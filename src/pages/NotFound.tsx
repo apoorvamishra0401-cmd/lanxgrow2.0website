@@ -1,9 +1,7 @@
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { cta, primaryNav } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
-import { Link } from 'react-router-dom';
 
 export default function NotFound() {
   usePageMeta('Page not found');
@@ -13,28 +11,18 @@ export default function NotFound() {
       <div className="max-w-2xl py-24 sm:py-32">
         <Eyebrow tone="muted">Page not found</Eyebrow>
         <h1 className="mt-6 font-display text-display-sm text-ink-900 sm:text-display-md">
-          This page does not exist.
+          We could not find that page.
         </h1>
         <p className="lx-prose mt-6">
-          The link may be out of date. Everything on the site is one of the pages below.
+          The link may be old, or the page may have moved. You can return home or head to Services.
         </p>
 
-        <ul className="mt-8 flex flex-wrap gap-3">
-          {primaryNav.map((item) => (
-            <li key={item.to}>
-              <Link
-                to={item.to}
-                className="inline-flex items-center rounded-full border border-line bg-ivory-50 px-4 py-2 text-[0.875rem] text-ink-700 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-10">
-          <Button to={cta.getStarted.to} withArrow>
-            {cta.getStarted.label}
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button to="/" withArrow>
+            Back to home
+          </Button>
+          <Button to="/services" variant="secondary">
+            Explore our services
           </Button>
         </div>
       </div>

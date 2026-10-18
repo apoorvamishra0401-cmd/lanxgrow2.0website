@@ -9,12 +9,11 @@
 
 export const homeHero = {
   eyebrow: 'English Communication',
-  headline: 'The confidence to speak English, built with care.',
+  headline: 'What changes when a learner can say exactly what they mean?',
   supporting:
-    'Mentorship, structured practice and Smart AI-supported voice and video assessments — in one calm, deliberate programme.',
-  primaryCta: { label: 'Get started', to: '/signin' },
+    'English Communication is not only grammar and marks. It is the ability to speak, listen and be understood — in a classroom, an interview, a workplace or a family conversation. LanXgrow builds that ability through mentorship, structured practice and Smart AI-supported voice and video assessments.',
+  primaryCta: { label: 'Get started', to: '/services' },
   secondaryCta: { label: 'Explore our services', to: '/services' },
-  footnote: 'Frontend preview — account creation opens in the next stage.',
 } as const;
 
 /** The three pillars, held together — the compact version of the brand story. */
@@ -22,7 +21,7 @@ export const homeApproach = {
   eyebrow: 'Why LanXgrow',
   heading: 'Three things, held together.',
   intro:
-    'English Communication is the goal. Mentorship is how we get there. Smart AI keeps the starting point honest.',
+    'English Communication is the goal. Mentorship is how we get there. Smart AI keeps the starting point honest — and keeps a human in charge of what happens next.',
   pillars: [
     {
       title: 'English Communication',
@@ -42,7 +41,7 @@ export const homeApproach = {
 export const homeSmartAi = {
   eyebrow: 'Smart AI',
   heading: 'Smart AI supports the mentor. It never replaces them.',
-  body: 'Voice and video assessments give learners a comfortable way to speak, and give mentors a clearer picture to guide from. The technology stays in the background.',
+  body: 'Voice and video assessments give learners a comfortable way to speak, and give mentors a clearer picture to guide from. The technology stays in the background, and it is a starting point and a checkpoint — never a verdict.',
   markers: [
     { label: 'Two ways to begin', detail: 'Voice or video — whichever feels natural.' },
     { label: 'A clearer starting point', detail: 'Guidance responds to the learner, not a script.' },
@@ -65,7 +64,7 @@ export const homeGetStarted = {
     {
       index: '02',
       title: 'Connect',
-      body: 'Create an account and complete a short voice or video assessment.',
+      body: 'Tell us about the learner and what you are hoping for.',
     },
     {
       index: '03',
@@ -73,13 +72,12 @@ export const homeGetStarted = {
       body: 'Work with a mentor on a plan built around you.',
     },
   ],
-  note: 'Intended journey — accounts and assessments open in a later stage.',
 } as const;
 
 export const homeClosing = {
   eyebrow: 'Join LanXgrow',
   heading: 'Give language the attention it deserves.',
   body: 'For parents, students and adult learners — the first step is simply to begin.',
-  primaryCta: { label: 'Get started', to: '/signin' },
+  primaryCta: { label: 'Get started', to: '/services' },
   secondaryCta: { label: 'Talk to us', to: '/contact' },
 } as const;

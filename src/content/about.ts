@@ -11,9 +11,37 @@ export const aboutPurpose = {
   eyebrow: 'Purpose',
   heading: 'Why LanXgrow exists',
   paragraphs: [
-    'Most people who struggle with English do not lack effort. They lack a place to speak and feedback that helps rather than discourages.',
-    'LanXgrow was created to be that place — English Communication brought together with mentorship, so learning is never solitary.',
+    'Learning English and using English in everyday conversation are related, but they are not identical skills.',
+    'A 2022 British Council review of English teaching and learning in India discussed the limited space often given to speaking and listening in classroom practice. The review synthesised existing research and policy, alongside a small number of interviews; it was not a nationally representative test of students’ spoken English.',
+    'LanXgrow exists to explore how structured speaking practice, supportive human mentorship and thoughtful assessment can help learners put their knowledge to use.',
   ],
+} as const;
+
+/**
+ * Research note shown on the About page.
+ *
+ * The figure, age range, rural scope and the reading-only limitation must always
+ * appear together. It is never a spoken-English statistic and never belongs in
+ * the homepage hero.
+ */
+export const aboutResearch = {
+  eyebrow: 'Research note',
+  figure: '57.3%',
+  statement: 'of rural youth aged 14–18 could read simple sentences in English.',
+  source:
+    'Source: ASER 2023, rural India. The finding measures the ability to read simple English sentences; it does not measure spoken English fluency, listening ability or conversational confidence.',
+} as const;
+
+/**
+ * Progress copy.
+ *
+ * Deliberately future-facing: it describes an intended approach, and promises
+ * neither a fixed timeline nor an outcome.
+ */
+export const aboutProgress = {
+  eyebrow: 'Progress',
+  heading: 'Progress, reviewed with care',
+  body: 'Our intended approach is to understand a learner’s starting point, use comparable speaking activities to review progress, and give specific feedback along the way. We do not promise a fixed timeline or a particular outcome.',
 } as const;
 
 export const aboutPhilosophy = {

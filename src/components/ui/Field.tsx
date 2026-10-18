@@ -65,7 +65,7 @@ export function Field({ label, htmlFor, hint, error, required, children, classNa
 }
 
 const controlBase =
-  'w-full rounded-xl border bg-ivory-50 px-4 py-3 text-[0.9375rem] text-ink-900 placeholder:text-ink-300 transition-colors duration-200 ease-editorial';
+  'w-full rounded-xl border bg-ivory-50 px-4 py-3 text-[0.9375rem] text-ink-900 placeholder:text-ink-300 transition-colors duration-200 ease-editorial disabled:cursor-not-allowed disabled:bg-ivory-100 disabled:text-ink-400';
 const controlIdle = 'border-line hover:border-ink-300 focus:border-terracotta-500';
 const controlError = 'border-terracotta-500 bg-terracotta-50/40';
 

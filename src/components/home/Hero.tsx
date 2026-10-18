@@ -36,8 +36,6 @@ export function Hero() {
                 {homeHero.secondaryCta.label}
               </Button>
             </div>
-
-            <p className="mt-6 text-[0.8125rem] text-ink-500">{homeHero.footnote}</p>
           </div>
 
           {/* Product scene: the assessment interface itself, plus mentor note and depth block. */}

@@ -6,14 +6,15 @@ import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
 import Contact from '@/pages/Contact';
 import SignIn from '@/pages/SignIn';
+import Account from '@/pages/Account';
+import Privacy from '@/pages/Privacy';
 import NotFound from '@/pages/NotFound';
 
 /**
  * Public routes.
  *
  * Everything ships inside the shared `SiteLayout` shell so navigation and the
- * footer stay consistent. Stage 2 can add authenticated routes as sibling
- * trees without disturbing these pages.
+ * footer stay consistent.
  */
 export default function App() {
   return (
@@ -25,6 +26,8 @@ export default function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
