@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   LanXgrow design tokens
+   Single source of truth for surfaces, type, spacing rhythm and motion.
+   Kept as CSS custom properties so future stages (and non-Tailwind surfaces,
+   e.g. embedded widgets) can reuse the same system.
+   ========================================================================== */
+@layer base {
+  :root {
+    /* Surfaces */
+    --lx-ivory: #faf7f2;
+    --lx-alabaster: #fffdfa;
+    --lx-sand: #f1eae0;
+    --lx-line: #e7dfd4;
+
+    /* Text */
+    --lx-ink: #1d1a16;
+    --lx-ink-muted: #6b6459;
+    --lx-ink-faint: #8a8277;
+
+    /* Accent */
+    --lx-terracotta: #b85c38;
+    --lx-terracotta-deep: #7e3b22;
+    --lx-terracotta-tint: #f6e2d8;
+
+    /* Rhythm */
+    --lx-radius: 14px;
+    --lx-shell: 76rem;
+
+    /* Motion */
+    --lx-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --lx-dur: 320ms;
+
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings inherit the editorial serif by default; pages can opt out. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink-900;
+    font-weight: 400;
+    font-optical-sizing: auto;
+  }
+
+  /* Visible, consistent keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--lx-terracotta);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Native controls shouldn't show the custom ring twice. */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--lx-terracotta);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--lx-terracotta-tint);
+    color: var(--lx-terracotta-deep);
+  }
+}
+
+@layer components {
+  /* Page shell: consistent horizontal rhythm across breakpoints. */
+  .lx-container {
+    @apply mx-auto w-full max-w-wrap px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Hairline rule used to compose editorial sections. */
+  .lx-rule {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Long-form copy defaults. */
+  .lx-prose {
+    @apply max-w-prose text-[1.0625rem] leading-[1.75] text-ink-500;
+  }
+
+  .lx-prose + .lx-prose {
+    @apply mt-5;
+  }
+
+  /* Mobile drawer, open state.
+     Bounded by the space under the sticky header and scrollable, so every
+     nav item stays reachable on short viewports (landscape phones, larger
+     system text) where the body scroll is locked.
+     `dvh` keeps this correct as mobile browser chrome shows and hides;
+     `vh` is the fallback for browsers without dynamic viewport units. */
+  .lx-drawer-open {
+    max-height: calc(100vh - 4.5rem);
+    max-height: calc(100dvh - 4.5rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal primitive. Progressive enhancement:
+     elements are visible by default and only animate when revealed. */
+  .lx-reveal {
+    opacity: 1;
+  }
+
+  .lx-reveal--armed {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .lx-reveal--in {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.7s var(--lx-ease),
+      transform 0.7s var(--lx-ease);
+  }
+
+  .lx-grain {
+    background-image: radial-gradient(rgba(29, 26, 22, 0.045) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Animated waveform bar.
+     The animation alternates between two scaleY values, so when motion is
+     reduced (and the animation collapses to its end frame) every bar rests at
+     its natural height — the waveform still reads correctly, just still. */
+  .lx-wave {
+    animation: lx-wave 1.2s ease-in-out infinite alternate;
+  }
+
+  /* Used when switching between the voice and video assessment scenes. */
+  .lx-scene-in {
+    animation: lx-scene-in 0.55s var(--lx-ease) both;
+  }
+}
+
+@keyframes lx-wave {
+  from {
+    transform: scaleY(0.42);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes lx-scene-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Honour the OS reduced-motion preference across the whole site. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .lx-reveal--armed {
+    opacity: 1;
+    transform: none;
+  }
+}
