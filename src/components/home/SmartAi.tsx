@@ -2,6 +2,7 @@ import { homeSmartAi } from '@/content/home';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
+import { SignalToGuidance } from '@/components/visuals/SignalToGuidance';
 
 /**
  * Smart AI section.
@@ -29,6 +30,11 @@ export function SmartAi() {
         </Reveal>
 
         <Reveal delay={100} className="lg:col-span-6 lg:pl-4">
+          {/* How a spoken answer becomes guidance. Illustrative, and said so. */}
+          <div className="mb-9 max-w-2xl">
+            <SignalToGuidance />
+          </div>
+
           <ul className="border-t border-ivory-100/15">
             {homeSmartAi.markers.map((marker) => (
               <li key={marker.label} className="border-b border-ivory-100/15 py-6">

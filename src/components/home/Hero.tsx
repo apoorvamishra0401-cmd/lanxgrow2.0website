@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { AssessmentShowcase } from '@/components/assessment/AssessmentShowcase';
+import { TwoWaysOnePlan } from '@/components/visuals/TwoWaysOnePlan';
 
 export function Hero() {
   return (
@@ -65,6 +66,11 @@ export function Hero() {
                 <p className="mt-3 text-[0.875rem] leading-relaxed text-ink-500">
                   Every assessment leads to a next step planned with a mentor.
                 </p>
+
+                {/* Both ways of beginning arrive at the same human plan. */}
+                <div className="mt-4 border-t border-line pt-4">
+                  <TwoWaysOnePlan />
+                </div>
               </div>
             </div>
           </div>

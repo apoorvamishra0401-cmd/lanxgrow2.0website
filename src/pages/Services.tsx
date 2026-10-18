@@ -1,4 +1,5 @@
 import { services, servicesAssessment, servicesIntro, servicesNotes } from '@/content/services';
+import type { ComponentType } from 'react';
 import { assessmentTiles } from '@/content/assessment';
 import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
@@ -6,7 +7,19 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
 import { AssessmentModes } from '@/components/assessment/AssessmentModes';
+import { ConversationThreads } from '@/components/visuals/ConversationThreads';
+import { GuidedPath } from '@/components/visuals/GuidedPath';
 import { usePageMeta } from '@/hooks/usePageMeta';
+
+/**
+ * One original motif per service, each illustrating what that service's summary
+ * describes in prose: communication as a two-way exchange, and mentorship as
+ * guidance that travels *with* the learner.
+ */
+const serviceVisuals: Record<string, ComponentType<{ className?: string }>> = {
+  'english-communication': ConversationThreads,
+  mentorship: GuidedPath,
+};
 
 export default function Services() {
   usePageMeta('Services', 'English Communication, mentorship and guided learning support at LanXgrow.');
@@ -20,7 +33,10 @@ export default function Services() {
       />
 
       {/* Primary services — one editorial block each, no card repetition. */}
-      {services.map((service, index) => (
+      {services.map((service, index) => {
+        const ServiceVisual = serviceVisuals[service.id];
+
+        return (
         <Section key={service.id} id={service.id} tone={index % 2 === 0 ? 'ivory' : 'alabaster'} divided>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-7">
@@ -39,6 +55,12 @@ export default function Services() {
 
             <Reveal delay={90} className="lg:col-span-5">
               <div className="rounded-[20px] border border-line bg-ivory-50 p-7 sm:p-8">
+                {ServiceVisual ? (
+                  <div className="mb-7 border-b border-line pb-7">
+                    <ServiceVisual className="max-w-sm" />
+                  </div>
+                ) : null}
+
                 <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ink-500">
                   {service.includesHeading}
                 </h3>
@@ -54,7 +76,8 @@ export default function Services() {
             </Reveal>
           </div>
         </Section>
-      ))}
+        );
+      })}
 
       {/* Smart AI-supported assessment, presented as part of the approach. */}
       <Section id="assessments" tone="ink" spacing="loose">
