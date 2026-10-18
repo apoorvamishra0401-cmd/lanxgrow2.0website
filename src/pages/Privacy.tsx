@@ -1,4 +1,5 @@
-import { privacyIntro, privacySections } from '@/content/privacy';
+import { getPrivacySections, privacyIntro } from '@/content/privacy';
+import { isEnquiryDeliveryConfigured } from '@/lib/enquiry';
 import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
@@ -6,6 +7,12 @@ import { usePageMeta } from '@/hooks/usePageMeta';
 
 export default function Privacy() {
   usePageMeta('Privacy Notice', 'What the LanXgrow website does with your information.');
+
+  // The notice must describe the build that is actually deployed: with no
+  // enquiry endpoint configured the form is disabled and nothing is sent.
+  const sections = getPrivacySections({
+    enquiryDeliveryEnabled: isEnquiryDeliveryConfigured(),
+  });
 
   return (
     <>
@@ -17,7 +24,7 @@ export default function Privacy() {
 
       <Section tone="ivory">
         <div className="max-w-prose">
-          {privacySections.map((section, index) => (
+          {sections.map((section, index) => (
             <Reveal
               key={section.heading}
               delay={index === 0 ? 0 : 40}

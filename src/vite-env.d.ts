@@ -4,7 +4,8 @@
  * Environment variables this project reads at build time.
  *
  * All of them are optional: with none set, the site runs exactly as it does
- * today (an honest, unconnected sign-in preview). See `.env.example`.
+ * today — account access is unavailable, and the enquiry form on the Contact
+ * page is disabled and transmits nothing. See `.env.example`.
  */
 interface ImportMetaEnv {
   /** Supabase project URL, e.g. `https://<project-ref>.supabase.co`. */
@@ -15,7 +16,11 @@ interface ImportMetaEnv {
   readonly VITE_AUTH_PHONE_ENABLED?: string;
   /**
    * Optional HTTPS endpoint that accepts a JSON POST of an enquiry.
-   * While this is empty the contact form keeps its honest "preview" behaviour.
+   *
+   * While this is empty the Contact form's controls stay disabled, nothing is
+   * submitted, and the Privacy Notice describes that state. Setting it changes
+   * what the form transmits, so the Privacy Notice must be reviewed with it
+   * (see `src/content/privacy.ts`).
    */
   readonly VITE_CONTACT_ENDPOINT?: string;
 }

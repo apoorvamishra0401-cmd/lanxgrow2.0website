@@ -96,7 +96,7 @@ export default function Contact() {
       setFailureMessage(
         'message' in result && result.message
           ? result.message
-          : 'Nothing was sent. Please try again.',
+          : 'We could not confirm that your enquiry was delivered. Please try again.',
       );
       setStatus('failed');
       return;

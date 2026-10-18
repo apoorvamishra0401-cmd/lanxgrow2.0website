@@ -43,7 +43,7 @@ export const contactLiveCopy = {
   successTitle: 'Enquiry sent',
   success:
     'Thank you — your enquiry reached the LanXgrow team. Someone will reply to the address you provided.',
-  failedTitle: 'Enquiry not sent',
+  failedTitle: 'Delivery not confirmed',
   checking: 'Sending…',
   send: 'Send enquiry',
 } as const;
