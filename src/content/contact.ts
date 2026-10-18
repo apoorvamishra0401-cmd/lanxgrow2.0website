@@ -4,7 +4,18 @@ export const contactIntro = {
   eyebrow: 'Contact',
   heading: 'Start a conversation with LanXgrow.',
   supporting:
-    'Tell us a little about the learner and what you are hoping for. Enquiries are read by the LanXgrow team — the form below is a design preview for this stage.',
+    'Online enquiries are not open yet. In the meantime, our Services page explains how LanXgrow works.',
+} as const;
+
+/**
+ * Shown while no enquiry endpoint is configured.
+ *
+ * This is a plain availability message for visitors. It states that the form is
+ * not active so nothing entered here can be mistaken for a delivered enquiry.
+ */
+export const contactAvailability = {
+  title: 'Enquiries are not open yet',
+  body: 'This form is not active, so nothing you enter here is sent to anyone. When enquiries open, this is how you will be able to reach the LanXgrow team.',
 } as const;
 
 /** Reason-for-enquiry options. Kept aligned with the published services. */
@@ -18,13 +29,24 @@ export const enquiryReasons = [
 export type EnquiryReason = (typeof enquiryReasons)[number];
 
 /**
- * Stage 1 honesty notice.
+ * Copy used once a real enquiry endpoint is configured.
  *
- * The brief requires that this page must not pretend enquiries are stored or
- * sent. This string is rendered as a visible notice beside the form.
+ * The success message is only ever rendered after that endpoint has confirmed
+ * delivery — there is no local "assume it worked" path.
  */
-export const contactFormNotice =
-  'This form is a frontend preview. Submissions are not stored or sent yet — enquiry delivery is connected in a later stage.' as const;
+export const contactLiveCopy = {
+  introSupporting:
+    'Tell us a little about the learner and what you are hoping for. Enquiries are read by the LanXgrow team.',
+  noticeTitle: 'How this works',
+  notice:
+    'Your enquiry is sent to the LanXgrow team and used only to reply to you. Nothing is stored on this website.',
+  successTitle: 'Enquiry sent',
+  success:
+    'Thank you — your enquiry reached the LanXgrow team. Someone will reply to the address you provided.',
+  failedTitle: 'Enquiry not sent',
+  checking: 'Sending…',
+  send: 'Send enquiry',
+} as const;
 
 export const contactAside = {
   heading: 'What happens next',
@@ -33,5 +55,5 @@ export const contactAside = {
     'A member of the LanXgrow team reviews your enquiry.',
     'You receive guidance on the most suitable next step.',
   ],
-  note: 'Official enquiry channels are being finalised and will be published here before launch.',
+  note: 'Enquiry channels will open on this page.',
 } as const;

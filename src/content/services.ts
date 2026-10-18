@@ -13,15 +13,16 @@ export const services = [
     eyebrow: 'Primary service',
     title: 'English Communication',
     summary:
-      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence.',
+      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence. No promises, no shortcuts — just careful, repeated practice with someone in your corner.',
     includesHeading: 'What this focuses on',
     includes: [
+      'Speaking in real situations — introductions, interviews and everyday conversation',
       'Speaking and conversational fluency',
       'Listening and comprehension',
       'Pronunciation and clarity of expression',
       'Confidence in real, everyday communication',
     ],
-    cta: { label: 'Get started', to: '/signin' },
+    cta: { label: 'Explore English Communication', to: '/services#english-communication' },
   },
   {
     id: 'mentorship',
@@ -43,7 +44,7 @@ export const services = [
 export const servicesAssessment = {
   eyebrow: 'Part of the approach',
   title: 'Smart AI-supported assessments',
-  body: 'Voice-based and video-based assessments are woven into how LanXgrow works. They give learners a comfortable format in which to speak, and give mentors a clearer picture to guide from.',
+  body: 'Voice-based and video-based assessments are woven into how LanXgrow works. They give learners a comfortable format in which to speak, and give mentors a clearer picture to guide from. They are a starting point and a checkpoint, not a verdict.',
 } as const;
 
 export const servicesNotes = {

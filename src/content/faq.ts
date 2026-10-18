@@ -1,8 +1,10 @@
 /**
  * FAQ content.
  *
- * Answers are limited to information supported by the Stage 1 brief and the
- * LanXgrow brand direction. No policies, prices or guarantees have been invented.
+ * Answers are limited to information supported by the brand direction and, where
+ * research is referenced, by sources that are safe to publish. No policies,
+ * prices or guarantees are invented, and language about accounts, assessments
+ * and progress stays future-facing because those workflows are not live yet.
  */
 
 export type FaqItem = {
@@ -47,13 +49,13 @@ export const faqItems: FaqItem[] = [
     id: 'smart-ai-assessments',
     question: 'What are Smart AI-supported assessments?',
     answer:
-      'They are voice-based and video-based assessments that support the mentorship process. They give learners a comfortable way to speak, and give mentors a clearer starting point for guidance. They are a support for mentorship, not a replacement for it.',
+      'They are voice-based and video-based assessments that support the mentorship process. They give learners a comfortable way to speak, and give mentors a clearer starting point for guidance. They are a starting point and a checkpoint, not a verdict, and they never replace the mentor’s judgement.',
   },
   {
     id: 'do-i-need-to-be-a-beginner',
     question: 'Do I need to be a complete beginner to join?',
     answer:
-      'No. Learners begin by being assessed so that guidance responds to their actual level. That applies whether someone is starting from the very beginning or looking to refine the English they already use.',
+      'No. Our approach begins by understanding the learner’s current level, so guidance responds to where they actually are — whether they are starting from the very beginning or looking to refine the English they already use.',
   },
   {
     id: 'parents',
@@ -65,6 +67,18 @@ export const faqItems: FaqItem[] = [
     id: 'how-to-start',
     question: 'How do I get started?',
     answer:
-      'Create an account using an email address or a phone number, complete a short assessment, and begin guided practice with a mentor. If you would prefer to ask questions first, use the contact form.',
+      'Start with our Services page to see how LanXgrow works and what English Communication covers. Enrolment is not open yet, and we will publish how to join on this website as soon as it is.',
+  },
+  {
+    id: 'how-do-you-measure-progress',
+    question: 'How do you measure progress?',
+    answer:
+      'Our intended approach is to understand a learner’s starting point, use comparable speaking activities to review progress, and give specific feedback along the way. We do not promise a fixed timeline or a particular outcome.',
+  },
+  {
+    id: 'are-my-voice-and-video-recorded',
+    question: 'Is my voice or video recorded?',
+    answer:
+      'The voice and video assessment shown on this website is a visual demonstration. This page does not access your camera or microphone, and it does not record or send anything. When live assessments are introduced, we will explain clearly what is captured and how it is used before anything begins.',
   },
 ];

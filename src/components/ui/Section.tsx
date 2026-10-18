@@ -43,6 +43,8 @@ export function Section({
         spacingMap[spacing],
         toneMap[tone],
         divided && 'border-t border-line',
+        // Sections that are anchor targets must clear the sticky header.
+        id && 'scroll-mt-[4.5rem] lg:scroll-mt-20',
         className,
       )}
     >

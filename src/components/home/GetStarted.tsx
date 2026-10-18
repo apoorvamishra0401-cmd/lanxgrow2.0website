@@ -39,10 +39,6 @@ export function GetStarted() {
           </Reveal>
         ))}
       </ol>
-
-      <Reveal delay={140}>
-        <p className="mt-12 text-[0.8125rem] text-ink-500">{homeGetStarted.note}</p>
-      </Reveal>
     </Section>
   );
 }

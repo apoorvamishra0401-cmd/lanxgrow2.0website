@@ -3,7 +3,9 @@ import {
   aboutCommitments,
   aboutIntro,
   aboutPhilosophy,
+  aboutProgress,
   aboutPurpose,
+  aboutResearch,
 } from '@/content/about';
 import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
@@ -24,7 +26,7 @@ export default function About() {
         supporting={aboutIntro.supporting}
       />
 
-      {/* Purpose */}
+      {/* Purpose, with the one research figure the site publishes. */}
       <Section tone="ivory">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-5">
@@ -39,10 +41,45 @@ export default function About() {
             ))}
           </Reveal>
         </div>
+
+        {/* Research note. The figure, age range, rural scope and reading-only
+            limitation are always shown together, never as a spoken-English claim. */}
+        <Reveal delay={120}>
+          <figure className="mt-14 grid gap-8 rounded-[20px] border border-line bg-sand/50 p-8 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12 sm:p-10">
+            <p className="font-display text-[3.25rem] leading-none text-ink-900 sm:text-[4.25rem]">
+              {aboutResearch.figure}
+            </p>
+            <div>
+              <figcaption>
+                <p className="text-[1.0625rem] leading-[1.7] text-ink-700">
+                  {aboutResearch.statement}
+                </p>
+              </figcaption>
+              <p className="mt-4 border-t border-line pt-4 text-[0.8125rem] leading-relaxed text-ink-500">
+                {aboutResearch.source}
+              </p>
+            </div>
+          </figure>
+        </Reveal>
+      </Section>
+
+      {/* Progress — future-facing by design: no timeline, no outcome promise. */}
+      <Section tone="alabaster" divided>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <Eyebrow>{aboutProgress.eyebrow}</Eyebrow>
+            <h2 className="mt-6 max-w-xl font-display text-display-sm text-ink-900">
+              {aboutProgress.heading}
+            </h2>
+          </Reveal>
+          <Reveal delay={80} className="lg:col-span-7 lg:pt-2">
+            <p className="lx-prose">{aboutProgress.body}</p>
+          </Reveal>
+        </div>
       </Section>
 
       {/* Philosophy */}
-      <Section tone="alabaster" divided>
+      <Section tone="ivory" divided>
         <Reveal>
           <Eyebrow>{aboutPhilosophy.eyebrow}</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-display-sm text-ink-900">
@@ -64,7 +101,7 @@ export default function About() {
       </Section>
 
       {/* Approach + commitments */}
-      <Section tone="ivory" divided>
+      <Section tone="alabaster" divided>
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
             <Eyebrow>{aboutApproach.eyebrow}</Eyebrow>
@@ -81,7 +118,7 @@ export default function About() {
           </Reveal>
 
           <Reveal delay={90} className="lg:col-span-6 lg:pl-6">
-            <div className="rounded-[20px] border border-line bg-sand/60 p-8 sm:p-10">
+            <div className="rounded-[20px] border border-line bg-ivory-50 p-8 sm:p-10">
               <Eyebrow tone="muted">{aboutCommitments.eyebrow}</Eyebrow>
               <h2 className="mt-6 font-display text-[1.5rem] text-ink-900">
                 {aboutCommitments.heading}

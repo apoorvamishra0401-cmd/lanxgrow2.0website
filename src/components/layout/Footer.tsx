@@ -66,7 +66,7 @@ export function Footer() {
                 </ul>
               ) : (
                 <p className="text-ivory-100/60">
-                  Official enquiry channels are being finalised.
+                  Our enquiry channels are not open yet.
                 </p>
               )}
 
