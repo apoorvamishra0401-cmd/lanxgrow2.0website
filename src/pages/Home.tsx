@@ -1,5 +1,6 @@
 import { Hero } from '@/components/home/Hero';
 import { Approach } from '@/components/home/Approach';
+import { ProductShowcase } from '@/components/product/ProductShowcase';
 import { SmartAi } from '@/components/home/SmartAi';
 import { GetStarted } from '@/components/home/GetStarted';
 import { ClosingCta } from '@/components/home/ClosingCta';
@@ -16,6 +17,7 @@ export default function Home() {
     <>
       <Hero />
       <Approach />
+      <ProductShowcase />
       <SmartAi />
       <GetStarted />
       <ClosingCta />
