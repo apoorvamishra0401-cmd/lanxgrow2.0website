@@ -1,3 +1,4 @@
+import './About.css';
 import {
   aboutApproach,
   aboutCommitments,
@@ -19,7 +20,7 @@ export default function About() {
   usePageMeta('About', 'The purpose, philosophy and approach behind LanXgrow.');
 
   return (
-    <>
+    <div className="about-page">
       <PageIntro
         eyebrow={aboutIntro.eyebrow}
         heading={aboutIntro.heading}
@@ -45,7 +46,7 @@ export default function About() {
         {/* Research note. The figure, age range, rural scope and reading-only
             limitation are always shown together, never as a spoken-English claim. */}
         <Reveal delay={120}>
-          <figure className="mt-14 grid gap-8 rounded-[20px] border border-line bg-sand/50 p-8 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12 sm:p-10">
+          <figure className="about-research mt-14 grid gap-8 rounded-[20px] border border-line bg-sand/50 p-8 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12 sm:p-10">
             <p className="font-display text-[3.25rem] leading-none text-ink-900 sm:text-[4.25rem]">
               {aboutResearch.figure}
             </p>
@@ -58,6 +59,7 @@ export default function About() {
               <p className="mt-4 border-t border-line pt-4 text-[0.8125rem] leading-relaxed text-ink-500">
                 {aboutResearch.source}
               </p>
+              <a className="about-source" href={aboutResearch.url} target="_blank" rel="noopener noreferrer">Read the ASER findings <span aria-hidden="true">↗</span></a>
             </div>
           </figure>
         </Reveal>
@@ -89,7 +91,7 @@ export default function About() {
 
         <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8 lg:gap-12">
           {aboutPhilosophy.beliefs.map((belief, index) => (
-            <Reveal key={belief.title} delay={index * 70} className="border-t border-line pt-6">
+            <Reveal key={belief.title} delay={index * 70} className="about-belief border-t border-line pt-6">
               <span aria-hidden="true" className="font-display text-[1.125rem] leading-none text-terracotta-400">
                 {String(index + 1).padStart(2, '0')}
               </span>
@@ -119,26 +121,26 @@ export default function About() {
             <ul className="mt-7 space-y-4">
               <li key={1} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
                 <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
-                Structured English practice tailored to your current level and goals.
+                A structured starting point, with practice that connects to your learning goals.
               </li>
               <li key={2} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
                 <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
-                AI-powered guidance to identify gaps and suggest targeted next steps.
+                Purposeful guidance designed to turn reflection into a practical next step.
               </li>
               <li key={3} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
                 <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
-                Voice and video assessments to track progress and highlight improvements.
+                Voice and video practice in development, designed to help you review how you communicate.
               </li>
               <li key={4} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
                 <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
-                Real-world focus: learn to express, not just to know.
+                Real situations at the centre: learn to share an idea, explain a decision and keep a conversation going.
               </li>
             </ul>
             <p className="mt-6 lx-prose text-ink-500">Your voice. Your pace. Your progress.</p>
           </Reveal>
 
           <Reveal delay={90} className="lg:col-span-6 lg:pl-6">
-            <div className="rounded-[20px] border border-line bg-ivory-50 p-8 sm:p-10">
+            <div className="about-commitments rounded-[20px] border border-line bg-ivory-50 p-8 sm:p-10">
               <Eyebrow tone="muted">{aboutCommitments.eyebrow}</Eyebrow>
               <h2 className="mt-6 font-display text-[1.5rem] text-ink-900">
                 {aboutCommitments.heading}
@@ -163,6 +165,7 @@ export default function About() {
                 ))}
               </ul>
 
+              <p className="about-availability">These commitments guide the experience we’re building. Current and planned features are identified on the homepage.</p>
               <div className="mt-9">
                 <Button to={cta.getStarted.to} withArrow>
                   {cta.getStarted.label}
@@ -172,6 +175,6 @@ export default function About() {
           </Reveal>
         </div>
       </Section>
-    </>
+    </div>
   );
 }

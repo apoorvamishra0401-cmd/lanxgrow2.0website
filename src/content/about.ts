@@ -4,16 +4,16 @@ export const aboutIntro = {
   eyebrow: 'About LanXgrow',
   heading: 'AI-Powered English Learning, Personalised Around You.',
   supporting:
-    'English communication shapes how people express their ideas, build confidence and participate in the world around them. At LanXgrow, we bring together personalised learning, guided practice and AI-assisted assessment to help each learner develop at their own pace.',
+    'Your ideas deserve to be heard—in the classroom, in an interview and in the conversations that shape your future. LanXgrow is bringing purposeful English practice, human guidance and thoughtfully designed technology into one connected learning experience, built around the person behind the voice.',
 } as const;
 
 export const aboutPurpose = {
   eyebrow: 'Purpose',
   heading: 'Why LanXgrow Exists',
   paragraphs: [
-    'Learning English is one thing. Feeling ready to use it in the real world is another.',
-    'English communication develops through more than grammar and vocabulary. Learners need opportunities to express their thoughts, practise real conversations, make mistakes, receive meaningful feedback and try again.',
-    'Yet access to these opportunities and the ability to use English can differ widely. At LanXgrow, we want to help close that gap through structured speaking practice, personalised learning and AI-assisted assessment—designed to help learners build practical communication skills at their own pace.',
+    'You can know the words and still hesitate when it is your turn to speak. That moment is where our purpose begins.',
+    'Confidence needs room to grow: a chance to explain an idea, ask a question, make a mistake and try again. Grammar and vocabulary matter most when they help you say something that matters to you.',
+    'We are building LanXgrow to make that practice more purposeful and easier to return to. From school and college to a first job or the workplace, our aim is to help learners turn understanding into expression, one meaningful conversation at a time.',
   ],
 } as const;
 
@@ -25,6 +25,7 @@ export const aboutPurpose = {
  * the homepage hero.
  */
 export const aboutResearch = {
+  url: 'https://asercentre.org/wp-content/uploads/2022/12/ASER-2023_Main-findings-1.pdf',
   eyebrow: 'Research note',
   figure: '42.7%',
   statement: 'of surveyed rural Indian youth aged 14–18 could not read at least simple sentences in English.',
@@ -41,7 +42,7 @@ export const aboutResearch = {
 export const aboutProgress = {
   eyebrow: 'Progress',
   heading: 'Progress, reviewed with care',
-  body: 'Our intended approach is to understand a learner’s starting point, use comparable speaking activities to review progress, and give specific feedback along the way. We do not promise a fixed timeline or a particular outcome.',
+  body: 'Progress starts with noticing: the idea you explained more clearly, the question you asked without holding back, the conversation you stayed in. Our approach is designed to connect a clear starting point with repeatable practice and specific guidance, so each review points towards a useful next step. Every learner brings a different starting point and pace.',
 } as const;
 
 export const aboutPhilosophy = {
@@ -50,15 +51,15 @@ export const aboutPhilosophy = {
   beliefs: [
     {
       title: 'Communication Before Perfection',
-      body: 'Build the confidence to express your thoughts, practise speaking and learn through meaningful feedback.',
+      body: 'Your first goal is to make yourself understood. We value the attempt, the exchange and the willingness to keep going—because clearer expression grows through use.',
     },
     {
       title: 'Learning That Adapts to You',
-      body: 'Personalised practice responds to your learning needs, helping you focus on what to work on next.',
+      body: 'A classroom presentation, an interview and a team meeting ask different things of you. Learning should make space for your starting point, your goals and the situations you want to feel ready for.',
     },
     {
       title: 'Technology With a Purpose',
-      body: 'LAN-X AI supports voice and video assessments, helping learners practise, review their performance and recognise areas for improvement.',
+      body: 'Technology earns its place when it makes the next step clearer. LAN-X AI is being developed to support voice and video practice, with feedback that informs learning while human judgement keeps its place.',
     },
   ],
 } as const;
@@ -67,8 +68,8 @@ export const aboutApproach = {
   eyebrow: 'THE LANXGROW APPROACH',
   heading: 'English Is Not Just What You Know. It\'s What You Can Express.',
   body: [
-    'You may understand English but struggle to speak. You may know the words but find it difficult to form sentences in the moment. Or you may hold back because you\'re afraid of making mistakes.',
-    'Your learning should begin with these challenges, not with a one-size-fits-all lesson. LanXgrow brings together structured English practice, AI-powered guidance, and voice and video assessments to help you understand where you stand, recognise what is holding you back, and work on the skills that matter most to you.',
+    'Sometimes the thought is clear in your mind, but the words arrive too late. Sometimes you have an answer and still let the moment pass. We believe learning should help you meet those everyday moments with more preparation and less hesitation.',
+    'The LanXgrow experience is being built around six connected parts: Call, Practice, Video Assessment, English Pro Course, Learn & Entertainment, and Dashboard. Together, they are designed to give learning a rhythm—explore an idea, put it into words, reflect on the experience and return with a clearer focus.',
   ],
 } as const;
 
@@ -76,9 +77,10 @@ export const aboutCommitments = {
   eyebrow: 'Commitments',
   heading: 'What you can expect from us',
   items: [
-    'Plain, honest descriptions of what our services involve.',
-    'Guided practice that treats learners with patience and respect.',
-    'A deliberate pace, prioritising real communication over busywork.',
-    'No exaggerated claims about outcomes we cannot verify.',
+    'A clear path forward: purposeful learning that connects your starting point with the conversations you want to handle.',
+    'Practice for real life: speaking tasks shaped around everyday conversations, presentations, interviews and work.',
+    'Guidance you can act on: specific next steps, with patience and respect for the way you learn.',
+    'More reasons to keep learning: conversation, structured lessons and interest-led discovery within one connected approach.',
+    'Progress with perspective: opportunities to reflect on your practice and choose what to work on next.',
   ],
 } as const;
