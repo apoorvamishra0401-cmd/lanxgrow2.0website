@@ -1,3 +1,4 @@
+import '@/pages/ExperiencePages.css';
 import './HeroResponsive.css';
 import { homeHero } from '@/content/home';
 import { Container } from '@/components/ui/Container';

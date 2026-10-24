@@ -33,7 +33,7 @@ export default function SignIn() {
     setBusy(true);
     try {
       const result = method === 'email' ? await signInWithPassword(identity, password) : await signInWithPhonePassword(phone, password);
-      if (result.ok) navigate('/placeholder', { replace: true }); else setError(result.message);
+      if (result.ok) navigate('/consent', { replace: true }); else setError(result.message);
     } catch { setError('We could not sign you in. Please try again.'); } finally { setBusy(false); }
   }
   async function google() {

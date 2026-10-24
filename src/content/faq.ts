@@ -97,7 +97,7 @@ export const faqItems: FaqItem[] = [
     question:
       'How does LanXgrow use my voice and video data?',
     answer:
-      'Voice and video data is stored to support personalised learning and is used only for learning purposes. LanXgrow does not independently share this data with other companies. If you have questions about how your learning data is handled, please contact the LanXgrow team.',
+      'The current public assessment preview does not record your camera or microphone. Before any recording-based learning feature is introduced, we will explain what is collected, why it is needed and how it is handled. Read our Privacy Notice or email official@lanxgrow.com with questions.',
   },
   {
     id: 'cost-and-duration',

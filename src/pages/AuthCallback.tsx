@@ -21,7 +21,7 @@ export default function AuthCallback() {
         if (!mounted) return;
         window.history.replaceState(null, '', window.location.pathname);
         if (!user) throw new Error('session');
-        navigate(recovery ? '/reset-password' : '/placeholder', { replace: true });
+        navigate(recovery ? '/reset-password' : '/consent', { replace: true });
       } catch {
         if (mounted) { window.history.replaceState(null, '', window.location.pathname); setError('We could not complete sign-in. Please try again.'); }
       }
