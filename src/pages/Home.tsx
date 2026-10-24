@@ -1,3 +1,4 @@
+import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
 import { Hero } from '@/components/home/Hero';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { Journey } from '@/components/home/Journey';
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <LearningEcosystem />
       <WhyLanXgrow />
       <Journey />
       <ClosingCta />
