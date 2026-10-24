@@ -20,7 +20,7 @@ export function WhyLanXgrow() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      if (!track.current) return;
+      if (!track.current || window.matchMedia('(max-height: 600px)').matches) return;
       const rect = track.current.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
       const p = Math.max(0, Math.min(1, (88 - rect.top) / Math.max(1, travel)));
@@ -35,6 +35,7 @@ export function WhyLanXgrow() {
   }, []);
   const select = (index: number) => {
     if (!track.current) return;
+    if (window.matchMedia('(max-height: 600px)').matches) { setActive(index); setHovered(null); return; }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const top = window.scrollY + track.current.getBoundingClientRect().top - 88;
     const travel = track.current.offsetHeight - window.innerHeight;

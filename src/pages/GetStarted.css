@@ -8,3 +8,9 @@
 @media(min-width:1000px){.lx-welcome{padding-top:34px;padding-bottom:30px}.lx-welcome-story{padding:20px 0 30px}.lx-welcome-art{width:130px;height:120px;margin-bottom:12px}.lx-welcome h1{font-size:58px}.lx-welcome-story>p{font-size:24px;margin-top:20px}}
 @media(max-width:480px){.lx-welcome{padding:45px 24px 28px}.lx-welcome-brand{font-size:45px}.lx-welcome-art{width:130px;height:125px;margin-bottom:20px}.lx-welcome-story{padding:42px 0}.lx-welcome h1{font-size:clamp(32px,9vw,43px)}.lx-welcome-story>p{font-size:21px;margin-top:20px}.lx-welcome-cta{font-size:24px;padding:20px}.lx-welcome-actions>p{font-size:13px;max-width:310px;margin:18px auto 0}}
 @media(prefers-reduced-motion:reduce){.lx-welcome-cta{transition:none}}
+
+/* Safe areas, short screens and tablet proportions. No fixed-width phone canvas. */
+.lx-welcome{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right));padding-bottom:max(28px,env(safe-area-inset-bottom))}
+@media(min-width:600px) and (max-width:999px){.lx-welcome{padding-top:50px;padding-bottom:40px}.lx-welcome-story{padding:40px 0}.lx-welcome-art{width:160px;height:150px}.lx-welcome h1{font-size:56px}.lx-welcome-story>p{font-size:26px}}
+@media(max-width:359px){.lx-welcome{padding-left:18px;padding-right:18px}.lx-welcome-break{display:none}.lx-welcome-story>p{font-size:19px}}
+@media(max-height:650px){.lx-welcome-story{padding:24px 0}.lx-welcome-art{width:90px;height:80px;margin-bottom:10px}.lx-welcome h1{font-size:clamp(30px,5vw,44px)}.lx-welcome-story>p{font-size:20px;margin-top:16px}.lx-welcome-brand{font-size:36px}}
