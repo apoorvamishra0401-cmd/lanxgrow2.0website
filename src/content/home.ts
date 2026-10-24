@@ -16,6 +16,31 @@ export const homeHero = {
   secondaryCta: { label: 'Talk to us', to: '/contact' },
 } as const;
 
+/** The learning method, stated plainly. */
+export const homeApproach = {
+  eyebrow: 'Approach',
+  heading: 'Our learning method',
+  intro:
+    'LanXgrow\'s approach to English communication practice is built on structured, progressive exercises that develop practical skills through consistent practice.',
+  pillars: [
+    {
+      title: 'Direct Practice',
+      body:
+        'Hands-on exercises that build real communication skills, not just theoretical knowledge.',
+    },
+    {
+      title: 'AI-Enhanced Feedback',
+      body:
+        'Intelligent voice and video tasks provide personalised feedback to accelerate progress.',
+    },
+    {
+      title: 'Human Guidance',
+      body:
+        'Expert instructors review progress and provide direction tailored to individual goals.',
+    },
+  ],
+} as const;
+
 /** The compact brand story — method pillars stated plainly. */
 export const homeWhyLanXgrow = {
   eyebrow: 'Why LanXgrow',
@@ -24,18 +49,29 @@ export const homeWhyLanXgrow = {
     'LanXgrow is built around disciplined English communication practice. AI supports the learning experience through the product\'s intended voice and video assessment approach. Personalisation is a stated direction of the product, not a claim about today\'s build.',
 } as const;
 
+type AiCapability = {
+  label: string;
+  detail: string;
+};
+
 export const homeSmartAi = {
   eyebrow: 'Smart AI',
   heading: 'Practice that responds. Progress you can see.',
   body:
     'AI-supported voice and video practice is the centre of the LanXgrow experience — comfortable formats that invite learners to speak, and clearer material for anyone guiding them. What is live today and what comes next is stated plainly.',
-  markers: [
-    { label: 'Two ways to begin', detail: 'Voice or video — whichever feels natural.' },
-    { label: 'A clearer starting point', detail: 'Guidance responds to the learner, not a script.' },
-    { label: 'Human judgement', detail: 'Encouragement and direction stay with the mentor.' },
-  ],
+  verifiedToday: [] as AiCapability[],
+  plannedNext: [
+    {
+      label: 'Voice and video practice screens',
+      detail: 'Comfortable formats that invite learners to speak.',
+    },
+    {
+      label: 'Clearer starting point for mentors',
+      detail: 'Practice output used as guidance material, never a verdict.',
+    },
+  ] as AiCapability[],
   disclaimer:
-    'Capabilities described here reflect how Smart AI supports the LanXgrow approach. Specific scoring, accuracy or performance guarantees are not claimed.',
+    'Capabilities described here reflect how Smart AI supports the LanXgrow approach. Specific scoring, accuracy or performance guarantees are not claimed. Planned capabilities are labelled as planned.',
 } as const;
 
 export const homeProgrammes = {

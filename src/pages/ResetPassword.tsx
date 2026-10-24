@@ -14,19 +14,19 @@ import { Alert } from '@/components/ui/Alert';
 import { Field, Input, useFieldId } from '@/components/ui/Field';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
-const ids = {
-  email: useFieldId('reset-email'),
-  password: useFieldId('reset-password'),
-  confirmPassword: useFieldId('reset-confirm-password'),
-};
-
 export default function ResetPassword() {
     const location = useLocation();
   const configured = isAuthConfigured();
   const [step, setStep] = useState<'request' | 'reset' | 'done'>('request');
   const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
-  
+
+  const ids = {
+    email: useFieldId('reset-email'),
+    password: useFieldId('reset-password'),
+    confirmPassword: useFieldId('reset-confirm-password'),
+  };
+
   const searchParams = new URLSearchParams(location.search);
   const accessToken = searchParams.get('access_token');
   const refreshToken = searchParams.get('refresh_token');

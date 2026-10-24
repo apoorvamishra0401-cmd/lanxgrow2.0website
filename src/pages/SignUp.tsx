@@ -13,11 +13,6 @@ import { Alert } from '@/components/ui/Alert';
 import { Field, Input, useFieldId } from '@/components/ui/Field';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
-const ids = {
-  email: useFieldId('signup-email'),
-  password: useFieldId('signup-password'),
-};
-
 export default function SignUp() {
   usePageMeta('Create account', 'Create your LanXgrow account.');
 
@@ -25,6 +20,11 @@ export default function SignUp() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AuthResult<{ userId: string; email: string | null | undefined }> | null>(null);
+
+  const ids = {
+    email: useFieldId('signup-email'),
+    password: useFieldId('signup-password'),
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
