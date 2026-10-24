@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current work belongs on `preview/scroll-feature-showcase` and its Vercel preview.
+- Current work belongs on `preview/brand-research-footer` and its Vercel preview. The prior responsive/onboarding release is already on main.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 

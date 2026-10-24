@@ -100,7 +100,7 @@ export const homeProgrammes = {
 export const homeClosing = {
   eyebrow: 'Join LanXgrow',
   heading: 'Give language the attention it deserves.',
-  body: 'For parents, students and adult learners — the first step is simply to begin.',
+  body: 'Your ideas deserve more than a moment of hesitation. Give them a clearer voice—with purposeful English practice for the classroom, the interview and the conversations that move your life forward.',
   primaryCta: { label: 'Explore the experience', to: '#experience' },
   secondaryCta: { label: 'Get started', to: '/get-started' },
 } as const;

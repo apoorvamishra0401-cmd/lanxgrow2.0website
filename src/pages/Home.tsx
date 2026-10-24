@@ -1,6 +1,8 @@
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
 import { Hero } from '@/components/home/Hero';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
+import { ResearchStories } from '@/components/home/ResearchStories';
+import { RealConversations } from '@/components/home/RealConversations';
 import { Journey } from '@/components/home/Journey';
 import { ClosingCta } from '@/components/home/ClosingCta';
 import { usePageMeta } from '@/hooks/usePageMeta';
@@ -17,6 +19,8 @@ export default function Home() {
       <Hero />
       <LearningEcosystem />
       <WhyLanXgrow />
+      <ResearchStories />
+      <RealConversations />
       <Journey />
       <ClosingCta />
     </>
