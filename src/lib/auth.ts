@@ -1,13 +1,7 @@
-import type { Session, SupabaseClient } from '@supabase/supabase-js';
+import type { Session, SupabaseClient, User } from '@supabase/supabase-js';
 
 /**
- * Authentication adapter — Supabase Auth, email one-time codes.
- *
- * Chosen because it is the only zero-cost provider that issues a genuine
- * six-digit *code* over email. Firebase's passwordless web flow is a magic
- * link rather than a code, and both Firebase's and Supabase's SMS channels
- * require a paid provider (Firebase needs a Cloud Billing account for SMS;
- * Supabase needs Twilio/MessageBird/Vonage/Textlocal). See README.md.
+ * Authentication adapter — Supabase Auth, email + password.
  *
  * Three outcomes, and the pages must be able to tell them apart:
  *
@@ -15,13 +9,12 @@ import type { Session, SupabaseClient } from '@supabase/supabase-js';
  *   configured + failure  — a real request failed, with a reason
  *   not configured        — nothing is called, and the sign-in page keeps its
  *                           honest "preview only" behaviour instead of
- *                           pretending a code was sent
+ *                           pretending sign-in is available
  *
  * Configuration comes from Vite environment variables at build time:
  *
  *   VITE_SUPABASE_URL       https://<project-ref>.supabase.co
  *   VITE_SUPABASE_ANON_KEY  the project's publishable (anon) key
- *   VITE_AUTH_PHONE_ENABLED "true" only once a paid SMS provider is set up
  *
  * The URL and anon key are public by design — the anon key is protected by
  * row-level security and is expected to ship in a browser bundle. Secrets,
@@ -32,7 +25,10 @@ import type { Session, SupabaseClient } from '@supabase/supabase-js';
  */
 
 export type AuthErrorCode =
-  | 'invalid-code'
+  | 'invalid-credentials'
+  | 'email-exists'
+  | 'weak-password'
+  | 'email-unverified'
   | 'rate-limited'
   | 'not-enabled'
   | 'network'
@@ -45,7 +41,6 @@ export type AuthResult<T = undefined> =
 export type AuthSession = {
   userId: string;
   email: string | null;
-  phone: string | null;
 };
 
 export type AuthConfig = {
@@ -71,15 +66,6 @@ export function isAuthConfigured(): boolean {
   return getAuthConfig() !== null;
 }
 
-/**
- * Phone sign-in is off unless it is switched on explicitly, because it cannot
- * work without a paid SMS provider. The switch exists so the channel can be
- * enabled later without touching any component.
- */
-export function isPhoneAuthEnabled(): boolean {
-  return isAuthConfigured() && import.meta.env.VITE_AUTH_PHONE_ENABLED === 'true';
-}
-
 /* -------------------------------------------------------------------------
    Client
    ------------------------------------------------------------------------- */
@@ -98,7 +84,7 @@ async function getClient(): Promise<SupabaseClient | null> {
           autoRefreshToken: true,
           // Sign-in uses a typed code, not a link, so there is nothing to
           // recover from the URL.
-          detectSessionInUrl: false,
+          detectSessionInUrl: true,
         },
       }),
     );
@@ -119,7 +105,6 @@ function toSession(session: Session): AuthSession {
   return {
     userId: session.user.id,
     email: session.user.email ?? null,
-    phone: session.user.phone ?? null,
   };
 }
 
@@ -135,11 +120,42 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
   const code = raw.code ?? '';
   const message = raw.message ?? '';
 
-  if (code === 'otp_expired' || code === 'otp_disabled' || /invalid|incorrect|expired/i.test(message)) {
+  if (
+    code === 'invalid_credentials' ||
+    code === 'email_not_confirmed' ||
+    /invalid login|wrong email|incorrect password|email not confirmed/i.test(message)
+  ) {
+    if (/email not confirmed|unverified/i.test(message)) {
+      return {
+        ok: false,
+        code: 'email-unverified',
+        message: 'Please verify your email address before signing in. Check your inbox for the verification link.',
+      };
+    }
     return {
       ok: false,
-      code: 'invalid-code',
-      message: 'That code was not accepted. Check the six digits, or request a new code.',
+      code: 'invalid-credentials',
+      message: 'The email address or password is incorrect. Please try again.',
+    };
+  }
+
+  if (
+    code === 'signup_allowed_but_email_exists' ||
+    code === 'user_already_exists' ||
+    /user already exists|email exists|registered/i.test(message)
+  ) {
+    return {
+      ok: false,
+      code: 'email-exists',
+      message: 'An account with this email address already exists. Please sign in instead.',
+    };
+  }
+
+  if (/weak password|password should|too short/i.test(message)) {
+    return {
+      ok: false,
+      code: 'weak-password',
+      message: 'Please choose a stronger password. It should be at least 6 characters.',
     };
   }
 
@@ -162,7 +178,7 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
   return {
     ok: false,
     code: 'unknown',
-    message: 'Something went wrong while signing in. Please try again in a moment.',
+    message: 'Something went wrong. Please try again in a moment.',
   };
 }
 
@@ -170,33 +186,61 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
    Operations
    ------------------------------------------------------------------------- */
 
-/** Sends a six-digit code to the address, creating the account on first use. */
-export async function sendEmailCode(email: string): Promise<AuthResult> {
+/** Creates a new account with email and password. */
+export async function signUp(
+  email: string,
+  password: string,
+  meta?: { full_name?: string },
+): Promise<AuthResult<{ userId: string; email: string | null | undefined }>> {
   const client = await getClient();
   if (!client) return notConfigured();
 
   try {
-    const { error } = await client.auth.signInWithOtp({
+    const { data, error } = await client.auth.signUp({
       email,
-      options: { shouldCreateUser: true },
+      password,
+      options: {
+        data: meta,
+      },
     });
 
     if (error) return toAuthError(error);
-    return { ok: true, data: undefined };
+    if (!data.user) {
+      return {
+        ok: false,
+        code: 'unknown',
+        message: 'Account creation was not confirmed. Please try again.',
+      };
+    }
+    return { ok: true, data: { userId: data.user.id, email: data.user.email ?? null } };
   } catch (error) {
     return toAuthError(error);
   }
 }
 
-/** Verifies the six digits. Only the provider can decide that this is correct. */
-export async function verifyEmailCode(email: string, token: string): Promise<AuthResult> {
+/** Signs in with email and password. */
+export async function signInWithPassword(
+  email: string,
+  password: string,
+): Promise<AuthResult<{ userId: string; email: string | null | undefined }>> {
   const client = await getClient();
   if (!client) return notConfigured();
 
   try {
-    const { error } = await client.auth.verifyOtp({ email, token, type: 'email' });
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password,
+    });
+
     if (error) return toAuthError(error);
-    return { ok: true, data: undefined };
+    if (!data.session || !data.user) {
+      return {
+        ok: false,
+        code: 'unknown',
+        message: 'Sign-in was not confirmed. Please try again.',
+      };
+    }
+    return { ok: true, data: { userId: data.user.id, email: data.user.email ?? null } };
   } catch (error) {
     return toAuthError(error);
   }
@@ -238,4 +282,48 @@ export async function subscribeToAuth(
   });
 
   return () => data.subscription.unsubscribe();
+}
+
+/** Sends a password reset link to the given email address. */
+export async function resetPasswordForEmail(email: string): Promise<AuthResult> {
+  const client = await getClient();
+  if (!client) return notConfigured();
+
+  try {
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      redirectTo: origin + '/reset-password',
+    });
+
+    if (error) return toAuthError(error);
+    return { ok: true, data: undefined };
+  } catch (error) {
+    return toAuthError(error);
+  }
+}
+
+/** Updates the password for the currently authenticated user. */
+export async function updatePassword(newPassword: string): Promise<AuthResult> {
+  const client = await getClient();
+  if (!client) return notConfigured();
+
+  try {
+    const { error } = await client.auth.updateUser({ password: newPassword });
+
+    if (error) return toAuthError(error);
+    return { ok: true, data: undefined };
+  } catch (error) {
+    return toAuthError(error);
+  }
+}
+
+/**
+ * Returns the currently authenticated user, or null if no session exists.
+ */
+export async function getCurrentUser(): Promise<User | null> {
+  const client = await getClient();
+  if (!client) return null;
+
+  const { data } = await client.auth.getUser();
+  return data.user ?? null;
 }

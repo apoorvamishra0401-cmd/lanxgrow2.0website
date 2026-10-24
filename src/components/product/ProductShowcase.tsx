@@ -41,7 +41,7 @@ export function ProductShowcase() {
   };
 
   return (
-    <Section id="product" tone="alabaster" spacing="loose" divided>
+    <Section id="experience" tone="alabaster" spacing="loose" divided>
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-6">
           <Eyebrow>{productShowcase.eyebrow}</Eyebrow>
@@ -92,7 +92,7 @@ export function ProductShowcase() {
                     aria-hidden="true"
                     className={cn(
                       'shrink-0 font-sans text-[0.6875rem] font-semibold tabular-nums tracking-[0.16em]',
-                      selected ? 'text-terracotta-600' : 'text-ink-400',
+                      selected ? 'text-terracotta-600' : 'text-ink-500',
                     )}
                   >
                     {item.step}

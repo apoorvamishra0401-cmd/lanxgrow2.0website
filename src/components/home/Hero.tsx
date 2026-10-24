@@ -48,21 +48,21 @@ export function Hero() {
 
               <AssessmentShowcase className="relative" />
 
-              {/* Mentor note — the human counterweight to the technology panel. */}
+              {/* The human layer — expertise lives in live programmes, not bundled with every AI interaction. */}
               <div className="relative mt-5 max-w-sm rounded-2xl border border-line bg-ivory p-5 shadow-lift sm:ml-6">
                 <div className="flex items-center gap-2.5">
                   <span
                     aria-hidden="true"
                     className="grid h-7 w-7 place-items-center rounded-full bg-ink-900 font-display text-[0.75rem] text-ivory-50"
                   >
-                    M
+                    L
                   </span>
                   <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink-500">
-                    Mentor guidance
+                    The human layer
                   </span>
                 </div>
                 <p className="mt-3 text-[0.875rem] leading-relaxed text-ink-500">
-                  Every assessment leads to a next step planned with a mentor.
+                  Practice first. Perspective when you want it — LanXgrow live learning programmes.
                 </p>
 
                 {/* Both ways of beginning arrive at the same human plan. */}

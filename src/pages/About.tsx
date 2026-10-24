@@ -115,6 +115,26 @@ export default function About() {
                 </p>
               ))}
             </div>
+<h3 className="mt-8 font-display text-[1.25rem] text-ink-900">A Learning Experience Built Around You</h3>
+            <ul className="mt-7 space-y-4">
+              <li key={1} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
+                Structured English practice tailored to your current level and goals.
+              </li>
+              <li key={2} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
+                AI-powered guidance to identify gaps and suggest targeted next steps.
+              </li>
+              <li key={3} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
+                Voice and video assessments to track progress and highlight improvements.
+              </li>
+              <li key={4} className="flex items-start gap-3 text-[0.9375rem] leading-[1.7] text-ink-700">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3.5 8.5 6.5 11.5l6-7" /></svg>
+                Real-world focus: learn to express, not just to know.
+              </li>
+            </ul>
+            <p className="mt-6 lx-prose text-ink-500">Your voice. Your pace. Your progress.</p>
           </Reveal>
 
           <Reveal delay={90} className="lg:col-span-6 lg:pl-6">

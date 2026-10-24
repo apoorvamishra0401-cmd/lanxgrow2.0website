@@ -15,7 +15,8 @@ export const contactIntro = {
  */
 export const contactAvailability = {
   title: 'Enquiries are not open yet',
-  body: 'This form is not active, so nothing you enter here is sent to anyone. When enquiries open, this is how you will be able to reach the LanXgrow team.',
+  body:
+    'This form is not active, so nothing you enter here is sent to anyone. You can reach the LanXgrow team directly at official@lanxgrow.com or 9826365691. When enquiries open, this is how you will be able to reach the LanXgrow team.',
 } as const;
 
 /** Reason-for-enquiry options. Kept aligned with the published services. */
@@ -56,4 +57,14 @@ export const contactAside = {
     'You receive guidance on the most suitable next step.',
   ],
   note: 'Enquiry channels will open on this page.',
+} as const;
+
+/**
+ * Shown on the Contact page while no enquiry endpoint is configured.
+ * Links to the verified channels published in site config.
+ */
+export const contactDirect = {
+  heading: 'Reach us directly',
+  body:
+    'While the form is not yet delivering, you can contact the LanXgrow team directly:',
 } as const;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import {
   contactAside,
-  contactAvailability,
+  contactDirect,
   contactIntro,
   contactLiveCopy,
   enquiryReasons,
@@ -21,6 +21,7 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { Field, Input, Select, Textarea, useFieldId } from '@/components/ui/Field';
 import { usePageMeta } from '@/hooks/usePageMeta';
+import { hasPublishedContactChannels, contactChannels } from '@/config/site';
 
 const emptyValues: EnquiryValues = {
   name: '',
@@ -118,14 +119,38 @@ export default function Contact() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           {/* Form */}
           <div className="lg:col-span-7">
-            <Reveal>
-              <Alert
-                tone="info"
-                title={deliveryConfigured ? contactLiveCopy.noticeTitle : contactAvailability.title}
-              >
-                {deliveryConfigured ? contactLiveCopy.notice : contactAvailability.body}
-              </Alert>
-            </Reveal>
+            {hasPublishedContactChannels && (
+              <Reveal delay={30}>
+                <Eyebrow tone="muted">{contactDirect.heading}</Eyebrow>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-500">
+                  {contactDirect.body}
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {contactChannels.email && (
+                    <li>
+                      <a
+                        href={`mailto:${contactChannels.email}`}
+                        className="inline-flex items-center gap-2 py-1.5 text-terracotta-600 transition-colors hover:text-terracotta-700"
+                      >
+                        {contactChannels.email}
+                        <span aria-hidden="true"> →</span>
+                      </a>
+                    </li>
+                  )}
+                  {contactChannels.phone && (
+                    <li>
+                      <a
+                        href={`tel:${contactChannels.phone.replace(/\s+/g, '')}`}
+                        className="inline-flex items-center gap-2 py-1.5 text-terracotta-600 transition-colors hover:text-terracotta-700"
+                      >
+                        {contactChannels.phone}
+                        <span aria-hidden="true"> →</span>
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </Reveal>
+            )}
 
             <Reveal delay={60} className="mt-8">
               <form noValidate onSubmit={handleSubmit}>
@@ -312,8 +337,24 @@ export default function Contact() {
                 ))}
               </ol>
 
-              <p className="mt-8 border-t border-line pt-6 text-[0.8125rem] leading-relaxed text-ink-500">
-                {contactAside.note}
+              <div className="mt-8 flex items-center gap-3 rounded-lg border border-line bg-ivory-50 p-4 sm:p-6 hover:bg-ivory-100 transition-colors" onClick={() => window.open('https://wa.me/9826365691', '_blank')} role="button" aria-label="Contact via WhatsApp" tabIndex={0}>
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06H5.66a5 5 0 0 0-1 9.44c0 .13-.03.26-.05.39l2.04 2.11a5.5 5.5 0 0 0 7.78 7.78l4.77-4.77a5.5 5.5 0 0 0 0-7.77z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span className="text-[0.9375rem] leading-[1.6] text-ink-900">WhatsApp</span>
+              </div>
+
+              <div className="mt-8 flex items-center gap-3 rounded-lg border border-line bg-ivory-50 p-4 sm:p-6 hover:bg-ivory-100 transition-colors" onClick={() => window.open('mailto:official@lanxgrow.com', '_blank')} role="button" aria-label="Email LanXgrow team" tabIndex={0}>
+                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 text-terracotta-500" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <path d="M22 6l-10 7L2 6" />
+                </svg>
+                <span className="text-[0.9375rem] leading-[1.6] text-ink-900">Contact Details</span>
+              </div>
+
+              <p className="text-[0.8125rem] text-ink-500">
+                Email: <span className="text-terracotta-600 underline underline-offset-2">official@lanxgrow.com</span>
               </p>
             </div>
           </Reveal>

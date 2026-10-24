@@ -8,9 +8,9 @@
 export const brand = {
   name: 'LanXgrow',
   /** Short, honest positioning line reused in metadata and the footer. */
-  tagline: 'English Communication & Mentorship',
+  tagline: 'Speak Smart, Think Smart',
   description:
-    'LanXgrow is an education brand built around English Communication, guided mentorship and Smart AI-supported voice and video assessments.',
+    'LanXgrow is an AI-powered English learning platform designed to help learners build confidence, improve communication skills, and achieve fluency through personalized practice and intelligent guidance. With AI-supported voice and video assessments, interactive learning experiences, and personalized feedback, LanXgrow helps learners identify their strengths, improve their weaknesses, track their progress, and discover the next steps in their learning journey.\n\nOur mission is to make English learning more accessible, engaging, and personalized, empowering every learner to grow at their own pace without the fear of judgment.',
 } as const;
 
 export type NavItem = {
@@ -41,16 +41,13 @@ export const footerNav: NavItem[] = [
 /**
  * Official contact channels.
  *
- * Intentionally left empty for Stage 1: the brief forbids inventing company
- * facts, and no verified enquiry inbox has been provided yet. The Contact page
- * renders a graceful note while these are blank, and will show real channels
- * automatically once they are filled in.
- *
- * TODO(stage-2): populate with verified LanXgrow enquiry channels before launch.
+ * Populated with verified LanXgrow enquiry channels. The Contact page and
+ * footer render these as clickable mailto/tel links automatically. No address
+ * is published.
  */
 export const contactChannels: { email: string; phone: string; address: string } = {
-  email: '',
-  phone: '',
+  email: 'official@lanxgrow.com',
+  phone: '9826365691',
   address: '',
 };
 
@@ -61,7 +58,7 @@ export const hasPublishedContactChannels = Boolean(
 
 /** Shared CTA targets so every button across the site stays consistent. */
 export const cta = {
-  getStarted: { label: 'Get started', to: '/services' },
-  exploreServices: { label: 'Explore our services', to: '/services' },
-  talkToUs: { label: 'Start a conversation', to: '/contact' },
+  getStarted: { label: 'Get started', to: '/contact' },
+  exploreExperience: { label: 'Explore the experience', to: '#experience' },
+  talkToUs: { label: 'Talk to us', to: '/contact' },
 } as const;

@@ -1,14 +1,11 @@
-import { services, servicesAssessment, servicesIntro, servicesNotes } from '@/content/services';
+import { services, servicesIntro, servicesNotes } from '@/content/services';
 import type { ComponentType } from 'react';
-import { assessmentTiles } from '@/content/assessment';
 import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
-import { AssessmentModes } from '@/components/assessment/AssessmentModes';
 import { ConversationThreads } from '@/components/visuals/ConversationThreads';
-import { GuidedPath } from '@/components/visuals/GuidedPath';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
 /**
@@ -18,11 +15,10 @@ import { usePageMeta } from '@/hooks/usePageMeta';
  */
 const serviceVisuals: Record<string, ComponentType<{ className?: string }>> = {
   'english-communication': ConversationThreads,
-  mentorship: GuidedPath,
 };
 
 export default function Services() {
-  usePageMeta('Services', 'English Communication, mentorship and guided learning support at LanXgrow.');
+  usePageMeta('Services', 'English Communication and guided learning support at LanXgrow.');
 
   return (
     <>
@@ -78,30 +74,6 @@ export default function Services() {
         </Section>
         );
       })}
-
-      {/* Smart AI-supported assessment, presented as part of the approach. */}
-      <Section id="assessments" tone="ink" spacing="loose">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <Reveal className="lg:col-span-6">
-            <Eyebrow tone="inverse">{servicesAssessment.eyebrow}</Eyebrow>
-            <h2 className="mt-6 max-w-xl font-display text-display-sm text-ivory-50 sm:text-display-md">
-              {servicesAssessment.title}
-            </h2>
-            <p className="mt-7 max-w-prose text-[1.0625rem] leading-[1.75] text-ivory-100/75">
-              {servicesAssessment.body}
-            </p>
-          </Reveal>
-
-          <Reveal delay={90} className="lg:col-span-6">
-            <div className="rounded-[20px] border border-ivory-100/15 bg-ivory-100/[0.04] p-6 sm:p-8">
-              <AssessmentModes tone="dark" />
-              <p className="mt-6 border-t border-ivory-100/15 pt-5 font-display text-[1.0625rem] text-ivory-100/85">
-                {assessmentTiles.note}
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
 
       {/* Honest pre-enrolment notes. */}
       <Section tone="alabaster" divided>

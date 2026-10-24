@@ -1,17 +1,17 @@
-/**
- * FAQ content.
- *
+/** FAQ content.
  * Answers are limited to information supported by the brand direction and, where
  * research is referenced, by sources that are safe to publish. No policies,
  * prices or guarantees are invented, and language about accounts, assessments
  * and progress stays future-facing because those workflows are not live yet.
  */
 
+
 export type FaqItem = {
   id: string;
   question: string;
   answer: string;
 };
+
 
 export const faqIntro = {
   eyebrow: 'FAQ',
@@ -20,65 +20,90 @@ export const faqIntro = {
     'If something is not covered here, the enquiry form is the best way to reach the LanXgrow team.',
 } as const;
 
+
 export const faqItems: FaqItem[] = [
   {
-    id: 'what-is-lanxgrow',
-    question: 'What is LanXgrow?',
+    id: 'why-cannot-speak-fluent',
+    question:
+      'Why can I understand English but struggle to speak fluently?',
     answer:
-      'LanXgrow is an education brand focused on English Communication and mentorship. We bring guided learning together with Smart AI-supported voice and video assessments to support learners as they build real communication skills.',
+      'Understanding English and speaking it comfortably are different skills. You may recognise words and follow conversations but still struggle to respond quickly, organise your thoughts or speak without translating in your head. Regular speaking practice and useful feedback can help you work on these challenges. LanXgrow focuses on practical English Communication through structured practice, personalised learning and AI-assisted assessment.',
   },
   {
-    id: 'who-is-it-for',
-    question: 'Who is LanXgrow for?',
+    id: 'improve-speaking-skills',
+    question:
+      'How can I improve my English speaking skills and confidence?',
     answer:
-      'LanXgrow is designed for students and adult learners who want to communicate more confidently in English, and for parents looking for considered, guided support for their children.',
+      'Start by speaking about familiar topics, practising everyday conversations and gradually moving towards more challenging situations. Focus on expressing your ideas clearly instead of waiting for every sentence to be perfect. LanXgrow\'s English Communication programme focuses on practical speaking, listening, pronunciation and clarity of expression, supported by personalised learning and AI-assisted assessment.',
   },
   {
-    id: 'what-does-english-communication-cover',
-    question: 'What does English Communication cover?',
+    id: 'practice-without-partner',
+    question:
+      'How can I practise speaking English without a conversation partner?',
     answer:
-      'The focus is on using English in real situations — speaking and conversational fluency, listening and comprehension, pronunciation, clarity of expression and the confidence to take part in everyday conversation.',
+      'You can practise by explaining a topic aloud, describing your day or rehearsing common situations such as introductions and workplace conversations. AI-based practice can offer another way to exercise your speaking skills, although feedback may have limitations. LanXgrow uses AI-assisted voice and video assessments as part of its learning approach. Contact the team to confirm the available practice formats.',
   },
   {
-    id: 'role-of-a-mentor',
-    question: 'What does the mentor do?',
+    id: 'improve-for-interviews',
+    question:
+      'How can I improve my English communication skills for interviews and the workplace?',
     answer:
-      'A mentor works alongside the learner. They establish where the learner is, decide what to practise next, and give feedback that is specific and encouraging. Mentorship is how LanXgrow keeps learning personal rather than generic.',
+      'Clear communication can help you explain your ideas, answer questions and participate in professional conversations. Practising structured responses, organising your thoughts and speaking clearly are useful starting points. LanXgrow focuses on practical English Communication skills. Ask the team which programme content is relevant to your current career or interview preparation goals.',
   },
   {
-    id: 'smart-ai-assessments',
-    question: 'What are Smart AI-supported assessments?',
+    id: 'can-ai-help',
+    question:
+      'Can AI help me improve my spoken English?',
     answer:
-      'They are voice-based and video-based assessments that support the mentorship process. They give learners a comfortable way to speak, and give mentors a clearer starting point for guidance. They are a starting point and a checkpoint, not a verdict, and they never replace the mentor’s judgement.',
+      'AI can support language practice by giving learners opportunities to work on speaking and review aspects of their performance. Its usefulness depends on the quality of the assessment, the feedback provided and how consistently you practise. LAN-X AI supports voice-based and video-based assessments for personalised learning. AI feedback is guidance, not a guarantee of perfect accuracy or fluency.',
   },
   {
-    id: 'do-i-need-to-be-a-beginner',
-    question: 'Do I need to be a complete beginner to join?',
+    id: 'ai-feedback-reliable',
+    question:
+      'How reliable is AI feedback on English speaking and pronunciation?',
     answer:
-      'No. Our approach begins by understanding the learner’s current level, so guidance responds to where they actually are — whether they are starting from the very beginning or looking to refine the English they already use.',
+      'AI feedback can help highlight areas to review, but it may not capture every aspect of natural communication, context or pronunciation. It is best used as a learning aid rather than a definitive judgement of your ability. LanXgrow incorporates AI-assisted assessments into its learning approach. Ask the team about the assessment features available in the programme before enrolling.',
   },
   {
-    id: 'parents',
-    question: 'I am a parent. Can I be involved?',
+    id: 'improve-pronunciation',
+    question:
+      'How can I improve my English pronunciation and clarity of speech?',
     answer:
-      'Yes. Parents and adult learners remain part of the picture at LanXgrow. Progress is easier to sustain when the people around a learner understand what is being worked on and why.',
+      'Listen to spoken English, practise saying useful phrases aloud and review how clearly you express your ideas. Pay attention to individual sounds as well as pace and sentence clarity. LanXgrow\'s English Communication learning focus includes pronunciation and clarity of expression. The specific feedback available depends on the assessment features offered.',
   },
   {
-    id: 'how-to-start',
-    question: 'How do I get started?',
+    id: 'programme-audience',
+    question:
+      'Who is LanXgrow\'s English Communication programme designed for?',
     answer:
-      'Start with our Services page to see how LanXgrow works and what English Communication covers. Enrolment is not open yet, and we will publish how to join on this website as soon as it is.',
+      'LanXgrow\'s intended audience includes higher secondary students, undergraduate and postgraduate freshers, job seekers, experienced professionals and working professionals who want to develop their English Communication skills. The most suitable programme depends on your current level and goals. Contact the LanXgrow team to discuss your requirements and confirm programme suitability.',
   },
   {
-    id: 'how-do-you-measure-progress',
-    question: 'How do you measure progress?',
+    id: 'programme-contents',
+    question:
+      'What does LanXgrow\'s English Communication programme cover?',
     answer:
-      'Our intended approach is to understand a learner’s starting point, use comparable speaking activities to review progress, and give specific feedback along the way. We do not promise a fixed timeline or a particular outcome.',
+      'The programme focuses on practical communication, including speaking, listening, pronunciation and clarity of expression. Personalised learning and AI-assisted voice and video assessments support the learning approach. For the exact curriculum, session structure and activities relevant to your goals, contact LanXgrow directly.',
   },
   {
-    id: 'are-my-voice-and-video-recorded',
-    question: 'Is my voice or video recorded?',
+    id: 'measure-progress',
+    question:
+      'How can I measure my progress in English speaking?',
     answer:
-      'The voice and video assessment shown on this website is a visual demonstration. This page does not access your camera or microphone, and it does not record or send anything. When live assessments are introduced, we will explain clearly what is captured and how it is used before anything begins.',
+      'Compare similar speaking activities over time and notice changes in how clearly you express ideas, respond to questions and organise your thoughts. LanXgrow\'s intended approach uses the learner\'s starting point, comparable speaking activities and feedback to help identify areas for improvement. Individual progress varies, so a fixed timeline or guaranteed result cannot be promised.',
+  },
+  {
+    id: 'voice-data-use',
+    question:
+      'How does LanXgrow use my voice and video data?',
+    answer:
+      'Voice and video data is stored to support personalised learning and is used only for learning purposes. LanXgrow does not independently share this data with other companies. If you have questions about how your learning data is handled, please contact the LanXgrow team.',
+  },
+  {
+    id: 'cost-and-duration',
+    question:
+      'How much does the English Communication programme cost, and how long does it take?',
+    answer:
+      'Fees and programme schedules depend on the programme details confirmed by LanXgrow. There is no single timeline that guarantees the same improvement for every learner. Contact the LanXgrow team for current fees, programme duration, schedules and inclusions before making an enrolment decision.',
   },
 ];

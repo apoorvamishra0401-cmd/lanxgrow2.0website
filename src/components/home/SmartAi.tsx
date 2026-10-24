@@ -2,13 +2,13 @@ import { homeSmartAi } from '@/content/home';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
-import { SignalToGuidance } from '@/components/visuals/SignalToGuidance';
 
 /**
  * Smart AI section.
  *
- * States the principle rather than listing capabilities — the voice and video
- * demonstration itself lives in the hero, so the page does not repeat it.
+ * Distinguishes capabilities verified as present in the product from
+ * capabilities planned for the future. Nothing here claims scoring, accuracy
+ * or performance guarantees.
  */
 export function SmartAi() {
   return (
@@ -24,6 +24,45 @@ export function SmartAi() {
             {homeSmartAi.body}
           </p>
 
+          <div className="mt-10 border border-ivory-100/15 rounded-[20px] p-8 sm:p-10">
+            <div className="grid gap-8 sm:grid-cols-2 sm:gap-6">
+              <div className="border-b sm:border-b-0 sm:border-r border-ivory-100/15 pb-8 sm:pb-0 sm:pr-8">
+                <h3 className="font-display text-[1rem] text-ivory-300 uppercase tracking-[0.14em] mb-4">
+                  In the product today
+                </h3>
+                {homeSmartAi.verifiedToday.length > 0 ? (
+                  <ul className="space-y-4 text-[0.9375rem] leading-[1.7] text-ivory-100/80">
+                    {homeSmartAi.verifiedToday.map((item) => (
+                      <li key={item.label}>
+                        <span className="font-semibold text-ivory-100">{item.label}</span>{' '}
+                        {item.detail}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[0.9375rem] leading-[1.7] text-ivory-100/70 italic">
+                    Screens shown are from the LanXgrow app. Availability of
+                    individual features varies as the product develops.
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <h3 className="font-display text-[1rem] text-terracotta-300 uppercase tracking-[0.14em] mb-4">
+                  Being built next
+                </h3>
+                <ul className="space-y-4 text-[0.9375rem] leading-[1.7] text-ivory-100/80">
+                  {homeSmartAi.plannedNext.map((item) => (
+                    <li key={item.label}>
+                      <span className="font-semibold text-terracotta-200">{item.label}</span>{' '}
+                      {item.detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <p className="mt-8 max-w-md text-[0.8125rem] leading-relaxed text-ivory-100/70">
             {homeSmartAi.disclaimer}
           </p>
@@ -32,11 +71,14 @@ export function SmartAi() {
         <Reveal delay={100} className="lg:col-span-6 lg:pl-4">
           {/* How a spoken answer becomes guidance. Illustrative, and said so. */}
           <div className="mb-9 max-w-2xl">
-            <SignalToGuidance />
           </div>
 
           <ul className="border-t border-ivory-100/15">
-            {homeSmartAi.markers.map((marker) => (
+            {[
+              { label: 'Voice or video', detail: 'Whichever feels natural.' },
+              { label: 'A clearer starting point', detail: 'Guidance responds to the learner, not a script.' },
+              { label: 'Human judgement', detail: 'Encouragement and direction stay with the mentor.' },
+            ].map((marker) => (
               <li key={marker.label} className="border-b border-ivory-100/15 py-6">
                 <div className="flex items-start gap-4">
                   <span

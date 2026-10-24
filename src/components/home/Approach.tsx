@@ -4,11 +4,11 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 
 /**
- * The compact brand story.
+ * The learning method.
  *
- * Three pillars held together — English Communication, mentorship and Smart AI
- * assessments — stated in one line each, so the section reads quickly instead
- * of explaining at length.
+ * Structured English communication practice stated plainly, plus the intended
+ * direction of personalisation — clearly labelled as direction, not as a
+ * capability already shipped.
  */
 export function Approach() {
   return (

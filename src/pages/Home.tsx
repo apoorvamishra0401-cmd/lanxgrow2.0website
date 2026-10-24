@@ -1,25 +1,26 @@
 import { Hero } from '@/components/home/Hero';
-import { Approach } from '@/components/home/Approach';
+import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { ProductShowcase } from '@/components/product/ProductShowcase';
 import { SmartAi } from '@/components/home/SmartAi';
-import { GetStarted } from '@/components/home/GetStarted';
+import { Journey } from '@/components/home/Journey';
 import { ClosingCta } from '@/components/home/ClosingCta';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { brand } from '@/config/site';
 
 export default function Home() {
   usePageMeta(
-    'English Communication & Mentorship',
+    'English Communication & AI Practice',
     brand.description,
   );
 
   return (
     <>
       <Hero />
-      <Approach />
+      <WhyLanXgrow />
       <ProductShowcase />
+      <Journey />
       <SmartAi />
-      <GetStarted />
+      
       <ClosingCta />
     </>
   );
