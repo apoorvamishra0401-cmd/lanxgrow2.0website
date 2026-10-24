@@ -35,7 +35,7 @@ export const footerNav: NavItem[] = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' },
   { label: 'Privacy', to: '/privacy' },
-  { label: 'Sign in', to: '/signin' },
+  { label: 'Sign in', to: '/get-started' },
 ];
 
 /**
@@ -58,7 +58,7 @@ export const hasPublishedContactChannels = Boolean(
 
 /** Shared CTA targets so every button across the site stays consistent. */
 export const cta = {
-  getStarted: { label: 'Get started', to: '/contact' },
+  getStarted: { label: 'Get started', to: '/get-started' },
   exploreExperience: { label: 'Explore the experience', to: '#experience' },
-  talkToUs: { label: 'Talk to us', to: '/contact' },
+  talkToUs: { label: 'Get started', to: '/get-started' },
 } as const;

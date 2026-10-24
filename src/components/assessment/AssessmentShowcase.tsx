@@ -1,5 +1,5 @@
 import { useId, useRef, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent, PointerEvent } from 'react';
 import { cn } from '@/lib/cn';
 import {
   assessmentModes,
@@ -24,6 +24,12 @@ export function AssessmentShowcase({
   defaultMode?: AssessmentMode;
   className?: string;
 }) {
+  const reflectPointer = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse') return;
+    const box = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty('--scene-x', `${(event.clientX-box.left)/box.width*100}%`);
+    event.currentTarget.style.setProperty('--scene-y', `${(event.clientY-box.top)/box.height*100}%`);
+  };
   const [mode, setMode] = useState<AssessmentMode>(defaultMode);
   const baseId = useId();
   const tabRefs = useRef<Partial<Record<AssessmentMode, HTMLButtonElement | null>>>({});
@@ -51,8 +57,9 @@ export function AssessmentShowcase({
 
   return (
     <div
+      onPointerMove={reflectPointer}
       className={cn(
-        'rounded-[22px] border border-line bg-ivory-50 p-5 shadow-soft sm:p-7',
+        'assessment-live rounded-[22px] border border-line bg-ivory-50 p-5 shadow-soft sm:p-7',
         className,
       )}
     >

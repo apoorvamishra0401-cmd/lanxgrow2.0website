@@ -196,3 +196,22 @@
     transform: none;
   }
 }
+
+/* Responsive web-app foundations: retain browser zoom and natural page scrolling. */
+@layer base {
+  html { scroll-padding-top: 6rem; }
+  body { min-width: 0; }
+  img, video, canvas { max-width: 100%; }
+  input, select, textarea { max-width: 100%; scroll-margin-block: 6rem; }
+  button, a, input, select, textarea { -webkit-tap-highlight-color: rgba(184,92,56,.16); }
+  p, label { overflow-wrap: break-word; }
+}
+@media (max-width: 767px) {
+  input, select, textarea { font-size: 16px; }
+  a[href^="mailto:"], a[href^="tel:"] { overflow-wrap: anywhere; }
+}
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  a.group:hover, button.group:hover { transform:translateY(-2px); }
+  a.group:active, button.group:active { transform:translateY(0); }
+}

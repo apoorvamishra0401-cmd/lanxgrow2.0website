@@ -43,8 +43,8 @@ export default function Services() {
               <p className="lx-prose mt-7">{service.summary}</p>
 
               <div className="mt-9">
-                <Button to={service.cta.to} withArrow>
-                  {service.cta.label}
+                <Button to="/get-started" withArrow>
+                  Get started
                 </Button>
               </div>
             </Reveal>

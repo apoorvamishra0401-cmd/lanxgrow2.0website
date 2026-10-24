@@ -30,7 +30,7 @@ type ButtonAsAnchor = BaseProps & { href: string; to?: undefined };
 export type ButtonProps = ButtonAsButton | ButtonAsLink | ButtonAsAnchor;
 
 const base =
-  'group inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 ease-editorial disabled:cursor-not-allowed disabled:opacity-55';
+  'group min-h-11 max-w-full inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 ease-editorial disabled:cursor-not-allowed disabled:opacity-55';
 
 const variants: Record<Variant, string> = {
   primary:

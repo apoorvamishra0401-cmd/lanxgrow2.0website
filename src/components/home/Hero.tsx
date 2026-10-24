@@ -1,3 +1,4 @@
+import './HeroResponsive.css';
 import { homeHero } from '@/content/home';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
@@ -7,7 +8,7 @@ import { TwoWaysOnePlan } from '@/components/visuals/TwoWaysOnePlan';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-line">
+    <section className="lx-hero relative overflow-hidden border-b border-line">
       {/* Extremely subtle warm wash — one soft light source, no gradient noise. */}
       <div
         aria-hidden="true"
@@ -15,9 +16,9 @@ export function Hero() {
       />
 
       <Container>
-        <div className="relative grid items-center gap-12 pb-16 pt-10 lg:grid-cols-12 lg:gap-16 lg:pb-20 lg:pt-14">
+        <div className="hero-layout relative grid items-center gap-12 pb-16 pt-10 lg:grid-cols-12 lg:gap-16 lg:pb-20 lg:pt-14">
           {/* Copy */}
-          <div className="lg:col-span-6">
+          <div className="hero-copy lg:col-span-6">
             <Eyebrow>{homeHero.eyebrow}</Eyebrow>
 
             <h1 className="mt-7 max-w-xl text-balance font-display text-display-sm text-ink-900 sm:text-display-md lg:text-display-lg lg:text-wrap">
@@ -32,14 +33,14 @@ export function Hero() {
               <Button to={homeHero.primaryCta.to} size="lg" withArrow>
                 {homeHero.primaryCta.label}
               </Button>
-              <Button to={homeHero.secondaryCta.to} variant="secondary" size="lg">
-                {homeHero.secondaryCta.label}
+              <Button to="/get-started" variant="secondary" size="lg">
+                Get started
               </Button>
             </div>
           </div>
 
           {/* Product scene: the assessment interface itself, plus mentor note and depth block. */}
-          <div className="lg:col-span-6">
+          <div className="hero-visual lg:col-span-6">
             <div className="relative mx-auto max-w-lg lg:max-w-none">
               <div
                 aria-hidden="true"

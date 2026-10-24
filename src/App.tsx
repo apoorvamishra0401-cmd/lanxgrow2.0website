@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
+import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
@@ -23,13 +24,14 @@ import NotFound from '@/pages/NotFound';
 export default function App() {
   return (
     <Routes>
+      <Route path="/get-started" element={<GetStarted />} />
+      <Route path="/signin" element={<SignIn />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />

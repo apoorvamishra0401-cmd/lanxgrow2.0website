@@ -61,7 +61,7 @@ export function ExpertTeam() {
       </div>
 
       <Button to={cta.talkToUs.to} size="md" withArrow className="mt-12">
-        Talk to us about programmes
+        Get started
       </Button>
     </Section>
   );

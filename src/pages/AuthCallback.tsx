@@ -1,83 +1,33 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { PageIntro } from '@/components/ui/PageIntro';
-import { Section } from '@/components/ui/Section';
-import { Button } from '@/components/ui/Button';
-import { Alert } from '@/components/ui/Alert';
+import { Link, useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '@/lib/auth';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
 export default function AuthCallback() {
-  usePageMeta('Auth callback', 'Processing authentication response.');
-
+  usePageMeta('Completing sign in', 'Completing your secure LanXgrow sign-in.');
   const navigate = useNavigate();
-  const location = useLocation();
-  const [status, setStatus] = useState<'checking' | 'success' | 'error'>('checking');
-  const [message, setMessage] = useState<string>('');
-
+  const [error, setError] = useState('');
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const errorDescription = searchParams.get('error_description');
-    const errorCode = searchParams.get('error_code');
-    const accessToken = searchParams.get('access_token');
-    const type = searchParams.get('type');
-
-    if (errorDescription || errorCode) {
-      setStatus('error');
-      setMessage(
-        errorDescription ||
-        'Authentication failed. Please try signing in again.'
-      );
-      return;
+    let mounted = true;
+    const parameters = new URLSearchParams(window.location.search);
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const failed = parameters.has('error') || fragment.has('error');
+    const recovery = parameters.get('type') === 'recovery' || fragment.get('type') === 'recovery';
+    async function complete() {
+      try {
+        if (failed) throw new Error('provider');
+        // SDK initialization processes and verifies the PKCE callback before getUser resolves.
+        const user = await getCurrentUser();
+        if (!mounted) return;
+        window.history.replaceState(null, '', window.location.pathname);
+        if (!user) throw new Error('session');
+        navigate(recovery ? '/reset-password' : '/placeholder', { replace: true });
+      } catch {
+        if (mounted) { window.history.replaceState(null, '', window.location.pathname); setError('We could not complete sign-in. Please try again.'); }
+      }
     }
-
-    if (accessToken && type === 'recovery') {
-      // Password recovery flow - redirect to reset-password with tokens
-      navigate('/reset-password', { replace: true });
-      return;
-    }
-
-    if (accessToken || type === 'signup' || type === 'login') {
-      setStatus('success');
-      setMessage('Authentication successful. Redirecting…');
-      setTimeout(() => navigate('/placeholder'), 1500);
-      return;
-    }
-
-    setStatus('error');
-    setMessage('No authentication response found.');
-  }, [location, navigate]);
-
-  if (status === 'checking') {
-    return (
-      <>
-        <PageIntro
-          eyebrow="Auth callback"
-          heading="Processing…"
-          supporting="Please wait while we handle the authentication response."
-        />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <PageIntro
-        eyebrow="Auth callback"
-        heading={status === 'success' ? 'Authentication successful' : 'Authentication failed'}
-        supporting={message}
-      />
-      <Section tone="ivory">
-        <div className="max-w-prose min-w-0">
-          {status === 'success' ? (
-            <Alert tone="success" title="Signed in">{message}</Alert>
-          ) : (
-            <Alert tone="error" title="Error">{message}</Alert>
-          )}
-          <Button to="/signin" variant="primary" size="lg" withArrow>
-            Go to sign in
-          </Button>
-        </div>
-      </Section>
-    </>
-  );
+    void complete();
+    return () => { mounted = false; };
+  }, [navigate]);
+  return <section className="lx-container py-20"><h1 className="text-display-sm">{error ? 'Let’s try again.' : 'Completing sign-in…'}</h1><p className="mt-6 text-ink-500" role={error?'alert':'status'}>{error || 'Please wait while we confirm your account.'}</p>{error&&<Link className="mt-6 inline-flex min-h-11 items-center underline" to="/signin">Return to sign in</Link>}</section>;
 }
