@@ -80,6 +80,9 @@ export function Footer() {
           </div>
         </div>
 
+        <figure className="brand-footer-art" aria-label="LanXgrow brand signature">
+          <img src="/images/brand/lanxgrow-footer-transparent.webp" alt="LanXgrow — sculpted three-dimensional brand emblem and wordmark" width="2048" height="682" loading="lazy" decoding="async" />
+        </figure>
         <div className="flex flex-col gap-4 border-t border-ivory-100/12 py-8 text-[0.8125rem] text-ivory-100/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {brand.name}. All rights reserved.
