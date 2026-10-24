@@ -24,29 +24,18 @@ export const homeWhyLanXgrow = {
     'LanXgrow is built around disciplined English communication practice. AI supports the learning experience through the product\'s intended voice and video assessment approach. Personalisation is a stated direction of the product, not a claim about today\'s build.',
 } as const;
 
-type AiCapability = {
-  label: string;
-  detail: string;
-};
-
 export const homeSmartAi = {
   eyebrow: 'Smart AI',
   heading: 'Practice that responds. Progress you can see.',
   body:
     'AI-supported voice and video practice is the centre of the LanXgrow experience — comfortable formats that invite learners to speak, and clearer material for anyone guiding them. What is live today and what comes next is stated plainly.',
-  verifiedToday: [] as AiCapability[],
-  plannedNext: [
-    {
-      label: 'Voice and video practice screens',
-      detail: 'Comfortable formats that invite learners to speak.',
-    },
-    {
-      label: 'Clearer starting point for mentors',
-      detail: 'Practice output used as guidance material, never a verdict.',
-    },
-  ] as AiCapability[],
+  markers: [
+    { label: 'Two ways to begin', detail: 'Voice or video — whichever feels natural.' },
+    { label: 'A clearer starting point', detail: 'Guidance responds to the learner, not a script.' },
+    { label: 'Human judgement', detail: 'Encouragement and direction stay with the mentor.' },
+  ],
   disclaimer:
-    'Capabilities described here reflect how Smart AI supports the LanXgrow approach. Specific scoring, accuracy or performance guarantees are not claimed. Planned capabilities are labelled as planned.',
+    'Capabilities described here reflect how Smart AI supports the LanXgrow approach. Specific scoring, accuracy or performance guarantees are not claimed.',
 } as const;
 
 export const homeProgrammes = {
