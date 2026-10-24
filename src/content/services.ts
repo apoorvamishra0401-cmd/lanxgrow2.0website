@@ -13,7 +13,7 @@ export const services = [
     eyebrow: 'Primary service',
     title: 'English Communication',
     summary:
-      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence. No promises, no shortcuts — just careful, repeated practice with AI-assisted support.',
+      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence. Build clearer expression through purposeful practice, useful feedback and AI-assisted support.',
     includesHeading: 'What this focuses on',
     includes: [
       'Speaking in real situations — introductions, interviews and everyday conversation',
@@ -36,7 +36,7 @@ export const servicesNotes = {
   heading: 'Before you begin',
   items: [
     'Programme details, schedules and any fees are confirmed directly with the LanXgrow team.',
-    '98.3% success rate, driven by personalised learning experiences and a commitment to continuous improvement.',
+    'Progress grows through consistent practice and feedback. Results depend on your starting point, goals and participation.',
     'Not sure where to begin? Open Get started, or ask us a question on WhatsApp.',
   ],
 } as const;

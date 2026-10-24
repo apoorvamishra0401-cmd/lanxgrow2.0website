@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   getCurrentSession,
+  hasCurrentConsent,
   signOut as signOutOfProvider,
   type AuthSession,
 } from '@/lib/auth';
@@ -31,6 +32,9 @@ export default function Placeholder() {
         navigate('/signin');
         return;
       }
+      const consent = await hasCurrentConsent();
+      if (!active) return;
+      if (!consent.ok || !consent.data) { navigate('/consent', { replace: true }); return; }
       setSession(current);
       setLoading(false);
     })();

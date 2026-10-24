@@ -33,6 +33,7 @@ export const footerNav: NavItem[] = [
   { label: 'Services', to: '/services' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
+  { label: 'Terms', to: '/terms' },
   { label: 'Sign in', to: '/get-started' },
 ];
 

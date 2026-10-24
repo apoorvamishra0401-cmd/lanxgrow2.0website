@@ -27,9 +27,12 @@ export function AssessmentShowcase({
   const reflectPointer = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== 'mouse') return;
     const box = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty('--tilt-x', `${((event.clientY-box.top)/box.height-.5)*-3}deg`);
+    event.currentTarget.style.setProperty('--tilt-y', `${((event.clientX-box.left)/box.width-.5)*3}deg`);
     event.currentTarget.style.setProperty('--scene-x', `${(event.clientX-box.left)/box.width*100}%`);
     event.currentTarget.style.setProperty('--scene-y', `${(event.clientY-box.top)/box.height*100}%`);
   };
+  const [paused, setPaused] = useState(false);
   const [mode, setMode] = useState<AssessmentMode>(defaultMode);
   const baseId = useId();
   const tabRefs = useRef<Partial<Record<AssessmentMode, HTMLButtonElement | null>>>({});
@@ -58,8 +61,10 @@ export function AssessmentShowcase({
   return (
     <div
       onPointerMove={reflectPointer}
+      onPointerLeave={event => { event.currentTarget.style.setProperty('--tilt-x','0deg'); event.currentTarget.style.setProperty('--tilt-y','0deg'); }}
       className={cn(
         'assessment-live rounded-[22px] border border-line bg-ivory-50 p-5 shadow-soft sm:p-7',
+        paused && 'assessment-paused',
         className,
       )}
     >
@@ -102,6 +107,8 @@ export function AssessmentShowcase({
           {assessmentShowcase.smartAiLabel}
         </span>
       </div>
+
+      <div className="scene-controls"><button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? 'Resume motion' : 'Pause motion'}</button></div>
 
       {/* Keyed by mode so the scene fades in on switch and the progress restarts. */}
       <div

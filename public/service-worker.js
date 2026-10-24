@@ -2,7 +2,7 @@
 const VERSION = '__BUILD_VERSION__';
 const PRECACHE = /* PRECACHE */ [];
 const CACHE = `lanxgrow-static-${VERSION}`;
-const AUTH_ROUTES = /^\/(signin|signup|auth-callback|account|placeholder|forgot-password|reset-password)(\/|$)/;
+const AUTH_ROUTES = /^\/(signin|signup|consent|auth-callback|account|placeholder|forgot-password|reset-password)(\/|$)/;
 const SENSITIVE = /(?:access_token|refresh_token|code|token|password|error_description)=/i;
 
 self.addEventListener('install', event => {

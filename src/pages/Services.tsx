@@ -1,3 +1,5 @@
+import './ExperiencePages.css';
+import { ServiceExplorer } from '@/components/home/ServiceExplorer';
 import { services, servicesIntro, servicesNotes } from '@/content/services';
 import type { ComponentType } from 'react';
 import { PageIntro } from '@/components/ui/PageIntro';
@@ -27,6 +29,8 @@ export default function Services() {
         heading={servicesIntro.heading}
         supporting={servicesIntro.supporting}
       />
+
+      <ServiceExplorer />
 
       {/* Primary services — one editorial block each, no card repetition. */}
       {services.map((service, index) => {

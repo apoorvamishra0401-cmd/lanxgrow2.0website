@@ -9,6 +9,8 @@ import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
 import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
+import Consent from '@/pages/Consent';
+import Terms from '@/pages/Terms';
 import ResetPassword from '@/pages/ResetPassword';
 import AuthCallback from '@/pages/AuthCallback';
 import Placeholder from '@/pages/Placeholder';
@@ -30,6 +32,8 @@ export default function App() {
     <Routes>
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/consent" element={<Consent />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -37,13 +41,13 @@ export default function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/contact-us/*" element={<Navigate to="/get-started" replace />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth-callback" element={<AuthCallback />} />
         <Route path="/placeholder" element={<Placeholder />} />
         <Route path="/account" element={<Account />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

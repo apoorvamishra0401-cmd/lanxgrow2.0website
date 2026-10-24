@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current authorized release: `release/pwa-direct-support`, including contact-page removal, direct support channels and PWA. The owner has authorized publishing this release.
+- Current authorized release: `release/account-consent-experience`, including account creation, policy acceptance and Services/FAQ interactions. The owner has authorized publishing this release.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 
@@ -21,3 +21,8 @@
 - Service-entry CTAs lead to `/get-started`, including header Sign in. Contact page removed by user request. Use floating WhatsApp, footer email and login support links instead. Old contact URLs redirect to the welcome screen.
 - Welcome -> `/signin` -> Google, email/password, or phone/password. Do not claim a provider works unless configuration and real authentication have been verified.
 - Keep the next learner screen at the existing placeholder until the user supplies its design.
+
+## Account data
+- Supabase Auth owns passwords and identities. Never create a plain-text password table.
+- Policy acceptance is append-only and versioned; use database-generated timestamps and owner-only RLS.
+- Google OAuth needs configured client credentials; phone registration requires an SMS provider and verified OTP. Do not bypass verification to make a provider appear available.

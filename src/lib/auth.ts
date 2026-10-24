@@ -189,7 +189,7 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
 export async function signUp(
   email: string,
   password: string,
-  meta?: { full_name?: string },
+  meta?: { full_name?: string; policy_version?: string },
 ): Promise<AuthResult<{ userId: string; email: string | null | undefined }>> {
   const client = await getClient();
   if (!client) return notConfigured();
@@ -200,6 +200,7 @@ export async function signUp(
       password,
       options: {
         data: meta,
+        emailRedirectTo: `${window.location.origin}/auth-callback`,
       },
     });
 
@@ -360,6 +361,50 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     if (error) return toAuthError(error);
     if (!data.url) return { ok: false, code: 'unknown', message: 'Google sign-in could not start. Please try again.' };
     window.location.assign(data.url);
+    return { ok: true, data: undefined };
+  } catch (error) { return toAuthError(error); }
+}
+
+/** Both policy documents are versioned together; accepted_at is database-generated. */
+export const POLICY_VERSION = '2026-10-24.1';
+export async function hasCurrentConsent(): Promise<AuthResult<boolean>> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { data: { user }, error: userError } = await client.auth.getUser();
+    if (userError || !user) return { ok: false, code: 'invalid-credentials', message: 'Please sign in to continue.' };
+    const { data, error } = await client.from('legal_consents').select('policy_version').eq('user_id', user.id).eq('policy_version', POLICY_VERSION).maybeSingle();
+    if (error) return toAuthError(error);
+    return { ok: true, data: Boolean(data) };
+  } catch (error) { return toAuthError(error); }
+}
+export async function acceptCurrentPolicies(): Promise<AuthResult> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { data: { user }, error: userError } = await client.auth.getUser();
+    if (userError || !user) return { ok: false, code: 'invalid-credentials', message: 'Please sign in to continue.' };
+    const { error } = await client.from('legal_consents').insert({ user_id: user.id, policy_version: POLICY_VERSION });
+    if (error && error.code !== '23505') return toAuthError(error);
+    return { ok: true, data: undefined };
+  } catch (error) { return toAuthError(error); }
+}
+export async function signUpWithPhone(phone: string, password: string): Promise<AuthResult> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { error } = await client.auth.signUp({ phone, password, options: { data: { policy_version: POLICY_VERSION } } });
+    if (error) return toAuthError(error);
+    return { ok: true, data: undefined };
+  } catch (error) { return toAuthError(error); }
+}
+export async function verifyPhoneRegistration(phone: string, token: string): Promise<AuthResult> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { data, error } = await client.auth.verifyOtp({ phone, token, type: 'sms' });
+    if (error) return toAuthError(error);
+    if (!data.session) return { ok: false, code: 'unknown', message: 'Verification was not completed. Please try again.' };
     return { ok: true, data: undefined };
   } catch (error) { return toAuthError(error); }
 }
