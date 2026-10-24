@@ -29,6 +29,13 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+
   /* Lock body scroll and support Escape while the drawer is open. */
   useEffect(() => {
     if (!open) return;
@@ -37,6 +44,12 @@ export function Header() {
     document.body.style.overflow = 'hidden';
 
     const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Tab') {
+        const controls = [toggleRef.current, ...Array.from(panelRef.current?.querySelectorAll<HTMLElement>('a, button') ?? [])].filter((node): node is HTMLElement => Boolean(node));
+        const first = controls[0]; const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
       if (event.key === 'Escape') {
         setOpen(false);
         toggleRef.current?.focus();
@@ -57,7 +70,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 transition-all duration-300 ease-editorial',
+        'lx-site-header sticky top-0 z-50 transition-all duration-300 ease-editorial',
         scrolled || open
           ? 'border-b border-line bg-ivory/90 backdrop-blur-md'
           : 'border-b border-transparent bg-transparent',

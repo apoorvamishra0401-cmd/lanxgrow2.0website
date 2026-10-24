@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current authorized release: `release/account-consent-experience`, including account creation, policy acceptance and Services/FAQ interactions. The owner has authorized publishing this release.
+- Current work: `preview/mobile-first-review`. This is a separate review deployment. The owner has explicitly required approval before any merge or live-site update.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 

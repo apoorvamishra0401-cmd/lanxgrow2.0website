@@ -23,7 +23,7 @@ export function PageIntro({
   const { pathname } = useLocation();
   const showStart = ['/about', '/services', '/faq', '/privacy', '/account'].includes(pathname);
   return (
-    <header className="border-b border-line bg-ivory-50 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-24">
+    <header className="lx-page-intro border-b border-line bg-ivory-50 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-24">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-7">

@@ -1,0 +1,8 @@
+import { useState } from 'react';
+const pages = ['/', '/about', '/services', '/faq', '/get-started', '/signin', '/signup'];
+/** Review-only device viewer. It is never routed in the live production build. */
+export default function MobileReview() {
+  const [width, setWidth] = useState(390);
+  const [page, setPage] = useState('/');
+  return <main style={{padding:20,background:'#eee5d9',minHeight:'100svh'}}><h1 style={{fontSize:30}}>LanXgrow device review</h1><p style={{margin:'12px 0',lineHeight:1.7}}>Review the same website at different widths. The current live site is unchanged.</p><div style={{display:'flex',flexWrap:'wrap',gap:8,margin:'16px 0'}}>{[320,390,430,768,1280].map(value=><button type="button" key={value} aria-pressed={width===value} onClick={()=>setWidth(value)} style={{minHeight:44,padding:'10px 16px',border:'1px solid #bda48a',borderRadius:24,background:width===value?'#29231d':'#fffaf2',color:width===value?'#fffaf2':'#29231d'}}>{value}px</button>)}<label style={{display:'flex',gap:10,alignItems:'center'}}>Page<select value={page} onChange={event=>setPage(event.target.value)} style={{minHeight:44,padding:8,background:'#fffaf2'}}>{pages.map(path=><option key={path} value={path}>{path==='/'?'Home':path.slice(1)}</option>)}</select></label><a href="/" style={{minHeight:44,display:'inline-flex',alignItems:'center',padding:10,textDecoration:'underline'}}>Open full preview ↗</a></div><div style={{overflowX:'auto',padding:'8px 0'}}><iframe title="Device preview" src={page} style={{width,height:1000,display:'block',border:'1px solid #c7b9a6',borderRadius:16,background:'#faf7f2'}}/></div></main>;
+}
