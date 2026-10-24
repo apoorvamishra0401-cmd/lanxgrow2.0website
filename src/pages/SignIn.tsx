@@ -5,6 +5,7 @@ import { getLoginMethods, isAuthConfigured, signInWithGoogle, signInWithPassword
 import type { LoginMethods } from '@/lib/auth';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { LoginSupport } from '@/components/support/SupportLinks';
 import { Logo } from '@/components/ui/Logo';
 import './SignIn.css';
 
@@ -63,6 +64,7 @@ export default function SignIn() {
         </form>
         <p className="login-signup">New to LanXgrow? <Link to="/signup">Create an account</Link></p>
         <p className="login-privacy">Your learning journey will be personalized to your goals.<br/><Link to="/privacy">Privacy</Link></p>
+        <LoginSupport />
       </section>
     </div>
   </main>;

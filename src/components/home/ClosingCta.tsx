@@ -4,7 +4,6 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
-import { hasPublishedContactChannels, contactChannels } from '@/config/site';
 
 export function ClosingCta() {
   return (
@@ -32,25 +31,7 @@ export function ClosingCta() {
                 </Button>
               </div>
 
-              {hasPublishedContactChannels && (
-                <p className="mt-8 text-[0.8125rem] leading-relaxed text-ivory-100/70">
-                  Prefer email?{' '}
-                  <a
-                    href={`mailto:${contactChannels.email}`}
-                    className="text-terracotta-300 underline underline-offset-4 hover:text-terracotta-200"
-                  >
-                    {contactChannels.email}
-                  </a>
-                  {' · '}
-                  <a
-                    href={`tel:${contactChannels.phone.replace(/\s+/g, '')}`}
-                    className="text-terracotta-300 underline underline-offset-4 hover:text-terracotta-200"
-                  >
-                    {contactChannels.phone}
-                  </a>
-                  . The enquiry form opens once delivery is configured.
-                </p>
-              )}
+
             </div>
           </Reveal>
         </div>

@@ -17,7 +17,7 @@ export const faqIntro = {
   eyebrow: 'FAQ',
   heading: 'Questions, answered plainly.',
   supporting:
-    'If something is not covered here, the enquiry form is the best way to reach the LanXgrow team.',
+    'If something is not covered here, use the WhatsApp button or the email address in the footer to reach the LanXgrow team.',
 } as const;
 
 
