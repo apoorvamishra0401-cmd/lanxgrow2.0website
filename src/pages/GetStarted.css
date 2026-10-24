@@ -14,3 +14,6 @@
 @media(min-width:600px) and (max-width:999px){.lx-welcome{padding-top:50px;padding-bottom:40px}.lx-welcome-story{padding:40px 0}.lx-welcome-art{width:160px;height:150px}.lx-welcome h1{font-size:56px}.lx-welcome-story>p{font-size:26px}}
 @media(max-width:359px){.lx-welcome{padding-left:18px;padding-right:18px}.lx-welcome-break{display:none}.lx-welcome-story>p{font-size:19px}}
 @media(max-height:650px){.lx-welcome-story{padding:24px 0}.lx-welcome-art{width:90px;height:80px;margin-bottom:10px}.lx-welcome h1{font-size:clamp(30px,5vw,44px)}.lx-welcome-story>p{font-size:20px;margin-top:16px}.lx-welcome-brand{font-size:36px}}
+
+.lx-welcome{position:relative}.lx-welcome-back{display:none}
+@media(min-width:1024px) and (hover:hover) and (pointer:fine){.lx-welcome-back{position:absolute;left:32px;top:26px;display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid #dfd5c7;border-radius:30px;font-size:13px;color:#6b6459;transition:background .2s,color .2s}.lx-welcome-back:hover{background:#eee6d8;color:#1d1a16}}

@@ -8,6 +8,7 @@ export default function GetStarted() {
   usePageMeta('Get started', 'Build your confidence, express your thoughts, and communicate better every day with LanXgrow.');
   return (
     <main className="lx-welcome" aria-labelledby="welcome-heading">
+      <Link to="/" className="lx-welcome-back"><span aria-hidden="true">←</span> Back to website</Link>
       <Link className="lx-welcome-brand" to="/" aria-label="LanXgrow home">Lan<span className="lx-welcome-x">X<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21C7 11 11 5 22 3c-1 11-7 16-14 14M8 17l9-9" /></svg></span>grow</Link>
       <div className="lx-welcome-story">
         <svg className="lx-welcome-art" viewBox="0 0 220 200" fill="none" aria-hidden="true">
