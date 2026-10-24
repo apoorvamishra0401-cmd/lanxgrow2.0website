@@ -43,8 +43,8 @@ class RouteBoundary extends Component<{ children: ReactNode }, { failed: boolean
             <Button to="/" withArrow>
               Back to home
             </Button>
-            <Button to="/contact" variant="secondary">
-              Contact us
+            <Button to="/get-started" variant="secondary">
+              Get started
             </Button>
           </div>
         </div>

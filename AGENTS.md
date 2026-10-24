@@ -15,3 +15,9 @@
 - Current work belongs on `preview/scroll-feature-showcase` and its Vercel preview.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
+
+## Approved onboarding and device experience
+- Keep hero copy and its product visual together on phones and tablets, using a compact two-column layout; preserve content and 44px interactive targets instead of a shrunken desktop canvas.
+- Service-entry CTAs lead to `/get-started`, including header Sign in. Preserve Contact in header/footer as a separate support destination.
+- Welcome -> `/signin` -> Google, email/password, or phone/password. Do not claim a provider works unless configuration and real authentication have been verified.
+- Keep the next learner screen at the existing placeholder until the user supplies its design.

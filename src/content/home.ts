@@ -13,7 +13,7 @@ export const homeHero = {
   supporting:
     'Structured English practice for two kinds of learners — young voices finding their footing, and students and professionals preparing for the moments that matter. Practise with intelligent voice and video tasks; go further with LanXgrow live learning programmes.',
   primaryCta: { label: 'Explore the experience', to: '#experience' },
-  secondaryCta: { label: 'Talk to us', to: '/contact' },
+  secondaryCta: { label: 'Get started', to: '/get-started' },
 } as const;
 
 /** The learning method, stated plainly. */
@@ -102,7 +102,7 @@ export const homeClosing = {
   heading: 'Give language the attention it deserves.',
   body: 'For parents, students and adult learners — the first step is simply to begin.',
   primaryCta: { label: 'Explore the experience', to: '#experience' },
-  secondaryCta: { label: 'Talk to us', to: '/contact' },
+  secondaryCta: { label: 'Get started', to: '/get-started' },
 } as const;
 
 /** The intended customer journey: Explore → Connect → Learn and practise. */

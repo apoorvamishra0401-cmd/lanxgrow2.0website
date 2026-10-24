@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import type { CSSProperties, KeyboardEvent } from 'react';
+import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react';
 import './LearningEcosystem.css';
 
 const features = [
@@ -63,14 +63,26 @@ export function LearningEcosystem() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [interacting, setInteracting] = useState(false);
   const section = useRef<HTMLElement>(null);
   const interacted = useRef(0);
   const uid = useId().replace(/:/g,'');
   useEffect(()=>{const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting),{threshold:.15});if(section.current)observer.observe(section.current);return()=>observer.disconnect();},[]);
-  useEffect(()=>{if(paused||!visible||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const timer=window.setInterval(()=>{if(document.hidden||Date.now()-interacted.current<6500)return;setActive(i=>(i+1)%features.length);},3200);return()=>window.clearInterval(timer);},[paused,visible]);
+  useEffect(()=>{if(paused||interacting||!visible||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const timer=window.setInterval(()=>{if(document.hidden||Date.now()-interacted.current<6500)return;setActive(i=>(i+1)%features.length);},3200);return()=>window.clearInterval(timer);},[paused,interacting,visible]);
   const select = (i:number)=>{interacted.current=Date.now();setActive(i);};
-  const sceneProps={active,select,pause:()=>setPaused(true),resume:()=>setPaused(false),uid};
-  return <section id="experience" ref={section} className={`learning-ecosystem ${visible&&!paused?'is-playing':''}`} aria-labelledby="ecosystem-heading">
+  const sceneProps={active,select,pause:()=>setInteracting(true),resume:()=>setInteracting(false),uid};
+  const reactToPointer = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    event.currentTarget.style.setProperty('--eco-light-x', `${x*100}%`);
+    event.currentTarget.style.setProperty('--eco-light-y', `${y*100}%`);
+    event.currentTarget.style.setProperty('--eco-tilt-x', `${(y-.5)*-2}deg`);
+    event.currentTarget.style.setProperty('--eco-tilt-y', `${(x-.5)*2}deg`);
+  };
+  const resetPointer = () => { section.current?.style.setProperty('--eco-tilt-x','0deg'); section.current?.style.setProperty('--eco-tilt-y','0deg'); };
+  return <section onPointerMove={reactToPointer} onPointerLeave={resetPointer} id="experience" ref={section} className={`learning-ecosystem ${visible&&!paused&&!interacting?'is-playing':''}`} aria-labelledby="ecosystem-heading">
     <div className="lx-container eco-heading"><p className="eco-eyebrow">The LanXgrow connection</p><h2 id="ecosystem-heading">Every part of learning.<br className="sm:hidden"/> Connected.</h2><p>One space to speak, practise, discover and grow.</p></div>
     <div className="eco-canvas"><Scene compact={false} {...sceneProps}/><Scene compact {...sceneProps}/></div>
     <div className="lx-container eco-bottom"><div className="eco-feature-status"><span className="eco-status-dot" aria-hidden="true"/><div><p className="eco-active-name">{features[active].name}</p><p className="eco-active-detail">{features[active].detail}</p></div><button type="button" className="eco-pause" onClick={()=>setPaused(p=>!p)} aria-label={paused?'Play feature animation':'Pause feature animation'}>{paused?'Play':'Pause'}<span aria-hidden="true">{paused?' ▷':' Ⅱ'}</span></button></div><p className="eco-instruction">Select a feature to explore the connection.</p></div>

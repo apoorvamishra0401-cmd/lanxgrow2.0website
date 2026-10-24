@@ -82,8 +82,7 @@ async function getClient(): Promise<SupabaseClient | null> {
         auth: {
           persistSession: true,
           autoRefreshToken: true,
-          // Sign-in uses a typed code, not a link, so there is nothing to
-          // recover from the URL.
+          flowType: 'pkce',
           detectSessionInUrl: true,
         },
       }),
@@ -135,7 +134,7 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
     return {
       ok: false,
       code: 'invalid-credentials',
-      message: 'The email address or password is incorrect. Please try again.',
+      message: 'The login details are incorrect. Please try again.',
     };
   }
 
@@ -326,4 +325,41 @@ export async function getCurrentUser(): Promise<User | null> {
 
   const { data } = await client.auth.getUser();
   return data.user ?? null;
+}
+
+export type LoginMethods = { email: boolean; google: boolean; phone: boolean };
+
+/** Read public provider availability; never exposes admin credentials. */
+export async function getLoginMethods(): Promise<LoginMethods | null> {
+  const config = getAuthConfig();
+  if (!config) return null;
+  try {
+    const response = await fetch(`${config.url}/auth/v1/settings`, { headers: { apikey: config.anonKey }, signal: AbortSignal.timeout(10000) });
+    if (!response.ok) return null;
+    const settings = await response.json() as { external?: Record<string, boolean> };
+    return { email: settings.external?.email === true, google: settings.external?.google === true, phone: settings.external?.phone === true };
+  } catch { return null; }
+}
+
+export async function signInWithPhonePassword(phone: string, password: string): Promise<AuthResult<{ userId: string }>> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { data, error } = await client.auth.signInWithPassword({ phone, password });
+    if (error) return toAuthError(error);
+    if (!data.session || !data.user) return { ok: false, code: 'unknown', message: 'Sign-in was not confirmed. Please try again.' };
+    return { ok: true, data: { userId: data.user.id } };
+  } catch (error) { return toAuthError(error); }
+}
+
+export async function signInWithGoogle(): Promise<AuthResult> {
+  try {
+    const client = await getClient();
+    if (!client) return notConfigured();
+    const { data, error } = await client.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/auth-callback`, skipBrowserRedirect: true, queryParams: { prompt: 'select_account' } } });
+    if (error) return toAuthError(error);
+    if (!data.url) return { ok: false, code: 'unknown', message: 'Google sign-in could not start. Please try again.' };
+    window.location.assign(data.url);
+    return { ok: true, data: undefined };
+  } catch (error) { return toAuthError(error); }
 }

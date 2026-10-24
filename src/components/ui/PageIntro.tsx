@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Button } from './Button';
 import { Container } from './Container';
 import { Eyebrow } from './Eyebrow';
 import { Reveal } from './Reveal';
@@ -18,6 +20,8 @@ export function PageIntro({
   supporting?: string;
   aside?: ReactNode;
 }) {
+  const { pathname } = useLocation();
+  const showStart = ['/about', '/services', '/faq', '/contact', '/privacy', '/account'].includes(pathname);
   return (
     <header className="border-b border-line bg-ivory-50 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-24">
       <Container>
@@ -27,6 +31,7 @@ export function PageIntro({
             <h1 className="mt-6 max-w-2xl font-display text-display-sm text-ink-900 sm:text-display-md">
               {heading}
             </h1>
+            {showStart && <div className="mt-7"><Button to="/get-started" withArrow>Get started</Button></div>}
           </Reveal>
 
           {(supporting || aside) && (

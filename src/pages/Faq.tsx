@@ -32,7 +32,7 @@ export default function Faq() {
               </p>
               <div className="mt-7">
                 <Button to={cta.talkToUs.to} variant="secondary" withArrow>
-                  Contact us
+                  Get started
                 </Button>
               </div>
             </div>

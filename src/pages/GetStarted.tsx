@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '@/hooks/usePageMeta';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 import './GetStarted.css';
 
 export default function GetStarted() {
+  useScrollToTop();
   usePageMeta('Get started', 'Build your confidence, express your thoughts, and communicate better every day with LanXgrow.');
   return (
     <main className="lx-welcome" aria-labelledby="welcome-heading">

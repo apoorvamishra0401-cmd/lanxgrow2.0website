@@ -210,3 +210,8 @@
   input, select, textarea { font-size: 16px; }
   a[href^="mailto:"], a[href^="tel:"] { overflow-wrap: anywhere; }
 }
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  a.group:hover, button.group:hover { transform:translateY(-2px); }
+  a.group:active, button.group:active { transform:translateY(0); }
+}
