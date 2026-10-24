@@ -8,40 +8,52 @@
  */
 
 export const homeHero = {
-  eyebrow: 'English Communication',
-  headline: 'What changes when a learner can say exactly what they mean?',
+  eyebrow: 'AI-first English communication practice',
+  headline: 'Command the room.',
   supporting:
-    'English Communication is not only grammar and marks. It is the ability to speak, listen and be understood — in a classroom, an interview, a workplace or a family conversation. LanXgrow builds that ability through mentorship, structured practice and Smart AI-supported voice and video assessments.',
-  primaryCta: { label: 'Get started', to: '/services' },
-  secondaryCta: { label: 'Explore our services', to: '/services' },
+    'Structured English practice for two kinds of learners — young voices finding their footing, and students and professionals preparing for the moments that matter. Practise with intelligent voice and video tasks; go further with LanXgrow live learning programmes.',
+  primaryCta: { label: 'Explore the experience', to: '#experience' },
+  secondaryCta: { label: 'Talk to us', to: '/contact' },
 } as const;
 
-/** The three pillars, held together — the compact version of the brand story. */
+/** The compact brand story — method pillars stated plainly. */
 export const homeApproach = {
-  eyebrow: 'Why LanXgrow',
-  heading: 'Three things, held together.',
+  eyebrow: 'Approach',
+  heading: 'Our learning method',
   intro:
-    'English Communication is the goal. Mentorship is how we get there. Smart AI keeps the starting point honest — and keeps a human in charge of what happens next.',
+    'LanXgrow\'s approach to English communication practice is built on structured, progressive exercises that develop practical skills through consistent practice.',
   pillars: [
     {
-      title: 'English Communication',
-      body: 'Speaking, listening and expression — practised until it feels natural.',
+      title: 'Direct Practice',
+      body:
+        'Hands-on exercises that build real communication skills, not just theoretical knowledge.',
     },
     {
-      title: 'Mentorship',
-      body: 'A mentor who knows the learner, sets the next step and stays with them.',
+      title: 'AI-Enhanced Feedback',
+      body:
+        'Intelligent voice and video tasks provide personalised feedback to accelerate progress.',
     },
     {
-      title: 'Smart AI assessments',
-      body: 'Voice and video assessments that give mentors a clearer place to begin.',
+      title: 'Human Guidance',
+      body:
+        'Expert instructors review progress and provide direction tailored to individual goals.',
     },
   ],
 } as const;
 
+/** The compact brand story — method pillars stated plainly. */
+export const homeWhyLanXgrow = {
+  eyebrow: 'Why LanXgrow',
+  heading: 'English Communication is the core, AI supports the experience.',
+  intro:
+    'LanXgrow is built around disciplined English communication practice. AI supports the learning experience through the product\'s intended voice and video assessment approach. Personalisation is a stated direction of the product, not a claim about today\'s build.',
+} as const;
+
 export const homeSmartAi = {
   eyebrow: 'Smart AI',
-  heading: 'Smart AI supports the mentor. It never replaces them.',
-  body: 'Voice and video assessments give learners a comfortable way to speak, and give mentors a clearer picture to guide from. The technology stays in the background, and it is a starting point and a checkpoint — never a verdict.',
+  heading: 'Practice that responds. Progress you can see.',
+  body:
+    'AI-supported voice and video practice is the centre of the LanXgrow experience — comfortable formats that invite learners to speak, and clearer material for anyone guiding them. What is live today and what comes next is stated plainly.',
   markers: [
     { label: 'Two ways to begin', detail: 'Voice or video — whichever feels natural.' },
     { label: 'A clearer starting point', detail: 'Guidance responds to the learner, not a script.' },
@@ -49,6 +61,41 @@ export const homeSmartAi = {
   ],
   disclaimer:
     'Capabilities described here reflect how Smart AI supports the LanXgrow approach. Specific scoring, accuracy or performance guarantees are not claimed.',
+} as const;
+
+export const homeProgrammes = {
+  eyebrow: 'Live learning programmes',
+  heading: 'Technology brings practice closer. Expertise brings perspective.',
+  body:
+    'Our expert team brings subject knowledge, practical guidance and a human perspective to LanXgrow live learning programmes — helping learners approach communication with greater intention and direction.',
+  points: [
+    {
+      title: 'Subject knowledge',
+      body:
+        'Instructors who know English communication as a discipline, not just a curriculum.',
+    },
+    {
+      title: 'Practical guidance',
+      body:
+        'Feedback shaped around real situations: the interview, the classroom, the meeting.',
+    },
+    {
+      title: 'A human perspective',
+      body:
+        'Judgement, encouragement and direction that no practice screen can supply.',
+    },
+  ],
+  closer:
+    'Programmes run alongside the AI-first experience — for learners who want the human layer, never assumed as part of it.',
+} as const;
+
+export const homeClosing = {
+  eyebrow: 'Join LanXgrow',
+  heading: 'Give language the attention it deserves.',
+  body:
+    'For parents, students and adult learners — the first step is simply to begin.',
+  primaryCta: { label: 'Explore the experience', to: '#experience' },
+  secondaryCta: { label: 'Talk to us', to: '/contact' },
 } as const;
 
 /** The intended customer journey: Explore → Connect → Learn and practise. */
@@ -69,15 +116,7 @@ export const homeGetStarted = {
     {
       index: '03',
       title: 'Learn and practise',
-      body: 'Work with a mentor on a plan built around you.',
+      body: 'Follow the learning route that fits your goals and pace.',
     },
   ],
-} as const;
-
-export const homeClosing = {
-  eyebrow: 'Join LanXgrow',
-  heading: 'Give language the attention it deserves.',
-  body: 'For parents, students and adult learners — the first step is simply to begin.',
-  primaryCta: { label: 'Get started', to: '/services' },
-  secondaryCta: { label: 'Talk to us', to: '/contact' },
 } as const;
