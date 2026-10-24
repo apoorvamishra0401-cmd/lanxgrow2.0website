@@ -17,7 +17,7 @@
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 
 ## Approved onboarding and device experience
-- Keep hero copy and its product visual together on phones and tablets, using a compact two-column layout; preserve content and 44px interactive targets instead of a shrunken desktop canvas.
+- Restore the original stacked hero on phones and tablets: heading, body and CTAs first, then the full-width product visual. The user rejected the compact side-by-side mobile hero on 25 October 2026. Keep desktop two-column layout, readable type and 44px controls.
 - Service-entry CTAs lead to `/get-started`, including header Sign in. Contact page removed by user request. Use floating WhatsApp, footer email and login support links instead. Old contact URLs redirect to the welcome screen.
 - Welcome -> `/signin` -> Google, email/password, or phone/password. Do not claim a provider works unless configuration and real authentication have been verified.
 - Keep the next learner screen at the existing placeholder until the user supplies its design.
