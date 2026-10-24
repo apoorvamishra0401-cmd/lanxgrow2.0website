@@ -25,7 +25,6 @@ export const primaryNav: NavItem[] = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'FAQ', to: '/faq' },
-  { label: 'Contact', to: '/contact' },
 ];
 
 /** Secondary (utility) navigation shown in the footer. */
@@ -33,7 +32,6 @@ export const footerNav: NavItem[] = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
   { label: 'FAQ', to: '/faq' },
-  { label: 'Contact', to: '/contact' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Sign in', to: '/get-started' },
 ];
@@ -45,9 +43,10 @@ export const footerNav: NavItem[] = [
  * footer render these as clickable mailto/tel links automatically. No address
  * is published.
  */
-export const contactChannels: { email: string; phone: string; address: string } = {
+export const contactChannels: { email: string; phone: string; whatsapp: string; address: string } = {
   email: 'official@lanxgrow.com',
   phone: '9826365691',
+  whatsapp: '919826365691',
   address: '',
 };
 

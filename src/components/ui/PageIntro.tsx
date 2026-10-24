@@ -21,7 +21,7 @@ export function PageIntro({
   aside?: ReactNode;
 }) {
   const { pathname } = useLocation();
-  const showStart = ['/about', '/services', '/faq', '/contact', '/privacy', '/account'].includes(pathname);
+  const showStart = ['/about', '/services', '/faq', '/privacy', '/account'].includes(pathname);
   return (
     <header className="border-b border-line bg-ivory-50 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-24">
       <Container>

@@ -37,6 +37,6 @@ export const servicesNotes = {
   items: [
     'Programme details, schedules and any fees are confirmed directly with the LanXgrow team.',
     '98.3% success rate, driven by personalised learning experiences and a commitment to continuous improvement.',
-    'If you are unsure which service fits, the enquiry form is the right place to start.',
+    'Not sure where to begin? Open Get started, or ask us a question on WhatsApp.',
   ],
 } as const;

@@ -1,11 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { FloatingWhatsApp } from '@/components/support/SupportLinks';
+import { PwaStatus } from '@/components/support/PwaStatus';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
-import Contact from '@/pages/Contact';
 import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
 import ResetPassword from '@/pages/ResetPassword';
@@ -23,6 +24,9 @@ import NotFound from '@/pages/NotFound';
  */
 export default function App() {
   return (
+    <>
+    <FloatingWhatsApp />
+    <PwaStatus />
     <Routes>
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={<SignIn />} />
@@ -31,7 +35,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact/*" element={<Navigate to="/get-started" replace />} />
+        <Route path="/contact-us/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -42,5 +47,6 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
+    </>
   );
 }

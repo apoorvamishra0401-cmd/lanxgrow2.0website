@@ -1,3 +1,4 @@
+import { EmailLink } from '@/components/support/SupportLinks';
 import { Link } from 'react-router-dom';
 import { brand, cta, footerNav, hasPublishedContactChannels, contactChannels } from '@/config/site';
 import { Container } from '@/components/ui/Container';
@@ -43,16 +44,14 @@ export function Footer() {
           {/* Contact / CTA column */}
           <div>
             <h2 className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-ivory-100/50">
-              Enquiries
+              Connect with us
             </h2>
             <div className="mt-5 space-y-3 text-[0.9375rem] text-ivory-100/80">
               {hasPublishedContactChannels ? (
                 <ul className="space-y-3">
                   {contactChannels.email && (
                     <li>
-                      <a href={`mailto:${contactChannels.email}`} className="transition-colors hover:text-terracotta-300">
-                        {contactChannels.email}
-                      </a>
+                      <EmailLink />
                     </li>
                   )}
                   {contactChannels.phone && (

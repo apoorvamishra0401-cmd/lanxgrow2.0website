@@ -6,7 +6,7 @@
   "description": "LanXgrow public website",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/build-pwa.mjs",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
