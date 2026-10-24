@@ -21,3 +21,4 @@ serviceAccountKey*.json
 *.local
 *.log
 .DS_Store
+.vercel
