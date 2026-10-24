@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const pages = ['/', '/about', '/services', '/faq', '/get-started', '/signin', '/signup'];
+const pages = ['/', '/about', '/services', '/faq', '/get-started', '/signin', '/signup', '/privacy', '/terms'];
 /** Review-only device viewer. It is never routed in the live production build. */
 export default function MobileReview() {
   const [width, setWidth] = useState(390);
