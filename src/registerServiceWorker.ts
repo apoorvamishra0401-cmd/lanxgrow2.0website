@@ -1,5 +1,6 @@
 /** HTTPS production only; never intercept Vite's development server. */
 export function registerServiceWorker() {
+  if (import.meta.env.VITE_MOBILE_REVIEW === 'true') return;
   if (!import.meta.env.PROD || !('serviceWorker' in navigator) || !window.isSecureContext) return;
   let reloading = false;
   let wasControlled = Boolean(navigator.serviceWorker.controller);

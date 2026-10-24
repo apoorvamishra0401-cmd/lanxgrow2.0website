@@ -39,7 +39,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        'relative',
+        'lx-section relative',
         spacingMap[spacing],
         toneMap[tone],
         divided && 'border-t border-line',

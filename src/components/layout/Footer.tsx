@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-ink-900 text-ivory-100">
+    <footer className="lx-footer border-t border-line bg-ink-900 text-ivory-100">
       <Container>
         <div className="grid gap-14 py-18 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-16 lg:py-22">
           {/* Brand column */}
