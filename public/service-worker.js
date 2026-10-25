@@ -39,6 +39,11 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   // Never handle API, provider, message, non-GET or token-bearing requests.
   if (request.method !== 'GET' || url.origin !== self.location.origin || SENSITIVE.test(url.search) || url.pathname.startsWith('/api/') || url.pathname === '/service-worker.js') return;
+  // Archived public policy documents must open as documents, not the SPA shell.
+  if (!url.search && url.pathname.startsWith('/policies/') && PRECACHE.includes(url.pathname)) {
+    event.respondWith((async () => (await (await caches.open(CACHE)).match(url.pathname)) || fetch(request))());
+    return;
+  }
   if (request.mode === 'navigate') {
     if (AUTH_ROUTES.test(url.pathname) || url.search) {
       // Network-only auth navigation. An offline shell contains no account data.

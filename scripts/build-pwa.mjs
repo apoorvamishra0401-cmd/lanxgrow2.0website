@@ -7,7 +7,7 @@ async function walk(directory) {
   const nested = await Promise.all(items.map(item => item.isDirectory() ? walk(path.join(directory, item.name)) : path.join(directory, item.name)));
   return nested.flat();
 }
-const files = (await walk(root)).filter(file => /\.(?:html|css|js|png|jpe?g|webp|svg|ico|woff2?|json)$/.test(file) && !file.endsWith('service-worker.js')).sort();
+const files = (await walk(root)).filter(file => /\.(?:html|css|js|png|jpe?g|webp|svg|ico|woff2?|json|txt)$/.test(file) && !file.endsWith('service-worker.js')).sort();
 const hash = createHash('sha256');
 for (const file of files) { hash.update(path.relative(root, file)); hash.update(await readFile(file)); }
 hash.update(await readFile('public/service-worker.js'));

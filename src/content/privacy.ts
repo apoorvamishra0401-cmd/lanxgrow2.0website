@@ -1,4 +1,5 @@
-export const privacyIntro = { eyebrow: 'Privacy', heading: 'Privacy Notice', supporting: 'Version 2026-10-24.1 · Effective 24 October 2026. What this website does with your information, explained in plain language.' } as const;
+import { POLICY_VERSION, POLICY_EFFECTIVE_DATE } from '@/config/policies';
+export const privacyIntro = { eyebrow: 'Privacy', heading: 'Privacy Notice', supporting: `Version ${POLICY_VERSION} · Effective ${POLICY_EFFECTIVE_DATE}. What this website does with your information, explained in plain language.` } as const;
 export type PrivacySection = { heading: string; paragraphs: string[] };
 export function getPrivacySections(): PrivacySection[] {
   return [

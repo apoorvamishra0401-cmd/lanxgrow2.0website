@@ -1,5 +1,4 @@
-/* Review branch: retain the LanXgrow palette and typefaces; prioritise phone use. */
-.mobile-review-note{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 16px;padding:8px 20px;background:#f1eae0;color:#6b6459;font-size:12px;line-height:1.5;border-bottom:1px solid #e7dfd4}.mobile-review-note a{display:inline-flex;align-items:center;min-height:44px;color:#7e3b22;text-decoration:underline;text-underline-offset:4px}
+/* Mobile-first foundations: preserve the LanXgrow palette and typefaces. */
 @media(max-width:767px){
   :root{--mobile-gutter:clamp(20px,5.5vw,24px)}
   .lx-container{padding-left:max(var(--mobile-gutter),env(safe-area-inset-left));padding-right:max(var(--mobile-gutter),env(safe-area-inset-right))}

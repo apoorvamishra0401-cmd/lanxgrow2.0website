@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current work: `preview/mobile-first-review`. This is a separate review deployment. The owner has explicitly required approval before any merge or live-site update.
+- Current authorized release: `release/mobile-first-terms`. On 25 October 2026 the owner approved publishing the mobile-first work and revised Terms to the existing live website. Keep review tools and banners out of production.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 

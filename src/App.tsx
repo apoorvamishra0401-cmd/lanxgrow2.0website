@@ -1,9 +1,8 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { FloatingWhatsApp } from '@/components/support/SupportLinks';
 import { PwaStatus } from '@/components/support/PwaStatus';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
-import MobileReview from '@/pages/MobileReview';
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
@@ -26,15 +25,11 @@ import NotFound from '@/pages/NotFound';
  * footer stay consistent.
  */
 export default function App() {
-  const { pathname } = useLocation();
-  const isReviewViewer = import.meta.env.VITE_MOBILE_REVIEW === 'true' && pathname === '/review';
   return (
     <>
-    {import.meta.env.VITE_MOBILE_REVIEW === 'true' && <aside className="mobile-review-note" aria-label="Preview information"><span>Mobile-first preview · review version</span><a href="https://lanxgrow2-0website.vercel.app/">Open current live website ↗</a></aside>}
-    {!isReviewViewer && <FloatingWhatsApp />}
+    <FloatingWhatsApp />
     <PwaStatus />
     <Routes>
-      {import.meta.env.VITE_MOBILE_REVIEW === 'true' && <Route path="/review" element={<MobileReview />} />}
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />

@@ -1,14 +1,15 @@
 import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
 import { usePageMeta } from '@/hooks/usePageMeta';
-const sections = [
-  ['Using LanXgrow', 'LanXgrow supports English communication learning. These terms cover the current website and account features. The learning dashboard is still being developed; account creation does not purchase a programme or promise access to an unfinished feature.'],
-  ['Your account', 'Use accurate details, keep your password and verification codes private, and use only an account you are authorised to access. If you are not legally able to agree to these terms yourself, ask a parent or guardian to review them and provide the required permission. Tell us promptly if you suspect unauthorised access.'],
-  ['Respectful learning', 'Use the service respectfully. Do not harass others, upload unlawful material, impersonate another person, interfere with security or copy and redistribute protected learning material without permission. You keep ownership of content you create; any future recording feature will explain its processing before collection.'],
-  ['Learning and AI guidance', 'Learning progress depends on your starting point, practice and participation. We do not guarantee fluency, employment, examination results or a fixed improvement timeline. Illustrative previews are labelled. AI guidance may contain errors and should be reviewed with judgement.'],
-  ['Programmes and payment', 'Prices, programme inclusions, schedules, cancellation and refund terms will be shown separately before any paid enrolment. Creating an account does not authorise a payment or create a subscription. Your applicable consumer rights are not excluded by these terms.'],
-  ['Availability and account access', 'Features may change as the app develops, and interruptions can occur. Offline access covers saved public content; sign-in and messages require an internet connection. We may restrict misuse where reasonably necessary to protect learners and the service. Contact us if you believe access has been restricted in error.'],
-  ['Privacy and your agreement', 'Our Privacy Notice explains account information, policy acceptance records, local storage and service providers. We record the policy version and time of acceptance. Material changes to these documents will be presented for renewed acceptance when needed.'],
-  ['Questions or concerns', 'For account, programme or policy questions, email official@lanxgrow.com. Never include your password or verification codes. These terms do not remove rights or remedies available under applicable law.'],
-];
-export default function Terms(){usePageMeta('Terms and Conditions','Terms for the LanXgrow website and account features.');return <><PageIntro eyebrow="Your agreement" heading="Terms and Conditions" supporting="Version 2026-10-24.1 · Effective 24 October 2026. Clear expectations for your LanXgrow account."/><Section tone="ivory"><div className="max-w-prose">{sections.map(([heading,body])=><section className="mb-10" key={heading}><h2 className="font-display text-[1.5rem]">{heading}</h2><p className="lx-prose mt-4">{body}</p></section>)}</div></Section></>;}
+import { POLICY_EFFECTIVE_DATE, POLICY_VERSION } from '@/config/policies';
+import { termsSections } from '@/content/terms';
+export default function Terms() {
+  usePageMeta('Terms and Conditions', 'Our commitments and shared responsibilities for your LanXgrow learning journey.');
+  return <>
+    <PageIntro eyebrow="Our shared commitment" heading="Terms and Conditions" supporting={`Version ${POLICY_VERSION} · Effective ${POLICY_EFFECTIVE_DATE}. Clear commitments. Respectful learning. A journey we build together.`} />
+    <Section tone="ivory"><div className="max-w-prose">
+      {termsSections.map(({ heading, body }) => <section className="mb-10" key={heading}><h2 className="font-display text-[1.5rem]">{heading}</h2><p className="lx-prose mt-4">{body}</p></section>)}
+      <p className="text-sm text-ink-500 leading-relaxed">Previous version: <a className="underline underline-offset-4 inline-flex min-h-11 items-center" href="/policies/2026-10-24.1/terms.txt">24 October 2026</a></p>
+    </div></Section>
+  </>;
+}
