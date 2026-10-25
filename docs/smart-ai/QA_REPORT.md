@@ -31,3 +31,13 @@ Isolated branch/project only. No production database changes or live-site promot
 - Lightweight original robot fallback is visible with the orbital scene in WebGL-disabled Chromium. WebGL 3D visual review remains pending.
 - Touch gesture handlers are implemented, but a physical-device swipe test remains pending.
 - TypeScript/Vite build, model checks and existing PWA contract checks pass after the motion update.
+
+## Shared header / whole-site phone-first release
+
+- One shared Header on Home, SMART AI, About, Services, FAQ, Get started, Sign in, Sign up (and consent route).
+- Chromium frame checks across all eight pages at 320, 768 and 1280 CSS-pixel frame widths: 24 checks; each document scrollWidth equals clientWidth.
+- At 320px, AI mobile menu lists Home, Meet our Lan-X AI, About, Services, FAQ, Get started, Sign in and Sign up. AI -> Home -> About menu navigation works and closes the drawer.
+- At 390px, email and password fields compute to 16px text. Ecosystem Dashboard selection responds to click/tap-equivalent input; Next feature changes the screenshot/caption to Practice.
+- Desktop and short-screen menu behaviour use the same shared component. Phone drawer scrolls independently within the available dynamic viewport height.
+- Existing page copy, graphics, six product areas and seven AI descriptions are preserved. Phone touch-state effects added; hidden login tagline restored.
+- Build and PWA regression checks pass. Physical Android/iOS performance, hardware media and WebGL appearance still require physical-device testing. These browser checks do not establish identical rendering/performance on every device.
