@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-export function useDeviceVoices(){const [voices,setVoices]=useState<SpeechSynthesisVoice[]>([]);useEffect(()=>{if(!('speechSynthesis' in window))return;const update=()=>setVoices(window.speechSynthesis.getVoices());update();window.speechSynthesis.addEventListener('voiceschanged',update);return()=>window.speechSynthesis.removeEventListener('voiceschanged',update);},[]);return voices;}
+import { useDeviceVoices } from './deviceVoices';
 export const sample='Every conversation is a chance to share an idea. Take a breath, choose your words, and tell me about something that matters to you.';
 export default function SpeechLab({onSpeaking,onActivity}:{onSpeaking:(value:boolean)=>void;onActivity:()=>void}){const voices=useDeviceVoices();const [accent,setAccent]=useState('en-IN');const [transcript,setTranscript]=useState(true);const [answer,setAnswer]=useState('');const [level,setLevel]=useState('Everyday');const [playing,setPlaying]=useState(false);const [error,setError]=useState('');const voice=voices.find(v=>v.lang.toLowerCase()===accent.toLowerCase());useEffect(()=>()=>{if('speechSynthesis'in window)window.speechSynthesis.cancel();onSpeaking(false);},[onSpeaking]);
  function stop(){window.speechSynthesis?.cancel();setPlaying(false);onSpeaking(false);}
