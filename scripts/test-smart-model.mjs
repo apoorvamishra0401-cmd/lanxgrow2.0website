@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import ts from 'typescript';
+const source=await fs.readFile('src/smart/model.ts','utf8');
+const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+let stored=null;globalThis.localStorage={getItem:()=>stored,setItem:(key,value)=>{stored=value;}};
+const {readStore,persist,areas,wordCount}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+assert.deepEqual(areas.map(x=>x.name),['Call','Practice','Video Assessment','English Pro Course','Learn & Entertainment','Dashboard']);
+assert.equal(wordCount('  One   clear idea.\nThen an example. '),6);
+assert.equal(readStore().attempts.length,0);stored='{bad json';assert.equal(readStore().attempts.length,0);
+const base=readStore();base.prefs.interests=['Cooking','Travel','Business'];base.attempts=[{id:'a',area:'call',words:20,seconds:30,date:new Date().toISOString(),topic:'Travel',kind:'scripted rehearsal'}];assert(persist(base));assert.equal(readStore().attempts[0].words,20);
+const malicious=JSON.parse(stored);malicious.attempts.push({...malicious.attempts[0],area:'invented',id:'b'});malicious.attempts.push({...malicious.attempts[0],words:-50,id:'c'});stored=JSON.stringify(malicious);assert.equal(readStore().attempts.length,1,'invalid counts and unapproved areas are discarded');
+globalThis.localStorage={getItem(){throw Error('blocked');},setItem(){throw Error('quota');}};assert.equal(readStore().attempts.length,0);assert.equal(persist(base),false);
+console.log('SMART model checks passed: exact areas/order, word counts, persistence, invalid data rejection, unavailable-storage fallback.');

@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current authorized release: `release/mobile-first-terms`. On 25 October 2026 the owner approved publishing the mobile-first work and revised Terms to the existing live website. Keep review tools and banners out of production.
+- Current work: preview/smart-ai-foundation. SMART AI is an isolated staged showcase. Do not merge, promote, alter the original project/domain or change any production database/service. The owner requires fresh explicit approval for eventual production publication.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 
@@ -26,3 +26,9 @@
 - Supabase Auth owns passwords and identities. Never create a plain-text password table.
 - Policy acceptance is append-only and versioned; use database-generated timestamps and owner-only RLS.
 - Google OAuth needs configured client credentials; phone registration requires an SMS provider and verified OTP. Do not bypass verification to make a provider appear available.
+
+## SMART AI
+- Preserve the confirmed six homepage area names and order; these are product areas, not proficiency levels.
+- Black #111111 / blue #00BDEB / orange #FF861C follow the footer logo lighting; these are proposed page tokens, not asserted official corporate specifications.
+- Scripted conversation and browser-local recording must be labelled clearly. Never fabricate AI scores or grant mastery for opening an activity.
+- Prepare Supabase schema only until an isolated development database is identified. Customer rows must be owner-only; admin access requires a server-controlled role.

@@ -24,6 +24,7 @@ export const primaryNav: NavItem[] = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
+  { label: 'SMART AI', to: '/smart-ai' },
   { label: 'FAQ', to: '/faq' },
 ];
 
@@ -31,6 +32,7 @@ export const primaryNav: NavItem[] = [
 export const footerNav: NavItem[] = [
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
+  { label: 'SMART AI', to: '/smart-ai' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Terms', to: '/terms' },
