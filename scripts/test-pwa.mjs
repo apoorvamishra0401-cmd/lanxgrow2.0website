@@ -9,17 +9,19 @@ assert(!source.includes('__BUILD_VERSION__'));
 const list=JSON.parse(source.match(/const PRECACHE = (\[.*\]);/)[1]);
 assert(list.includes('/index.html')); assert(list.some(url=>/\/assets\/.*\.js$/.test(url)));
 for(const url of list) await access('dist'+url);
-const handlers={}; const records=new Map(); let offline=false; let networkCalls=0;
+const handlers={}; const records=new Map(); let offline=false; let networkCalls=0;let activations=0;
 const cache={put:async(key,value)=>records.set(typeof key==='string'?key:key.url,value.clone()),match:async key=>records.get(typeof key==='string'?key:key.url)?.clone()};
 const origin='https://example.test';
 class BrowserRequest extends Request { constructor(input,init){super(typeof input==='string'?new URL(input,origin):input,init);} }
-const context={self:{location:{origin},addEventListener:(type,handler)=>handlers[type]=handler,clients:{claim:async()=>{}},skipWaiting:async()=>{}},caches:{open:async()=>cache,delete:async()=>true,keys:async()=>[]},fetch:async request=>{networkCalls++;if(offline)throw Error('offline');return new Response(request.url.endsWith('/index.html')?'<html>static shell</html>':'static asset',{status:200});},Request:BrowserRequest,Response,URL,Promise};
+const context={self:{location:{origin},addEventListener:(type,handler)=>handlers[type]=handler,clients:{claim:async()=>{}},skipWaiting:async()=>{activations++;}},caches:{open:async()=>cache,delete:async()=>true,keys:async()=>[]},fetch:async request=>{networkCalls++;if(offline)throw Error('offline');return new Response(request.mode==='navigate'?'<html>latest shell</html>':request.url.endsWith('/index.html')?'<html>static shell</html>':'static asset',{status:200});},Request:BrowserRequest,Response,URL,Promise,AbortController,setTimeout,clearTimeout};
 vm.runInNewContext(source,context);
 let install;handlers.install({waitUntil:p=>install=p});await install;
 assert.equal(records.size,list.length,'Install caches complete static allowlist');
+assert.equal(activations,1,'Complete new bundles activate without leaving visitors on an obsolete router');
 const request=(path,mode='navigate',method='GET')=>({url:origin+path,method,mode});
 async function respond(req){let response;handlers.fetch({request:req,respondWith:p=>response=p});return response;}
-offline=true;const previous=networkCalls;const publicPage=await respond(request('/about'));assert.equal(await publicPage.text(),'<html>static shell</html>');assert.equal(networkCalls,previous,'Public offline navigation uses cache');
+const onlineCalls=networkCalls;const fresh=await respond(request('/smart-ai'));assert.equal(await fresh.text(),'<html>latest shell</html>','Online navigation loads the latest router');assert.equal(networkCalls,onlineCalls+1);assert.equal(await (await cache.match('/index.html')).text(),'<html>static shell</html>','Fresh deployment HTML does not overwrite the versioned offline shell');
+offline=true;const previous=networkCalls;const publicPage=await respond(request('/about'));assert.equal(await publicPage.text(),'<html>static shell</html>');assert.equal(networkCalls,previous+1,'Failed public navigation falls back to the complete saved shell');
 const archived=await respond(request('/policies/2026-10-24.1/terms.txt'));assert.equal(await archived.text(),'static asset','Archived policy navigation serves the saved document, not the SPA shell');
 const asset=await respond(request(list.find(url=>url.endsWith('.js')),'cors'));assert.equal(await asset.text(),'static asset');
 assert.equal(await respond({url:'https://project.supabase.co/auth/v1/token',method:'POST',mode:'cors'}),undefined);

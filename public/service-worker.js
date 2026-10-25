@@ -21,7 +21,9 @@ self.addEventListener('install', event => {
       await caches.delete(CACHE);
       throw error;
     }
-    // Updated workers wait until existing tabs close or the visitor chooses Update.
+    // Activate only after the complete new static bundle is cached. Existing clients
+    // reload through controllerchange so old routes cannot keep showing a stale app.
+    await self.skipWaiting();
   })());
 });
 self.addEventListener('message', event => {
@@ -50,10 +52,21 @@ self.addEventListener('fetch', event => {
       event.respondWith(fetch(request).catch(async () => (await caches.open(CACHE)).match('/index.html')));
       return;
     }
-    // Public routes share Vite's static SPA shell, served instantly from the cache.
+    // HTML must be fresh online: a cached old router may not know newly added pages.
+    // Hashed static assets remain cache-first; the complete versioned shell is the
+    // offline fallback, never overwritten by HTML from a different deployment.
     event.respondWith((async () => {
-      const shell = await (await caches.open(CACHE)).match('/index.html');
-      return shell || fetch(request);
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 3000);
+      try {
+        const response = await fetch(request, { cache: 'no-store', signal: controller.signal });
+        if (!response.ok) throw new Error('Navigation unavailable');
+        return response;
+      } catch (error) {
+        const shell = await (await caches.open(CACHE)).match('/index.html');
+        if (shell) return shell;
+        throw error;
+      } finally { clearTimeout(timer); }
     })());
     return;
   }
