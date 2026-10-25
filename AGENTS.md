@@ -28,7 +28,7 @@
 - Google OAuth needs configured client credentials; phone registration requires an SMS provider and verified OTP. Do not bypass verification to make a provider appear available.
 
 ## SMART AI
-- Preserve the confirmed six homepage area names and order; these are product areas, not proficiency levels.
+- SMART AI marketing content uses the owner’s seven mentor-first pillars (25 October revision), not the six homepage product areas. Preserve underlying activity history identifiers; do not alter other homepage content.
 - Black #111111 / blue #00BDEB / orange #FF861C follow the footer logo lighting; these are proposed page tokens, not asserted official corporate specifications.
 - Scripted conversation and browser-local recording must be labelled clearly. Never fabricate AI scores or grant mastery for opening an activity.
 - Prepare Supabase schema only until an isolated development database is identified. Customer rows must be owner-only; admin access requires a server-controlled role.
