@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { usePageMeta } from '@/hooks/usePageMeta';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { persist, readStore, topics } from './model';
 import type { AreaId, Mode, Store } from './model';
 import type { CompanionState } from './Companion';
@@ -17,6 +18,7 @@ const SpeechLab=lazy(()=>import('./SpeechLab'));
 const modeTitles:Record<Exclude<Mode,null>,string>={talk:'A conversation, at your pace.',call:'Make the call. Find your words.',practice:'Shape a thought into a message.',video:'Your speaking rehearsal.',voice:'Make room for your voice.',course:'A little structure. A clearer message.',entertainment:'A story worth talking about.',dashboard:'Grow Decoder',onboarding:'Let’s make this yours.',accents:'Three accents. One conversation.'};
 function Dialog({mode,onClose,children}:{mode:Exclude<Mode,null>;onClose:()=>void;children:React.ReactNode}){const dialog=useRef<HTMLDialogElement>(null);useEffect(()=>{const el=dialog.current;const previous=document.activeElement as HTMLElement|null;el?.showModal();return()=>{el?.close();previous?.focus();};},[]);return <dialog className="sx-dialog" ref={dialog} onCancel={event=>{event.preventDefault();onClose();}} aria-labelledby="sx-dialog-title"><div className="sx-dialog-top"><div><span className="sx-eyebrow">LanXgrow · Meet Lan-X</span><h2 id="sx-dialog-title">{modeTitles[mode]}</h2></div><button className="sx-close" type="button" aria-label="Close activity" onClick={onClose}>×</button></div><div className="sx-dialog-body">{children}</div></dialog>;}
 export default function SmartAI(){
+ useScrollToTop();
  usePageMeta('Meet our Lan-X AI','Explore LanXgrow SMART AI: a mobile-first, interactive English communication showcase.');
  const [store,setStore]=useState<Store>(readStore);const [storageError,setStorageError]=useState(false);const [mode,setMode]=useState<Mode>(null);const topic='Daily life';const [character,setCharacter]=useState<CompanionState>('idle');const [heroVisible,setHeroVisible]=useState(true);const [activeSeconds,setActiveSeconds]=useState(0);const [used,setUsed]=useState(trialUsed);const [signedIn,setSignedIn]=useState(false);const [gateOnEntry,setGateOnEntry]=useState(false);const hero=useRef<HTMLElement>(null);const lastInteraction=useRef(0);const animationReset=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{setStorageError(!persist(store));},[store]);
