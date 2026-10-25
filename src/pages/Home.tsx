@@ -1,3 +1,4 @@
+import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
 import { Hero } from '@/components/home/Hero';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <MeetLanX />
       <LearningEcosystem />
       <WhyLanXgrow />
       <ResearchStories />

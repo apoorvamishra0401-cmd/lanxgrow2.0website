@@ -22,17 +22,17 @@ export type NavItem = {
 /** Primary navigation, shared by the desktop header and the mobile drawer. */
 export const primaryNav: NavItem[] = [
   { label: 'Home', to: '/' },
+  { label: 'Meet our Lan-X AI', to: '/smart-ai' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
-  { label: 'SMART AI', to: '/smart-ai' },
   { label: 'FAQ', to: '/faq' },
 ];
 
 /** Secondary (utility) navigation shown in the footer. */
 export const footerNav: NavItem[] = [
+  { label: 'Meet our Lan-X AI', to: '/smart-ai' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
-  { label: 'SMART AI', to: '/smart-ai' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Terms', to: '/terms' },

@@ -30,7 +30,7 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1024px)');
+    const desktop = window.matchMedia('(min-width: 1280px)');
     const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
     desktop.addEventListener('change', closeOnDesktop);
     return () => desktop.removeEventListener('change', closeOnDesktop);
@@ -83,8 +83,8 @@ export function Header() {
           </NavLink>
 
           {/* Desktop navigation */}
-          <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-9">
+          <nav aria-label="Primary" className="hidden xl:block">
+            <ul className="flex items-center gap-6">
               {primaryNav.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -106,7 +106,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 xl:flex">
             <Button to="/get-started" variant="ghost" size="sm">
               Sign in
             </Button>
@@ -123,7 +123,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-900 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700 lg:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-900 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700 xl:hidden"
           >
             <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
               {open ? <path d="M5 5l10 10M15 5 5 15" /> : <path d="M3 6.5h14M3 13.5h14" />}
@@ -141,7 +141,7 @@ export function Header() {
         id="mobile-navigation"
         {...(open ? {} : ({ inert: '' } as Record<string, unknown>))}
         className={cn(
-          'border-t border-line bg-ivory transition-[max-height,opacity] duration-500 ease-editorial lg:hidden',
+          'border-t border-line bg-ivory transition-[max-height,opacity] duration-500 ease-editorial xl:hidden',
           open ? 'lx-drawer-open opacity-100' : 'max-h-0 overflow-hidden opacity-0',
         )}
       >

@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current work: preview/smart-ai-foundation. SMART AI is an isolated staged showcase. Do not merge, promote, alter the original project/domain or change any production database/service. The owner requires fresh explicit approval for eventual production publication.
+- On 25 October 2026 the owner explicitly approved publishing SMART AI and adding Meet our Lan-X AI after Home. This release may update the original production website. Future substantial work still requires preview review. Database changes remain outside this publication scope.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 
