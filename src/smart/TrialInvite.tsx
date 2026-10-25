@@ -1,0 +1,2 @@
+import { Link } from 'react-router-dom';
+export default function TrialInvite(){return <div className="sx-signup-invite" role="status"><span className="sx-orbit-mark">LX</span><h3>Your next conversation starts here.</h3><p>Sign in or create your LanXgrow account to continue practising with Lan-X.</p><div className="sx-row"><Link className="sx-primary" to="/signup">Create an account →</Link><Link className="sx-secondary" to="/signin">Sign in</Link></div></div>;}

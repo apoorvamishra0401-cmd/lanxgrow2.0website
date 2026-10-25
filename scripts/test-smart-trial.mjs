@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import ts from 'typescript';
+const text=await readFile('src/smart/trial.ts','utf8');
+const js=ts.transpileModule(text,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2020}}).outputText;
+const data=new Map();const cookies=new Map();globalThis.localStorage={getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v)};globalThis.document={};Object.defineProperty(document,'cookie',{get:()=>[...cookies].map(([k,v])=>`${k}=${v}`).join('; '),set:value=>{const [pair]=value.split(';');const [k,v]=pair.split('=');cookies.set(k,v);}});
+const load=tag=>import(`data:text/javascript;base64,${Buffer.from(js+'\n//'+tag).toString('base64')}`);
+const trial=await load('first');assert.equal(trial.trialUsed(),0);assert.equal(trial.consumeTrial(),true);assert.equal(trial.consumeTrial(),true);assert.equal(trial.consumeTrial(),true);assert.equal(trial.consumeTrial(),false);assert.equal(trial.trialUsed(),3);
+const reloaded=await load('reload');assert.equal(reloaded.trialUsed(),3);assert.equal(reloaded.consumeTrial(),false,'Refreshing cannot restore guest replies');
+data.clear();assert.equal(reloaded.trialUsed(),3,'Cookie preserves allowance if localStorage disappears');
+cookies.clear();globalThis.localStorage={getItem:()=>{throw Error('blocked');},setItem:()=>{throw Error('blocked');}};assert.equal(reloaded.consumeTrial(),true,'Cookie fallback works');assert.equal(reloaded.trialUsed(),1);
+Object.defineProperty(globalThis,'document',{value:{get cookie(){return '';},set cookie(_){}}});assert.equal(reloaded.consumeTrial(),false,'Unavailable persistent storage cannot grant an untracked reply');
+console.log('Guest trial checks passed: three replies, reload persistence, shared count, cookie fallback, fail-closed storage.');

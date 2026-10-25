@@ -84,3 +84,13 @@ Browser verification of the first correction confirmed seven tiles, orbit-to-sta
 ## Seven-point reading rail
 
 The full descriptions now share one continuous vertical rail. Its filled height follows a reading position at 35% of the viewport, in both scroll directions. The latest heading marker above that reading position becomes the current step. Only that heading and body receive full emphasis; other steps remain readable in muted colours. The original copy, accent selector, calls to action, seven-card scene and hero are preserved. Marker geometry updates on container resize, browser resize and passive scroll events through a single scheduled animation frame. Reduced motion removes colour transitions; no timer advances the reading state.
+
+## Simplified page and persistent guest allowance
+
+Public motion controls, status strip, companion action menu, Grow Decoder and preference entry links are removed. The floating Lan-X practice button opens the conversation directly. Reduced-motion device preferences remain respected automatically.
+
+Guest conversation submission reserves one of three browser-persisted replies before displaying its guided response. Counter storage is separate from learning preferences and has no calendar reset; a first-party cookie (400-day maximum age) backs up localStorage. Refreshes, route changes and later visits in the same browser retain the count. Other open tabs re-read it before submission. If neither persistence mechanism can write, the demo requires sign-in. Authenticated users are verified with the existing getCurrentUser helper.
+
+This browser-only control is NOT a secure API quota: visitors can clear storage, use private browsing or another device, or modify client code. Future live AI requests must authenticate and reserve quota transactionally on the server, using an account or a server-issued anonymous session. Never expose an AI API key in VITE_* variables or client bundles. No API key/provider is connected by this revision.
+
+Optional browser speech recognition fills the text box for review; it does not generate intelligent replies. Browser speech-service/microphone permission is explicit, and generated replies remain labelled as guided. Actual microphone input needs device verification.
