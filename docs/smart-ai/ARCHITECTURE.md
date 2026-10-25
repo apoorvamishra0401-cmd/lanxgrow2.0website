@@ -94,3 +94,7 @@ Guest conversation submission reserves one of three browser-persisted replies be
 This browser-only control is NOT a secure API quota: visitors can clear storage, use private browsing or another device, or modify client code. Future live AI requests must authenticate and reserve quota transactionally on the server, using an account or a server-issued anonymous session. Never expose an AI API key in VITE_* variables or client bundles. No API key/provider is connected by this revision.
 
 Optional browser speech recognition fills the text box for review; it does not generate intelligent replies. Browser speech-service/microphone permission is explicit, and generated replies remain labelled as guided. Actual microphone input needs device verification.
+
+## Approved circular Lan-X core
+
+The owner approved live replacement of both humanoid robot visuals with an original circular Lan-X energy core, including the pending UI simplification. A shared `LanXCore` uses layered SVG rings and CSS perspective/glass depth; no external image, video, WebGL model or API is required. It preserves its appearance on phones without WebGL. Rotation uses transforms, pauses off-screen/in background, and respects reduced-motion settings. Pointer and touch positions drive a bounded damped spring; release returns the core to centre with a small wobble. Vertical touch panning remains available for page scrolling. The animation is decorative and makes no claim of actual AI processing.

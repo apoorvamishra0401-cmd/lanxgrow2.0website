@@ -9,7 +9,6 @@ import { getCurrentUser } from '@/lib/auth';
 import { consumeTrial, trialUsed, TRIAL_LIMIT } from './trial';
 import TrialInvite from './TrialInvite';
 import SevenPillars from './SevenPillars';
-import { OrbitalScene } from './MotionScenes';
 import { MiniCourse, StoryPractice, WrittenPractice } from './Lessons';
 import './smart.css';
 const Companion=lazy(()=>import('./Companion'));
@@ -36,7 +35,7 @@ export default function SmartAI(){
   <main>
   <section className="sx-hero sx-shell" ref={hero}>
    <div className="sx-hero-copy"><p className="sx-eyebrow"><span className="sx-line"/>Intelligence with a human purpose</p><h1>Meet the intelligence <br/>behind your <em>growth.</em></h1><p className="sx-hero-body">Speak freely. Explore your potential.<br/>Grow through every conversation.</p><div className="sx-row sx-hero-actions"><button className="sx-primary" onClick={()=>open('talk')}>Meet Lan-X, your AI companion <span>↗</span></button><a className="sx-secondary" href="#sx-journey">Explore your journey <span>↓</span></a></div><p className="sx-small">Start with a guided demo. No account needed to explore.</p><div className="sx-hero-bottom"><span>Speak.<br/><b>With purpose.</b></span><span>Practise.<br/><b>Without judgement.</b></span><span>Grow.<br/><b>In your own way.</b></span></div></div>
-   <div className="sx-character-scene"><OrbitalScene paused={Boolean(mode)}/><div className="sx-scene-grid" aria-hidden="true"/><div className="sx-character-label"><span className="sx-dot"/>LAN-X <span>Your communication companion</span></div><Suspense fallback={<div className="sx-loading" role="status">Lan-X is arriving…</div>}><Companion state={character} paused={Boolean(mode)}/></Suspense></div>
+   <div className="sx-character-scene"><div className="sx-scene-grid" aria-hidden="true"/><div className="sx-character-label"><span className="sx-dot"/>LAN-X <span>Your communication companion</span></div><Suspense fallback={<div className="sx-loading" role="status">Lan-X is arriving…</div>}><Companion state={character} paused={Boolean(mode)}/></Suspense></div>
   </section>
   <SevenPillars open={open}/>
   <section className="sx-final sx-shell"><p className="sx-eyebrow">Your voice is worth the practice.</p><h2>A thought today.<br/>A clearer <em>voice tomorrow.</em></h2><p>Try a small activity. Find something to say.<br/>Take your next step with LanXgrow.</p><button className="sx-primary" onClick={()=>open('talk')}>Begin a guided conversation ↗</button><p className="sx-small">Three complimentary guided demo replies. Sign in to continue your journey.</p></section>
