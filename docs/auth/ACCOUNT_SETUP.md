@@ -6,7 +6,7 @@ Release: account-consent-experience. Production project: pgmlxzwicabgbctxyqvb.
 - Email/password registration and sign-in; email verification redirect uses the current origin `/auth-callback`.
 - Google OAuth PKCE code flow for sign-in and registration once the provider is configured.
 - International phone/password registration, SMS verification screen and phone/password sign-in once an SMS provider is configured.
-- Unchecked-by-default, required agreement checkbox linking `/terms` and `/privacy` (version `2026-10-24.1`). Google-created accounts are checked again after verified authentication; existing accounts without current acceptance must review it.
+- Unchecked-by-default, required agreement checkbox linking `/terms` and `/privacy` (version `2026-10-25.1`). Google-created accounts are checked again after verified authentication; existing accounts without current acceptance must review it.
 - Supabase Auth stores credentials. Existing `profiles` trigger retained with its function moved to non-exposed `private` schema and a fixed empty search path.
 - `legal_consents` stores account ID, policy version and server timestamp. Owner-only SELECT/INSERT; no client UPDATE or DELETE; column privileges prevent clients setting timestamps. Auth registration metadata is a learner's acceptance statement, never an authorization role.
 - Authenticated application screens must check current policy acceptance before exposing future learning functionality. The present placeholder also checks.
@@ -32,3 +32,5 @@ Public Supabase `/auth/v1/settings`: email enabled, signup enabled, email confir
 The terms cover the current public site/account scope without invented fees or guarantees. Review them as the paid learning service develops. Before changing either policy, archive the currently accepted text, assign a new shared version, extend the database version constraint and acceptance policy, and request renewed acceptance. Keep historical acceptance records; never overwrite a timestamp.
 
 The SQL in `docs/database/account-consent.sql` is an audit of the already-applied change, not an automatically executed deployment migration. Do not rerun it blindly: inspect current policies first.
+
+Release update, 25 October 2026: current shared policy version is 2026-10-25.1. Previous terms/privacy texts remain available under /policies/2026-10-24.1/. The database accepts both versions for old cached clients; the current app checks the new version before entering the learner area.

@@ -1,4 +1,6 @@
 import type { Session, SupabaseClient, User } from '@supabase/supabase-js';
+import { POLICY_VERSION } from '@/config/policies';
+export { POLICY_VERSION } from '@/config/policies';
 
 /**
  * Authentication adapter — Supabase Auth, email + password.
@@ -366,7 +368,6 @@ export async function signInWithGoogle(): Promise<AuthResult> {
 }
 
 /** Both policy documents are versioned together; accepted_at is database-generated. */
-export const POLICY_VERSION = '2026-10-24.1';
 export async function hasCurrentConsent(): Promise<AuthResult<boolean>> {
   try {
     const client = await getClient();

@@ -1,0 +1,34 @@
+LanXgrow — Privacy Notice
+Version 2026-10-24.1 · Effective 24 October 2026
+
+About this notice
+This notice describes the current LanXgrow website, sign-in and offline features. It will be updated as the learning app develops.
+
+Accounts and sign-in
+Sign-in is handled by Supabase. When you sign in, your browser sends the login details you enter to that service. Authentication session information is stored in your browser so you can stay signed in. Provider choices are available only when configured.
+
+Passwords and authentication responses are not stored in the website’s offline cache. Account access requires an internet connection.
+
+Profile and policy acceptance
+Supabase stores your account identifier, email address or phone number and authentication information. A linked profile stores your name if supplied. A separate acceptance record stores your account identifier, the policy version and the database-generated acceptance time. It is used to document your agreement, not for advertising.
+
+You can ask about access, correction or deletion by emailing official@lanxgrow.com. Account data is retained while needed to provide your account; agreement records may be retained where reasonably needed to meet legal obligations or resolve disputes. We assess deletion requests against those requirements and explain any information we must retain.
+
+Offline storage
+The service worker stores public HTML, JavaScript, styles, icons and images on your device to support repeat visits and offline browsing. It does not cache personal account information, authentication requests or messages.
+
+You can remove this local copy through your browser’s site-data settings. Browsers may also clear cached files to manage device storage. A first online visit must finish caching before offline access is available.
+
+Direct messages
+There is no contact form on this website. The WhatsApp button opens WhatsApp with a suggested message; it is sent only if you choose to send it. Email links open your email app. Messages are handled by those services and the LanXgrow team, not by the offline cache.
+
+Other services
+The website is hosted on Vercel, loads typefaces from Google Fonts and uses Supabase for authentication. These services receive the request information needed to provide their functionality. WhatsApp and your email provider handle messages you choose to send.
+
+No analytics or advertising tracking code is installed by this application. This does not describe independent logging or processing performed by service providers.
+
+Questions about privacy
+For privacy questions, email official@lanxgrow.com. Avoid sharing passwords or verification codes in messages.
+
+Changes to this notice
+The current notice will remain available on this page as the app evolves.

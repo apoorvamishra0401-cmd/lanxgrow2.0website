@@ -12,6 +12,7 @@ const features = [
 
 export function WhyLanXgrow() {
   const track = useRef<HTMLDivElement>(null);
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -20,7 +21,7 @@ export function WhyLanXgrow() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      if (!track.current || window.matchMedia('(max-height: 600px)').matches) return;
+      if (!track.current || window.matchMedia('(max-width: 767px), (max-height: 600px)').matches) return;
       const rect = track.current.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
       const p = Math.max(0, Math.min(1, (88 - rect.top) / Math.max(1, travel)));
@@ -35,7 +36,7 @@ export function WhyLanXgrow() {
   }, []);
   const select = (index: number) => {
     if (!track.current) return;
-    if (window.matchMedia('(max-height: 600px)').matches) { setActive(index); setHovered(null); return; }
+    if (window.matchMedia('(max-width: 767px), (max-height: 600px)').matches) { setActive(index); setHovered(null); return; }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const top = window.scrollY + track.current.getBoundingClientRect().top - 88;
     const travel = track.current.offsetHeight - window.innerHeight;
@@ -56,14 +57,15 @@ export function WhyLanXgrow() {
             </div>
             <p className="feature-scroll"><span aria-hidden="true">↓</span> Scroll to explore <span className="feature-progress"><span style={{ transform: `scaleX(${progress})` }} /></span></p>
           </div>
-          <div id="feature-preview" className="feature-preview" role="region" aria-label="Selected feature preview">
+          <div id="feature-preview" className="feature-preview" onTouchStart={event => { const touch = event.touches[0]; if (touch) swipeStart.current = { x: touch.clientX, y: touch.clientY }; }} onTouchEnd={event => { const touch = event.changedTouches[0]; const start = swipeStart.current; swipeStart.current = null; if (!touch || !start || !window.matchMedia('(max-width: 767px)').matches) return; const dx = touch.clientX - start.x; const dy = touch.clientY - start.y; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) { setHovered(null); setActive(value => Math.max(0, Math.min(features.length - 1, value + (dx < 0 ? 1 : -1)))); } }} role="region" aria-label="Selected feature preview">
             <div className="feature-preview-top"><span>THE LANXGROW EXPERIENCE</span><span>{String(shown + 1).padStart(2, '0')} <span className="feature-total">/ 06</span></span></div>
             <div className="feature-stage">
               <span className="feature-orbit" aria-hidden="true" />
-              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={active !== index}><img src={feature.src} alt={feature.alt} loading="eager" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'LanXgrow app · product preview'}</span></div>)}
+              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} loading="eager" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'LanXgrow app · product preview'}</span></div>)}
             </div>
             <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
           </div>
+          <div className="feature-mobile-controls"><button type="button" disabled={active === 0} onClick={() => select(active - 1)} aria-label="Previous feature">←</button><p>Tap a feature or swipe the preview.<br />{active + 1} of {features.length}</p><button type="button" disabled={active === features.length - 1} onClick={() => select(active + 1)} aria-label="Next feature">→</button></div>
         </div>
       </div>
     </section>

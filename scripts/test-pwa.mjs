@@ -20,6 +20,7 @@ assert.equal(records.size,list.length,'Install caches complete static allowlist'
 const request=(path,mode='navigate',method='GET')=>({url:origin+path,method,mode});
 async function respond(req){let response;handlers.fetch({request:req,respondWith:p=>response=p});return response;}
 offline=true;const previous=networkCalls;const publicPage=await respond(request('/about'));assert.equal(await publicPage.text(),'<html>static shell</html>');assert.equal(networkCalls,previous,'Public offline navigation uses cache');
+const archived=await respond(request('/policies/2026-10-24.1/terms.txt'));assert.equal(await archived.text(),'static asset','Archived policy navigation serves the saved document, not the SPA shell');
 const asset=await respond(request(list.find(url=>url.endsWith('.js')),'cors'));assert.equal(await asset.text(),'static asset');
 assert.equal(await respond({url:'https://project.supabase.co/auth/v1/token',method:'POST',mode:'cors'}),undefined);
 assert.equal(await respond(request('/auth-callback?code=private-code')),undefined,'OAuth codes bypass cache');

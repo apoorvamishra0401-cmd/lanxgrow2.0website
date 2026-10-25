@@ -12,7 +12,7 @@
 - Preserve existing pages and functionality unless the user asks to change them.
 
 ## Preview workflow
-- Current authorized release: `release/account-consent-experience`, including account creation, policy acceptance and Services/FAQ interactions. The owner has authorized publishing this release.
+- Current authorized release: `release/mobile-first-terms`. On 25 October 2026 the owner approved publishing the mobile-first work and revised Terms to the existing live website. Keep review tools and banners out of production.
 - Do not merge to main, promote a deployment, or change the live website without explicit user authorization.
 - Commit code and these project requirements to GitHub so future work retains the same standards.
 
