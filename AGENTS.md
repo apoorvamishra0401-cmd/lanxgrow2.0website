@@ -32,3 +32,10 @@
 - Black #111111 / blue #00BDEB / orange #FF861C follow the footer logo lighting; these are proposed page tokens, not asserted official corporate specifications.
 - Scripted conversation and browser-local recording must be labelled clearly. Never fabricate AI scores or grant mastery for opening an activity.
 - Prepare Supabase schema only until an isolated development database is identified. Customer rows must be owner-only; admin access requires a server-controlled role.
+
+## Shared navigation and mobile parity — 25 October 2026
+- The owner explicitly approved direct publication of shared navigation and mobile-first improvements across all pages.
+- Use the same Header component on marketing, SMART AI, welcome, sign-in, sign-up and consent pages. Keep Home, Meet our Lan-X AI, About, Services and FAQ available; account links include Sign in, Sign up and Get started.
+- On phones use the vertical mobile drawer, with touch and keyboard access, natural scrolling and safe-area spacing. No separate back button is required for main-site navigation.
+- Preserve complete graphics, feature content and activity availability on phones. Reflow layouts rather than shrinking a desktop canvas. Tap/swipe/scroll must provide the actions available through desktop hover.
+- Sign in now links directly to /signin, Sign up to /signup, and Get started to /get-started.

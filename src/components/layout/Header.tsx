@@ -107,9 +107,10 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 xl:flex">
-            <Button to="/get-started" variant="ghost" size="sm">
+            <Button to="/signin" variant="ghost" size="sm">
               Sign in
             </Button>
+            <Button to="/signup" variant="ghost" size="sm">Sign up</Button>
             <Button to={cta.getStarted.to} size="sm" withArrow>
               {cta.getStarted.label}
             </Button>
@@ -174,9 +175,10 @@ export function Header() {
             <Button to={cta.getStarted.to} size="md" fullWidth withArrow>
               {cta.getStarted.label}
             </Button>
-            <Button to="/get-started" variant="secondary" size="md" fullWidth>
+            <Button to="/signin" variant="secondary" size="md" fullWidth>
               Sign in
             </Button>
+            <Button to="/signup" variant="secondary" size="md" fullWidth>Sign up</Button>
           </div>
         </div>
       </div>

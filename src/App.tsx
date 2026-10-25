@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { FloatingWhatsApp } from '@/components/support/SupportLinks';
 import { PwaStatus } from '@/components/support/PwaStatus';
+import { Header } from '@/components/layout/Header';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import { lazy, Suspense } from 'react';
@@ -33,6 +34,7 @@ export default function App() {
     <>
     {!pathname.startsWith('/smart-ai') && <FloatingWhatsApp />}
     <PwaStatus />
+    {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />

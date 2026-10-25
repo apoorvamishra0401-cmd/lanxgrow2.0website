@@ -1,6 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Logo } from '@/components/ui/Logo';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { areas, emptyStore, interests, persist, readStore, topics } from './model';
 import type { AreaId, Mode, Preferences, Store } from './model';
@@ -30,7 +29,7 @@ export default function SmartAI(){
 const totalWords=store.attempts.reduce((n,a)=>n+a.words,0);const totalSeconds=store.attempts.reduce((n,a)=>n+a.seconds,0);
  return <div className="sx-page">
   <div className="sx-preview-bar"><span><i/>Interactive showcase</span><span>Scripted practice · local device data · no live AI</span></div>
-  <header className="sx-header"><Link to="/" aria-label="LanXgrow home"><Logo tone="inverse"/></Link><nav aria-label="SMART AI navigation"><a href="#sx-journey">Our approach</a><a href="#sx-labs">Try the labs</a><button onClick={()=>open('dashboard')}>Grow Decoder</button></nav><button className="sx-header-action" onClick={()=>open('onboarding')}>Make it yours <span>↗</span></button></header>
+  <nav className="sx-page-tools sx-shell" aria-label="AI learning tools"><a href="#sx-journey">Our approach</a><a href="#sx-labs">Try the labs</a><button onClick={()=>open('dashboard')}>Grow Decoder</button><button onClick={()=>open('onboarding')}>Make it yours ↗</button></nav>
   <main>
   <section className="sx-hero sx-shell" ref={hero}>
    <div className="sx-hero-copy"><p className="sx-eyebrow"><span className="sx-line"/>Intelligence with a human purpose</p><h1>Meet the intelligence <br/>behind your <em>growth.</em></h1><p className="sx-hero-body">Speak freely. Explore your potential.<br/>Grow through every conversation.</p><div className="sx-row sx-hero-actions"><button className="sx-primary" onClick={()=>open('talk')}>Talk to SMART AI <span>↗</span></button><a className="sx-secondary" href="#sx-journey">Explore your journey <span>↓</span></a></div><p className="sx-small">Start with a guided demo. No account needed to explore.</p><div className="sx-hero-bottom"><span>Speak.<br/><b>With purpose.</b></span><span>Practise.<br/><b>Without judgement.</b></span><span>Grow.<br/><b>In your own way.</b></span></div></div>
