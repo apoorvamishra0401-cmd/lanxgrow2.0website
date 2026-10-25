@@ -64,3 +64,13 @@ Three.js is dynamically loaded; the main page, media recorder and accent lab are
 
 ## Production release
 Owner reviews isolated preview → revisions → owner explicitly authorises production → complete provider/account/media/privacy checks for the intended phase → prepare a production-only release without noindex/review controls → verify → publish the approved version. Design acceptance or preview interaction alone is not permission to deploy production.
+
+## Reference-motion revision — 25 October
+
+The seven mentor-first content pillars replace the initial six-area marketing overview. The homepage product areas and saved activity IDs remain unchanged.
+
+`MotionScenes.tsx` adds an original orbital SVG composition around Lan-X, a compact seven-card overview linking to full descriptions, and scroll-linked accent selection. The selected accent retains colour; the other two use grayscale. Buttons support keyboard and tap, and a horizontal touch gesture changes accents. On short landscape viewports the sticky scroll stage becomes a normal compact block. Reduced motion disables floating animations and smooth transitions. Pause motion also pauses the orbital scene; the overview has its own pause control.
+
+The 3D character remains the primary renderer. A new original lightweight SVG robot replaces the old logo fallback on devices without WebGL, so the central composition still contains Lan-X.
+
+No Cashfree brand assets, code or payment content are used. Accent skyline illustrations are stylised listening visuals, not portraits or assertions that a nation has only one English accent. Live AI and account-linked persistence are still future phases.
