@@ -74,3 +74,9 @@ The seven mentor-first content pillars replace the initial six-area marketing ov
 The 3D character remains the primary renderer. A new original lightweight SVG robot replaces the old logo fallback on devices without WebGL, so the central composition still contains Lan-X.
 
 No Cashfree brand assets, code or payment content are used. Accent skyline illustrations are stylised listening visuals, not portraits or assertions that a nation has only one English accent. Live AI and account-linked persistence are still future phases.
+
+## Orbit-to-stack correction
+
+The rejected two-row overview has been replaced by `SevenOverview`: a full-screen sticky composition with a stationary centre headline, seven compact original illustrated tiles, slow orbital motion and scroll-controlled convergence into a small bottom-centre stack. Reverse scrolling opens the tiles again. This is a transform-based interactive scene, not a looping video. The motion pauses off-screen or in hidden tabs and respects reduced-motion preferences. The pause control freezes the current composition. Short landscape screens use a compact non-sticky stage. Full descriptions remain below, and tile links retain their complete accessible names.
+
+Browser verification of the first correction confirmed seven tiles, orbit-to-stack conversion on PageDown and return to orbit on PageUp. Phone spacing was then widened and tile sizes reduced to protect the central headline at 320px. The existing accent interactions and hero robot remain unchanged.
