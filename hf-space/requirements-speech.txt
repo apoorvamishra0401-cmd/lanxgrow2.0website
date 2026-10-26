@@ -1,0 +1,2 @@
+# OPTIONAL ONLY. Confirm CPU memory/build capacity before adding to requirements.txt.
+faster-whisper==1.2.1
