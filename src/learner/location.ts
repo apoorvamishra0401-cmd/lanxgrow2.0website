@@ -1,0 +1,42 @@
+// Common cities for quick selection. Other keeps every locality accessible offline.
+export const locations: Record<string, string[]> = {
+'Andhra Pradesh':['Amaravati','Visakhapatnam','Vijayawada','Guntur','Tirupati','Nellore','Kurnool'],
+'Arunachal Pradesh':['Itanagar','Naharlagun','Pasighat','Tawang'],
+'Assam':['Guwahati','Dibrugarh','Silchar','Jorhat','Tezpur'],
+'Bihar':['Patna','Gaya','Bhagalpur','Muzaffarpur','Darbhanga'],
+'Chhattisgarh':['Raipur','Bhilai','Bilaspur','Durg','Korba'],
+'Goa':['Panaji','Margao','Vasco da Gama','Mapusa'],
+'Gujarat':['Ahmedabad','Surat','Vadodara','Rajkot','Gandhinagar','Bhavnagar'],
+'Haryana':['Gurugram','Faridabad','Panipat','Ambala','Hisar','Karnal','Panchkula'],
+'Himachal Pradesh':['Shimla','Dharamshala','Solan','Mandi','Kullu'],
+'Jharkhand':['Ranchi','Jamshedpur','Dhanbad','Bokaro','Deoghar'],
+'Karnataka':['Bengaluru','Mysuru','Mangaluru','Hubballi','Belagavi','Udupi'],
+'Kerala':['Thiruvananthapuram','Kochi','Kozhikode','Thrissur','Kannur','Kollam'],
+'Madhya Pradesh':['Bhopal','Indore','Gwalior','Jabalpur','Ujjain','Sagar'],
+'Maharashtra':['Mumbai','Pune','Nagpur','Nashik','Thane','Navi Mumbai','Chhatrapati Sambhajinagar','Kolhapur'],
+'Manipur':['Imphal','Thoubal','Bishnupur'],
+'Meghalaya':['Shillong','Tura','Jowai'],
+'Mizoram':['Aizawl','Lunglei','Champhai'],
+'Nagaland':['Kohima','Dimapur','Mokokchung'],
+'Odisha':['Bhubaneswar','Cuttack','Rourkela','Puri','Sambalpur','Brahmapur'],
+'Punjab':['Ludhiana','Amritsar','Jalandhar','Patiala','Bathinda','Mohali'],
+'Rajasthan':['Jaipur','Jodhpur','Udaipur','Kota','Ajmer','Bikaner','Alwar'],
+'Sikkim':['Gangtok','Namchi','Gyalshing','Mangan'],
+'Tamil Nadu':['Chennai','Coimbatore','Madurai','Tiruchirappalli','Salem','Tiruppur','Vellore'],
+'Telangana':['Hyderabad','Warangal','Nizamabad','Karimnagar','Khammam'],
+'Tripura':['Agartala','Udaipur','Dharmanagar'],
+'Uttar Pradesh':['Lucknow','Noida','Greater Noida','Ghaziabad','Kanpur','Agra','Varanasi','Prayagraj','Meerut','Gorakhpur','Bareilly','Aligarh','Mathura','Ayodhya'],
+'Uttarakhand':['Dehradun','Haridwar','Haldwani','Roorkee','Rudrapur','Rishikesh'],
+'West Bengal':['Kolkata','Howrah','Durgapur','Asansol','Siliguri','Kharagpur'],
+'Andaman and Nicobar Islands':['Sri Vijaya Puram','Diglipur'],
+'Chandigarh':['Chandigarh'],
+'Dadra and Nagar Haveli and Daman and Diu':['Silvassa','Daman','Diu'],
+'Delhi':['New Delhi','Delhi'],
+'Jammu and Kashmir':['Srinagar','Jammu','Anantnag','Baramulla'],
+'Ladakh':['Leh','Kargil'],
+'Lakshadweep':['Kavaratti','Agatti','Minicoy'],
+'Puducherry':['Puducherry','Karaikal','Mahe','Yanam']
+};
+export const states=Object.keys(locations).sort();
+export const boards=['CBSE','CISCE / ISC','State Board','NIOS','International Baccalaureate (IB)','Cambridge International','Other'];
+export const validPin=(value:string)=>/^[1-9][0-9]{5}$/.test(value);
