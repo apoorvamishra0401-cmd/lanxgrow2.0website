@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import ts from 'typescript';
+const source=await fs.readFile('src/learner/state.ts','utf8');
+const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+let saved=null;globalThis.localStorage={getItem:()=>saved,setItem:(_k,v)=>{saved=v;}};
+const {initial,loadReview,saveReview,trialEnd,trialDays}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+assert.equal(trialEnd('2026-10-25T16:00:00Z').toISOString(),'2026-10-31T18:30:00.000Z');
+assert.equal(trialDays('2026-10-25T16:00:00Z',Date.parse('2026-10-31T18:29:59Z')),1);
+assert.equal(trialDays('2026-10-25T16:00:00Z',Date.parse('2026-10-31T18:30:00Z')),0);
+assert.equal(trialEnd('2026-12-31T18:00:00Z').toISOString(),'2027-01-06T18:30:00.000Z');
+const d=initial();d.step=11;d.profile.name='Sample';assert(saveReview(d));assert.equal(loadReview().step,11);
+saved='{bad';assert.equal(loadReview().step,0);
+globalThis.localStorage={getItem(){throw Error('blocked');},setItem(){throw Error('blocked');}};assert.equal(saveReview(d),false);assert.equal(loadReview().step,0);
+console.log('Learner checks passed: IST calendar boundaries, year rollover, resume, malformed and blocked storage.');

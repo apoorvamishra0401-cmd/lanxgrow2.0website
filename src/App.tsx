@@ -7,6 +7,7 @@ import Home from '@/pages/Home';
 import { lazy, Suspense } from 'react';
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
+const LearnerPreview = lazy(() => import('@/learner/LearnerPreview'));
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
@@ -32,11 +33,12 @@ export default function App() {
   const { pathname } = useLocation();
   return (
     <>
-    {!pathname.startsWith('/smart-ai') && <FloatingWhatsApp />}
+    {!pathname.startsWith('/smart-ai') && pathname !== '/app-preview' && <FloatingWhatsApp />}
     <PwaStatus />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
+      {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/app-preview" element={<Suspense fallback={<p>Opening your learning space…</p>}><LearnerPreview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={<SignIn />} />
