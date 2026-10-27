@@ -13,3 +13,11 @@
 ## Access verification
 
 HF_TOKEN availability, authentication and development Space write permission verified: https://github.com/apoorvamishra0401-cmd/lanxgrow2.0website/actions/runs/40459228186
+
+## Runtime verification update
+
+- Initial upload succeeded and all five files matched readback at Space revision `14e1c6320b0fcacdeb600ca9977b10e89e885b17`.
+- Five audio utility tests passed locally and in GitHub Actions.
+- Runtime check timed out while Hugging Face reported RUNNING_APP_STARTING. The synthetic TTS-to-STT test did not run; no inference success is claimed.
+- Build logs showed Hub 2.3.0 conflicting with preinstalled datasets' Hub <2 requirement. Added `huggingface-hub>=1.31,<2.0` and startup progress logging; corrective deployment queued.
+- Startup delay cause is not yet conclusively diagnosed. Ten-minute GPU inference and voice quality remain unverified.
