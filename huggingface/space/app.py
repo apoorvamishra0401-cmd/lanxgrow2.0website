@@ -17,12 +17,15 @@ from components import prepare_audio, audio_chunks, validate_text, TTS_SAMPLE_RA
 # Shared scheduling group also serializes API calls across both GPU tasks.
 GPU_GROUP = 'speech-models'
 MODEL_ID = 'openai/whisper-large-v3-turbo'
+print('Startup: loading speech recognition model', flush=True)
 processor = AutoProcessor.from_pretrained(MODEL_ID)
 whisper = AutoModelForSpeechSeq2Seq.from_pretrained(
     MODEL_ID, dtype=torch.float16, use_safetensors=True
 ).to('cuda').eval()
 # Keep Kokoro in float32: blindly applying fp16 to every model can cause issues.
+print('Startup: loading Kokoro model', flush=True)
 kokoro_model = KModel(repo_id='hexgrad/Kokoro-82M').to('cuda').eval()
+print('Startup: preparing Kokoro voices', flush=True)
 voices = {'American': ('a', 'af_heart'), 'British': ('b', 'bf_emma')}
 pipelines = {name: KPipeline(lang_code=language, model=kokoro_model,
     repo_id='hexgrad/Kokoro-82M') for name, (language, _) in voices.items()}
@@ -140,6 +143,7 @@ with gr.Blocks(title='LanXgrow speech workspace', delete_cache=(60, 900)) as dem
             concurrency_id=GPU_GROUP, concurrency_limit=1)
     gr.Markdown('Kokoro voices here are American and British English. Original recordings are deleted after each processing attempt. Generated audio is kept temporarily for playback, up to 15 minutes while the process runs. No learner accounts, reports or conversation model are connected here yet.')
 
+print('Startup: speech endpoints ready', flush=True)
 demo.queue(max_size=8, default_concurrency_limit=1)
 if __name__ == '__main__':
     demo.launch(server_name='0.0.0.0', server_port=7860, show_error=False, max_file_size='60mb')
