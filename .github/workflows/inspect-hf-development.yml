@@ -1,0 +1,66 @@
+name: Inspect Hugging Face development runtime
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/inspect-hf-development.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install the API test client
+        run: python -m pip install 'gradio_client==2.7.2'
+      - name: Wait for the current build and test generated sample only
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python -u - <<'PY'
+          import os, sys, json, time, urllib.request, urllib.error
+          token = os.environ['HF_TOKEN']
+          space = 'Apoorva-Mishra/lanxgrow-learning-dev'
+          def request(path):
+              req = urllib.request.Request('https://huggingface.co' + path,
+                  headers={'Authorization': 'Bearer ' + token})
+              return urllib.request.urlopen(req, timeout=15)
+          def show_errors():
+              for kind in ['build', 'run']:
+                  print('Checking ' + kind + ' diagnostics:')
+                  try:
+                      with request('/api/spaces/' + space + '/logs/' + kind) as stream:
+                          deadline = time.monotonic() + 12
+                          for i, line in enumerate(stream):
+                              if time.monotonic() > deadline or i > 2500: break
+                              text = line.decode('utf-8', 'replace').replace(token, '[REDACTED]')
+                              if any(word in text for word in ['Error', 'ERROR', 'Traceback', 'Exception', 'conflict', 'Cannot install', 'File "', 'ModuleNotFound']):
+                                  print(text[:1600])
+                  except Exception as exc:
+                      print('Log stream ended: ' + type(exc).__name__)
+          for attempt in range(24):
+              with request('/api/spaces/' + space) as response:
+                  info = json.load(response)
+              runtime = info.get('runtime', {})
+              stage = runtime.get('stage')
+              print('Runtime stage: ' + str(stage))
+              if stage in ['RUNTIME_ERROR', 'BUILD_ERROR', 'CONFIG_ERROR']:
+                  show_errors()
+                  sys.exit('The development Space has a build/runtime error.')
+              if stage == 'RUNNING' and runtime.get('sha') == info.get('sha'):
+                  break
+              time.sleep(10)
+          else:
+              show_errors()
+              sys.exit('Build/startup is still pending; no inference success claimed.')
+          from gradio_client import Client, handle_file
+          client = Client(space, hf_token=token, verbose=False)
+          generated, speech_meta = client.predict(
+              'Welcome to LanXgrow. Let us practise English together.',
+              'American', api_name='/synthesize')
+          print('PASS: Kokoro generated sample audio; duration=' + str(speech_meta.get('duration_seconds')))
+          transcript, metadata = client.predict(handle_file(generated), api_name='/transcribe')
+          if not transcript.strip():
+              sys.exit('FAIL: Generated audio did not produce a transcript.')
+          print('PASS: Whisper transcribed generated sample audio.')
+          print('Synthetic sample only. Indian accents, whispers and ten-minute inference remain unverified.')
+          PY
