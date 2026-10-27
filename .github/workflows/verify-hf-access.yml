@@ -1,0 +1,52 @@
+name: Verify Hugging Face access
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/verify-hf-access.yml]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify secret and development Space write permission
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.request
+          import urllib.error
+
+          token = os.environ.get("HF_TOKEN", "").strip()
+          if not token:
+              print("FAIL: HF_TOKEN is missing or unavailable to this workflow.")
+              sys.exit(1)
+          print("PASS: HF_TOKEN is available. Its value is never displayed.")
+
+          def check(path, label):
+              request = urllib.request.Request(
+                  "https://huggingface.co" + path,
+                  headers={"Authorization": "Bearer " + token},
+              )
+              try:
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      response.read()
+                  print("PASS: " + label)
+              except urllib.error.HTTPError as error:
+                  print("FAIL: " + label + "; HTTP " + str(error.code))
+                  sys.exit(1)
+              except Exception:
+                  print("FAIL: Network check could not complete. Retry the workflow.")
+                  sys.exit(1)
+
+          check("/api/whoami-v2", "Hugging Face accepted the token.")
+          check(
+              "/api/spaces/Apoorva-Mishra/lanxgrow-learning-dev/auth-check?write=true",
+              "Write access to the development Space confirmed.",
+          )
+          print("No Space files, hardware, settings or website deployments were changed.")
+          PY
