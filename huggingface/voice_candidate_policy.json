@@ -1,0 +1,45 @@
+{
+  "updated": "2026-10-28",
+  "scope": "Isolated auditions only. No production voice or backend replacement.",
+  "accent_policy": "Different speakers may be selected for each accent. Do not force all three accents from one reference.",
+  "candidates": {
+    "vibevoice_realtime_carter": {
+      "status": "shortlisted_for_report_narration",
+      "model": "microsoft/VibeVoice-Realtime-0.5B",
+      "voice": "en-Carter_man",
+      "reference": "huggingface/voice-samples/american-model-comparison/vibevoice-05b-male.wav"
+    },
+    "chatterbox_turbo_male": {
+      "status": "shortlisted_for_report_narration",
+      "model": "ResembleAI/chatterbox-turbo",
+      "reference": "huggingface/voice-samples/american-model-comparison/chatterbox-turbo-male.wav"
+    },
+    "cosyvoice3": {
+      "status": "audition_next",
+      "model": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "host": "FunAudioLLM/Fun-CosyVoice3-0.5B"
+    },
+    "miso": {
+      "status": "audition_next",
+      "model": "MisoLabs/MisoTTS",
+      "host": "multimodalart/MisoTTS",
+      "constraints": "8B model, commercial licence and deployment feasibility unverified."
+    },
+    "sesame_csm": {
+      "status": "research_next",
+      "model": "sesame/csm-1b",
+      "constraints": "Base generation model; not identical to Sesame hosted companions. Access/compute and reference suitability need verification."
+    }
+  },
+  "paused": {
+    "kokoro": "User target not met; no further auditions for now.",
+    "voxcpm2": "Overall target not met; no new generations. Retain historical preferred clips as benchmarks only.",
+    "edge_tts": "Native accent controls rejected for robotic delivery.",
+    "qwen": "User previously placed in second preference, unused for now.",
+    "legacy_vibevoice": "Official quick demo disabled; not counted as tested."
+  },
+  "benchmark_only": {
+    "female_reference": "huggingface/voice-samples/voxcpm2-style-b-v3/female-01-question.mp3",
+    "reason": "The specifically liked first ~1–10-second clip is a historical reference, not a selected engine or approved interviewer."
+  }
+}
