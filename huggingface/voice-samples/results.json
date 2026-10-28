@@ -1,0 +1,26 @@
+{
+  "script": "Welcome to LanXgrow. I'm Lan-X, your English communication mentor. Take your time. Speak in your own words. Let's build your confidence, one conversation at a time.",
+  "samples": [
+    {
+      "label": "American",
+      "model_voice": "af_heart",
+      "filename": "voice-01-american.wav",
+      "sample_rate": 24000,
+      "duration_seconds": 11.28,
+      "request_seconds": 6.22,
+      "peak": 0.407073974609375,
+      "rms": 0.052261893215005836
+    },
+    {
+      "label": "British",
+      "model_voice": "bf_emma",
+      "filename": "voice-02-british.wav",
+      "sample_rate": 24000,
+      "duration_seconds": 10.47,
+      "request_seconds": 1.11,
+      "peak": 0.529815673828125,
+      "rms": 0.06100390004164062
+    }
+  ],
+  "note": "Technical checks only. Human review of naturalness, pronunciation and confidence remains pending."
+}
