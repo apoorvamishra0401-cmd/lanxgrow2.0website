@@ -1,0 +1,52 @@
+{
+  "script": "Take your time. What part felt difficult? You don't need to get every word right. Tell me one thing you wanted to say, and we'll work through it together.",
+  "selection_policy": "huggingface/voice_candidate_policy.json",
+  "reference_provenance": "Synthetic historical liked references only. No real-person cloning.",
+  "limitations": "First audition of these engines, not a measured improvement or accent qualification. No production integration or guaranteed free capacity.",
+  "results": [
+    {
+      "candidate": "cosyvoice3",
+      "model": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "host": "FunAudioLLM/Fun-CosyVoice3-0.5B",
+      "gender": "male",
+      "reference": "huggingface/voice-samples/american-model-comparison/vibevoice-05b-male.wav",
+      "reference_sha256": "01203b152a8f677f71fb49f18393d7bbc7afe8727977b918f985fd6d01f8676b",
+      "status": "unavailable",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: 'ffmpeg'"
+    },
+    {
+      "candidate": "cosyvoice3",
+      "model": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "host": "FunAudioLLM/Fun-CosyVoice3-0.5B",
+      "gender": "female",
+      "reference": "huggingface/voice-samples/voxcpm2-style-b-v3/female-01-question.mp3",
+      "reference_sha256": "96c31c1b95b0b78e0276e123ed0d0ac9f4dcfe75bb6c2d20a3d8750381fac626",
+      "status": "unavailable",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: 'ffmpeg'"
+    },
+    {
+      "candidate": "miso",
+      "model": "MisoLabs/MisoTTS",
+      "host": "multimodalart/MisoTTS",
+      "gender": "male",
+      "reference": "huggingface/voice-samples/american-model-comparison/vibevoice-05b-male.wav",
+      "reference_sha256": "01203b152a8f677f71fb49f18393d7bbc7afe8727977b918f985fd6d01f8676b",
+      "status": "unavailable",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: 'ffmpeg'"
+    },
+    {
+      "candidate": "miso",
+      "model": "MisoLabs/MisoTTS",
+      "host": "multimodalart/MisoTTS",
+      "gender": "female",
+      "reference": "huggingface/voice-samples/voxcpm2-style-b-v3/female-01-question.mp3",
+      "reference_sha256": "96c31c1b95b0b78e0276e123ed0d0ac9f4dcfe75bb6c2d20a3d8750381fac626",
+      "status": "unavailable",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: 'ffmpeg'"
+    }
+  ]
+}
