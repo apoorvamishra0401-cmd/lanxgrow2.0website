@@ -1,0 +1,92 @@
+{
+  "script": "Welcome to LanXgrow. Take your time, and tell me about your day. If a sentence feels difficult, we'll work through it together. For a past event, try saying, 'Yesterday, I went to the market.' Now, have another go in your own words.",
+  "reference_script": "Welcome to LanXgrow. I'm Lan-X, your English communication mentor. Take your time, and speak in your own words. We'll work through this together. Here is one way to make your meaning clearer. Say: \"Yesterday, I went to the market.\" Now try that sentence once more, at a comfortable pace. Focus on the past tense. Progress comes from practice. Let's take the next step.",
+  "results": [
+    {
+      "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+      "test_host": "Qwen/Qwen3-TTS",
+      "gender_requested": "male",
+      "file": "qwen-06b-male.wav",
+      "sample_rate": 24000,
+      "seconds": 14.06,
+      "request_seconds": 19.87,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": "('Voice clone generation completed successfully!',)"
+    },
+    {
+      "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+      "test_host": "Qwen/Qwen3-TTS",
+      "gender_requested": "female",
+      "file": "qwen-06b-female.wav",
+      "sample_rate": 24000,
+      "seconds": 13.58,
+      "request_seconds": 19.85,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": "('Voice clone generation completed successfully!',)"
+    },
+    {
+      "model": "ResembleAI/chatterbox-turbo",
+      "test_host": "ResembleAI/chatterbox-turbo-demo",
+      "gender_requested": "male",
+      "file": "chatterbox-turbo-male.wav",
+      "sample_rate": 24000,
+      "seconds": 14.8,
+      "request_seconds": 8.55,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": ""
+    },
+    {
+      "model": "ResembleAI/chatterbox-turbo",
+      "test_host": "ResembleAI/chatterbox-turbo-demo",
+      "gender_requested": "female",
+      "file": "chatterbox-turbo-female.wav",
+      "sample_rate": 24000,
+      "seconds": 14.88,
+      "request_seconds": 5.19,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": ""
+    },
+    {
+      "model": "microsoft/VibeVoice-Realtime-0.5B",
+      "test_host": "anycoderapps/VibeVoice-Realtime-0.5B",
+      "gender_requested": "male",
+      "file": "vibevoice-05b-male.wav",
+      "sample_rate": 24000,
+      "seconds": 13.47,
+      "request_seconds": 19.77,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": "('\u2705 **Generation Complete!**\\n            \\n\ud83d\udcca **Metrics:**\\n- Audio Duration: 13.47s\\n- Generation Time: 7.85s\\n- Real-Time Factor: 0.58x\\n- Speaker: en-Carter_man\\n- CFG Scale: 1.5\\n- Device: ZeroGPU (CUDA)\\n            ',)"
+    },
+    {
+      "model": "microsoft/VibeVoice-Realtime-0.5B",
+      "test_host": "anycoderapps/VibeVoice-Realtime-0.5B",
+      "gender_requested": "female",
+      "file": "vibevoice-05b-female.wav",
+      "sample_rate": 24000,
+      "seconds": 16.53,
+      "request_seconds": 9.97,
+      "status": "generated",
+      "accent_status": "American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.",
+      "provider_notes": "('\u2705 **Generation Complete!**\\n            \\n\ud83d\udcca **Metrics:**\\n- Audio Duration: 16.53s\\n- Generation Time: 7.95s\\n- Real-Time Factor: 0.48x\\n- Speaker: en-Grace_woman\\n- CFG Scale: 1.5\\n- Device: ZeroGPU (CUDA)\\n            ',)"
+    },
+    {
+      "model": "MisoLabs/MisoTTS",
+      "gender_requested": "male",
+      "status": "unavailable",
+      "error_type": "AppError",
+      "reason": "You have exceeded your free ZeroGPU quota (120s requested vs. 0s left). Try again in 0:00:00. Subscribe to Hugging Face PRO to get 25 min of ZeroGPU quota a day - https://huggingface.co/subscribe/pro?from=ZeroGPU"
+    },
+    {
+      "model": "VibeVoice-TTS-1.5B",
+      "status": "not_tested",
+      "reason": "Official Microsoft repository lists legacy demo disabled and TTS code removed. Do not count Realtime-0.5B twice."
+    }
+  ],
+  "reference_provenance": "Previously generated synthetic Kokoro American voices; no real-person cloning.",
+  "limitations": "Single short audition per voice. No human quality score, accent verification, deployment benchmark or 98% matching claim."
+}
