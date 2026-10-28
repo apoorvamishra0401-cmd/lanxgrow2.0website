@@ -75,9 +75,19 @@
       "reference_sha256": "c7e6b56fb14dbf440c3695d0e1b261763cb55b4b21fad76f314e90c49bac8f68",
       "instruction": "Natural General American English accent. Preserve the reference speaker's vocal identity. Warm, relaxed, engaged one-to-one conversation. Clear connected articulation, grounded confidence, gentle curiosity in the questions, natural pauses and easy sentence endings. Supportive and understated, with an everyday conversational pace.",
       "cfg": 2.0,
-      "status": "unavailable",
-      "error_type": "QueueError",
-      "reason": "Queue is full! Please try again."
+      "status": "generated",
+      "previous_attempt": {
+        "status": "unavailable",
+        "error_type": "QueueError",
+        "reason": "Queue is full! Please try again."
+      },
+      "file": "lanx-male-american.mp3",
+      "seconds": 12.504,
+      "sample_rate": 48000,
+      "peak": 0.8555120825767517,
+      "sha256": "4ddc0722c6d50088c46d5f24a4c6a4aa35efbe16c2b017e9b0c4854cc6d376b4",
+      "request_seconds": 28.73,
+      "queue_retry_count": 1
     },
     {
       "gender": "male",
