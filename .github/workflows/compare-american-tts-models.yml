@@ -1,0 +1,141 @@
+name: Compare American mentor TTS models
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/compare-american-tts-models.yml]
+permissions:
+  contents: write
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install gradio_client==2.7.2 soundfile numpy
+      - name: Compare models without changing customer applications
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python -u - <<'PY'
+          import json, os, shutil, time
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          from gradio_client import Client, handle_file
+
+          root = Path('huggingface/voice-samples/american-model-comparison')
+          root.mkdir(parents=True, exist_ok=True)
+          token = os.environ['HF_TOKEN']
+          text = ("Welcome to LanXgrow. Take your time, and tell me about your day. "
+                  "If a sentence feels difficult, we'll work through it together. "
+                  "For a past event, try saying, 'Yesterday, I went to the market.' "
+                  "Now, have another go in your own words.")
+          previous = json.loads(Path('huggingface/voice-samples/v2/results.json').read_text())
+          reference_text = ' '.join(previous['paragraphs'])
+          references = {
+              'male': Path('huggingface/voice-samples/v2/01-american-male.wav'),
+              'female': Path('huggingface/voice-samples/v2/02-american-female.wav'),
+          }
+          models = [
+              ('qwen-06b', 'Qwen/Qwen3-TTS', '/generate_voice_clone',
+                  'Qwen/Qwen3-TTS-12Hz-0.6B-Base'),
+              ('chatterbox-turbo', 'ResembleAI/chatterbox-turbo-demo', '/generate',
+                  'ResembleAI/chatterbox-turbo'),
+              ('vibevoice-05b', 'anycoderapps/VibeVoice-Realtime-0.5B', '/generate',
+                  'microsoft/VibeVoice-Realtime-0.5B'),
+              ('miso-8b', 'multimodalart/MisoTTS', '/synthesize', 'MisoLabs/MisoTTS'),
+          ]
+          records = []
+          quota_blocked = False
+          for slug, space, endpoint, model in models:
+              try:
+                  if quota_blocked:
+                      raise RuntimeError('Stopped after platform quota limit; no bypass or automatic paid upgrade.')
+                  client = Client(space, token=token, verbose=False, analytics_enabled=False)
+                  for gender in ['male', 'female']:
+                      start = time.monotonic()
+                      try:
+                          ref = handle_file(str(references[gender]))
+                          if slug == 'qwen-06b':
+                              kwargs = dict(ref_audio=ref, ref_text=reference_text,
+                                  target_text=text, language='English',
+                                  use_xvector_only=False, model_size='0.6B')
+                          elif slug == 'chatterbox-turbo':
+                              kwargs = dict(text=text, audio_prompt_path=ref, temperature=0.8,
+                                  seed_num=42, min_p=0.0, top_p=0.95, top_k=1000,
+                                  repetition_penalty=1.2, norm_loudness=True)
+                          elif slug == 'vibevoice-05b':
+                              kwargs = dict(text=text,
+                                  speaker_name='en-Carter_man' if gender=='male' else 'en-Grace_woman',
+                                  cfg_scale=1.5)
+                          else:
+                              kwargs = dict(text=text, ref_audio_path=ref,
+                                  ref_text=reference_text, speaker_id=0,
+                                  max_length_s=40, temperature=0.6, topk=50)
+                          job = client.submit(api_name=endpoint, **kwargs)
+                          try: result = job.result(timeout=150)
+                          except TimeoutError:
+                              job.cancel()
+                              raise
+                          source = result[0] if isinstance(result, (tuple, list)) else result
+                          if isinstance(source, dict): source = source.get('path')
+                          wave, rate = sf.read(source)
+                          if not wave.size or not np.isfinite(wave).all() or np.max(np.abs(wave)) < .001:
+                              raise RuntimeError('Empty or invalid generated output')
+                          filename = slug+'-'+gender+'.wav'
+                          shutil.copyfile(source, root/filename)
+                          records.append({'model':model,'test_host':space,'gender_requested':gender,
+                              'file':filename,'sample_rate':rate,'seconds':round(len(wave)/rate,2),
+                              'request_seconds':round(time.monotonic()-start,2),'status':'generated',
+                              'accent_status':'American requested via synthetic references; VibeVoice uses English presets. Accent requires listener verification.',
+                              'provider_notes':str(result[1:])[:500] if isinstance(result,(list,tuple)) else ''})
+                          print('GENERATED: '+slug+' '+gender,flush=True)
+                      except Exception as exc:
+                          reason = str(exc).replace(token,'[REDACTED]')[:600]
+                          records.append({'model':model,'gender_requested':gender,'status':'unavailable',
+                              'error_type':type(exc).__name__,'reason':reason})
+                          print('UNAVAILABLE: '+slug+' '+gender+' '+type(exc).__name__,flush=True)
+                          if 'quota' in reason.lower() or 'rate limit' in reason.lower():
+                              quota_blocked = True
+                              break
+              except Exception as exc:
+                  reason = str(exc).replace(token,'[REDACTED]')[:600]
+                  records.append({'model':model,'status':'unavailable','reason':reason})
+                  print('MODEL UNAVAILABLE: '+slug+' '+type(exc).__name__,flush=True)
+
+          records.append({'model':'VibeVoice-TTS-1.5B','status':'not_tested',
+              'reason':'Official Microsoft repository lists legacy demo disabled and TTS code removed. Do not count Realtime-0.5B twice.'})
+          (root/'results.json').write_text(json.dumps(
+              {'script':text,'reference_script':reference_text,'results':records,
+               'reference_provenance':'Previously generated synthetic Kokoro American voices; no real-person cloning.',
+               'limitations':'Single short audition per voice. No human quality score, accent verification, deployment benchmark or 98% matching claim.'},indent=2))
+          (root/'README.md').write_text(
+              '# American mentor voice model comparison\n\n'
+              'Each available model is asked to speak the same script. '
+              'Qwen 0.6B Base, Chatterbox Turbo and Miso use our synthetic Kokoro American reference voices. '
+              'VibeVoice Realtime uses its Carter/Grace English presets; accent needs listener review. '
+              'Miso and VibeVoice use model-linked community demos; Qwen and Chatterbox use official demos. '
+              'This is not a production integration. Licence details and deployment feasibility require separate review. '
+              'No watermark or provenance notice is removed. '
+              'Unavailable tests are explicitly recorded in results.json.\n\n'+text+'\n')
+          print('Generated files: '+str(sum(r.get('status')=='generated' for r in records)),flush=True)
+          PY
+      - name: Preserve comparison results on development branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/american-model-comparison
+          git commit -m 'Save American TTS model audition results and explicit limitations'
+          git pull --rebase origin development/verify-hf-access
+          git push origin HEAD:development/verify-hf-access
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: american-tts-model-comparison
+          path: huggingface/voice-samples/american-model-comparison/
+          retention-days: 30
