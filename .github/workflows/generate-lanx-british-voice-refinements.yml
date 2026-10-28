@@ -112,9 +112,11 @@ jobs:
             echo 'Auditions already saved.'
           else
             git commit -m 'Save four Lan-X mentor voice auditions with measured pacing'
+            git pull --rebase origin development/verify-hf-access
             git push origin HEAD:development/verify-hf-access
           fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: lanx-british-voice-refinements-v3
           path: huggingface/voice-samples/v3/
