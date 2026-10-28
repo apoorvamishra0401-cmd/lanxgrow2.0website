@@ -1,0 +1,124 @@
+name: Four Lan-X mentor voice auditions
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/generate-lanx-voice-auditions.yml]
+permissions:
+  contents: write
+concurrency:
+  group: lanxgrow-voice-auditions-v2
+  cancel-in-progress: false
+jobs:
+  audition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install CPU-only Kokoro audition dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y espeak-ng
+          python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install kokoro==0.9.4 transformers==5.20.2 'huggingface-hub>=1.31,<2' soundfile==0.13.1 numpy
+      - name: Render four comparable, non-personal mentor samples
+        env:
+          GRADIO_ANALYTICS_ENABLED: 'False'
+        run: |
+          python -u - <<'PY'
+          import json, time
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          import torch
+          from kokoro import KModel, KPipeline
+
+          torch.set_num_threads(2)
+          root = Path('huggingface/voice-samples/v2')
+          root.mkdir(parents=True, exist_ok=True)
+          model = KModel(repo_id='hexgrad/Kokoro-82M').to('cpu').eval()
+          pipelines = {code: KPipeline(lang_code=code, model=model,
+              repo_id='hexgrad/Kokoro-82M') for code in ['a', 'b']}
+          paragraphs = [
+              "Welcome to LanXgrow. I'm Lan-X, your English communication mentor.",
+              "Take your time, and speak in your own words. We'll work through this together.",
+              'Here is one way to make your meaning clearer. Say: "Yesterday, I went to the market."',
+              "Now try that sentence once more, at a comfortable pace. Focus on the past tense.",
+              "Progress comes from practice. Let's take the next step.",
+          ]
+          settings = [
+              ('01-american-male', 'American male', 'a', 'am_michael'),
+              ('02-american-female', 'American female', 'a', 'af_bella'),
+              ('03-british-male', 'British male', 'b', 'bm_george'),
+              ('04-british-female', 'British female', 'b', 'bf_emma'),
+          ]
+          results = []
+          for filename, label, code, voice in settings:
+              start = time.monotonic()
+              pieces = []
+              with torch.inference_mode():
+                  for number, paragraph in enumerate(paragraphs):
+                      chunk = []
+                      for _, _, audio in pipelines[code](paragraph, voice=voice, speed=0.95):
+                          if audio is not None:
+                              chunk.append(audio.detach().cpu().numpy().reshape(-1))
+                      if not chunk:
+                          raise RuntimeError('No audio for ' + label)
+                      phrase = np.concatenate(chunk)
+                      # Short boundary fades prevent splice clicks; no pitch shifting.
+                      fade = min(96, len(phrase) // 2)
+                      phrase[:fade] *= np.linspace(0, 1, fade)
+                      phrase[-fade:] *= np.linspace(1, 0, fade)
+                      pieces.append(phrase)
+                      if number < len(paragraphs) - 1:
+                          pieces.append(np.zeros(int(0.32 * 24000), dtype=np.float32))
+              wave = np.concatenate(pieces)
+              if not np.isfinite(wave).all() or np.max(np.abs(wave)) < 0.001:
+                  raise RuntimeError('Invalid or silent audio for ' + label)
+              path = root / (filename + '.wav')
+              sf.write(path, wave, 24000, subtype='PCM_16')
+              readback, rate = sf.read(path)
+              if rate != 24000 or not np.isfinite(readback).all():
+                  raise RuntimeError('Invalid saved sample')
+              results.append({'label': label, 'voice': voice, 'file': path.name,
+                  'seconds': round(len(wave)/24000, 2), 'speed': 0.95,
+                  'paragraph_pause_seconds': 0.32,
+                  'peak': float(np.max(np.abs(readback))),
+                  'clipped_sample_fraction': float(np.mean(np.abs(readback) >= 0.999)),
+                  'render_seconds': round(time.monotonic()-start, 2)})
+              print('PASS: ' + label + ' sample generated and read back.')
+          (root/'results.json').write_text(json.dumps(
+              {'paragraphs': paragraphs, 'samples': results,
+               'runtime': 'isolated GitHub Actions CPU audition; not a live customer backend change',
+               'quality_status': 'Requires human listening review. Kokoro has no arbitrary emotion-instruction control here.'},
+              indent=2))
+          (root/'README.md').write_text(
+              '# Lan-X mentor voice auditions, version 2\n\n'
+              'Four voices: American male/female and British male/female. '
+              'Same script, speed 0.95 and 320 ms paragraph pauses. '
+              'Four-millisecond boundary fades prevent splice clicks. No pitch shifting or voice cloning.\n\n'
+              'Generated in an isolated CPU test worker; the existing Hugging Face app and live website were not changed. '
+              'These are synthetic, non-personal examples. The correction is scripted, not an assessment of an actual learner. '
+              'Warmth, authority and naturalness require listener approval. Respectful, honest feedback also depends on the conversation model and evidence rules.\n\n'
+              + '\n\n'.join(paragraphs) + '\n')
+          PY
+      - name: Save auditions on the development branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/v2
+          if git diff --cached --quiet; then
+            echo 'Auditions already saved.'
+          else
+            git commit -m 'Save four Lan-X mentor voice auditions with measured pacing'
+            git push origin HEAD:development/verify-hf-access
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lanx-four-voice-auditions-v2
+          path: huggingface/voice-samples/v2/
+          retention-days: 30
