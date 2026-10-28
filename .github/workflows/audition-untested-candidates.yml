@@ -1,0 +1,40 @@
+name: Audition only untested voice candidates
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/audition-untested-candidates.yml]
+permissions:
+  contents: write
+jobs:
+  audition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install gradio_client==2.7.2 soundfile==0.13.1 numpy
+      - name: Refine synthetic voices without production changes
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python -u huggingface/experiments/audition_untested_candidates.py
+      - name: Save audition evidence
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/untested-model-auditions
+          if ! git diff --cached --quiet; then
+            git commit -m 'Preserve independent VoxCPM2 interviewer audition results'
+            git pull --rebase origin development/verify-hf-access
+            git push origin HEAD:development/verify-hf-access
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: untested-model-auditions-audition
+          path: huggingface/voice-samples/untested-model-auditions/
+          retention-days: 30
