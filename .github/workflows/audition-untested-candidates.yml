@@ -1,4 +1,5 @@
 name: Audition only untested voice candidates
+# Reference transport uses soundfile; no system ffmpeg dependency.
 on:
   push:
     branches: [development/verify-hf-access]
