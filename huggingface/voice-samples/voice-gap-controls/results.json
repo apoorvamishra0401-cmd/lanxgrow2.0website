@@ -1,0 +1,526 @@
+{
+  "script": "After class, tell me what felt hard. Was it finding the right words, or starting the conversation? It's okay to pause. Let's work through one thought together.",
+  "purpose": "Separate native-accent catalogue control from chosen-speaker identity testing.",
+  "not_production": "No frontend/backend deployment; no paid upgrade.",
+  "limitations": "Catalogue locale is not a human rating of naturalness. Each locale uses a different stock speaker, not one voice changing accents. Continuity tests preserve chosen synthetic references but do not establish emotion or live reasoning.",
+  "results": [
+    {
+      "group": "native_locale",
+      "gender": "female",
+      "accent": "indian",
+      "locale": "en-IN",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-IN-NeerjaNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-IN, NeerjaNeural)",
+        "DisplayName": "Neerja",
+        "LocalName": "Neerja",
+        "ShortName": "en-IN-NeerjaNeural",
+        "Gender": "Female",
+        "Locale": "en-IN",
+        "LocaleName": "English (India)",
+        "StyleList": [
+          "newscast",
+          "cheerful",
+          "empathetic"
+        ],
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "Capabilities": [
+            "multi-style"
+          ],
+          "ModelSeries": [
+            "Monolingual"
+          ],
+          "PersonaId": [
+            "Neerja"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "ContentCategories": [],
+          "VoicePersonalities": []
+        }
+      },
+      "status": "generated",
+      "file": "native-female-indian.mp3",
+      "seconds": 13.08,
+      "sample_rate": 24000,
+      "sha256": "5b6cfdbd99ddbf48709b37fac8e3012f4369b5d4eead0bcac384b732181d2d46",
+      "request_seconds": 1.06
+    },
+    {
+      "group": "native_locale",
+      "gender": "female",
+      "accent": "american",
+      "locale": "en-US",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-US-AvaMultilingualNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-US, AvaMultilingualNeural)",
+        "DisplayName": "Ava Multilingual",
+        "LocalName": "Ava Multilingual",
+        "ShortName": "en-US-AvaMultilingualNeural",
+        "Gender": "Female",
+        "Locale": "en-US",
+        "LocaleName": "English (United States)",
+        "SecondaryLocaleList": [
+          "af-ZA",
+          "am-ET",
+          "ar-EG",
+          "ar-SA",
+          "az-AZ",
+          "bg-BG",
+          "bn-BD",
+          "bn-IN",
+          "bs-BA",
+          "ca-ES",
+          "cs-CZ",
+          "cy-GB",
+          "da-DK",
+          "de-AT",
+          "de-CH",
+          "de-DE",
+          "el-GR",
+          "en-AU",
+          "en-CA",
+          "en-GB",
+          "en-IE",
+          "en-IN",
+          "en-US",
+          "es-ES",
+          "es-MX",
+          "es-US",
+          "et-EE",
+          "eu-ES",
+          "fa-IR",
+          "fi-FI",
+          "fil-PH",
+          "fr-BE",
+          "fr-CA",
+          "fr-CH",
+          "fr-FR",
+          "ga-IE",
+          "gl-ES",
+          "he-IL",
+          "hi-IN",
+          "hr-HR",
+          "hu-HU",
+          "hy-AM",
+          "id-ID",
+          "is-IS",
+          "it-IT",
+          "ja-JP",
+          "jv-ID",
+          "ka-GE",
+          "kk-KZ",
+          "km-KH",
+          "kn-IN",
+          "ko-KR",
+          "lo-LA",
+          "lt-LT",
+          "lv-LV",
+          "mk-MK",
+          "ml-IN",
+          "mn-MN",
+          "ms-MY",
+          "mt-MT",
+          "my-MM",
+          "nb-NO",
+          "ne-NP",
+          "nl-BE",
+          "nl-NL",
+          "pl-PL",
+          "ps-AF",
+          "pt-BR",
+          "pt-PT",
+          "ro-RO",
+          "ru-RU",
+          "si-LK",
+          "sk-SK",
+          "sl-SI",
+          "so-SO",
+          "sq-AL",
+          "sr-RS",
+          "su-ID",
+          "sv-SE",
+          "sw-KE",
+          "ta-IN",
+          "te-IN",
+          "th-TH",
+          "tr-TR",
+          "uk-UA",
+          "ur-PK",
+          "uz-UZ",
+          "vi-VN",
+          "zh-CN",
+          "zh-HK",
+          "zh-TW",
+          "zu-ZA"
+        ],
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "Capabilities": [
+            "context-aware",
+            "multi-lingual"
+          ],
+          "ModelSeries": [
+            "Multilingual"
+          ],
+          "PersonaId": [
+            "Ava"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "TailoredScenarios": [
+            "Chat",
+            "News"
+          ],
+          "VoicePersonalities": [
+            "Pleasant",
+            "Friendly",
+            "Caring"
+          ],
+          "ContentCategories": []
+        }
+      },
+      "status": "generated",
+      "file": "native-female-american.mp3",
+      "seconds": 10.32,
+      "sample_rate": 24000,
+      "sha256": "a43be13ecc8f54749956520d7015915a4001c94ace25d4a1de0cb655c7dbe320",
+      "request_seconds": 1.22
+    },
+    {
+      "group": "native_locale",
+      "gender": "female",
+      "accent": "british",
+      "locale": "en-GB",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-GB-SoniaNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-GB, SoniaNeural)",
+        "DisplayName": "Sonia",
+        "LocalName": "Sonia",
+        "ShortName": "en-GB-SoniaNeural",
+        "Gender": "Female",
+        "Locale": "en-GB",
+        "LocaleName": "English (United Kingdom)",
+        "StyleList": [
+          "cheerful",
+          "sad"
+        ],
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "Capabilities": [
+            "multi-style"
+          ],
+          "ModelSeries": [
+            "Monolingual"
+          ],
+          "PersonaId": [
+            "Sonia"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "TailoredScenarios": [
+            "Narration",
+            "News"
+          ],
+          "VoicePersonalities": [
+            "Gentle",
+            "Soft"
+          ],
+          "ContentCategories": []
+        },
+        "WordsPerMinute": "150"
+      },
+      "status": "generated",
+      "file": "native-female-british.mp3",
+      "seconds": 10.944,
+      "sample_rate": 24000,
+      "sha256": "2e1055e6659d6058358e0447fff5580d33270995c3b55ca8c1eee65aa03b5663",
+      "request_seconds": 0.85
+    },
+    {
+      "group": "native_locale",
+      "gender": "male",
+      "accent": "indian",
+      "locale": "en-IN",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-IN-PrabhatNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-IN, PrabhatNeural)",
+        "DisplayName": "Prabhat",
+        "LocalName": "Prabhat",
+        "ShortName": "en-IN-PrabhatNeural",
+        "Gender": "Male",
+        "Locale": "en-IN",
+        "LocaleName": "English (India)",
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "ModelSeries": [
+            "Monolingual"
+          ],
+          "PersonaId": [
+            "Prabhat"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "ContentCategories": [],
+          "VoicePersonalities": []
+        },
+        "WordsPerMinute": "129"
+      },
+      "status": "generated",
+      "file": "native-male-indian.mp3",
+      "seconds": 13.536,
+      "sample_rate": 24000,
+      "sha256": "9a2ed562d6ad81525c7c162a611f3b30b2379933455da93dbc4bee67124cc8cd",
+      "request_seconds": 0.99
+    },
+    {
+      "group": "native_locale",
+      "gender": "male",
+      "accent": "american",
+      "locale": "en-US",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-US-AndrewMultilingualNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-US, AndrewMultilingualNeural)",
+        "DisplayName": "Andrew Multilingual",
+        "LocalName": "Andrew Multilingual",
+        "ShortName": "en-US-AndrewMultilingualNeural",
+        "Gender": "Male",
+        "Locale": "en-US",
+        "LocaleName": "English (United States)",
+        "StyleList": [
+          "empathetic",
+          "relieved"
+        ],
+        "SecondaryLocaleList": [
+          "af-ZA",
+          "am-ET",
+          "ar-EG",
+          "ar-SA",
+          "az-AZ",
+          "bg-BG",
+          "bn-BD",
+          "bn-IN",
+          "bs-BA",
+          "ca-ES",
+          "cs-CZ",
+          "cy-GB",
+          "da-DK",
+          "de-AT",
+          "de-CH",
+          "de-DE",
+          "el-GR",
+          "en-AU",
+          "en-CA",
+          "en-GB",
+          "en-IE",
+          "en-IN",
+          "en-US",
+          "es-ES",
+          "es-MX",
+          "es-US",
+          "et-EE",
+          "eu-ES",
+          "fa-IR",
+          "fi-FI",
+          "fil-PH",
+          "fr-BE",
+          "fr-CA",
+          "fr-CH",
+          "fr-FR",
+          "ga-IE",
+          "gl-ES",
+          "he-IL",
+          "hi-IN",
+          "hr-HR",
+          "hu-HU",
+          "hy-AM",
+          "id-ID",
+          "is-IS",
+          "it-IT",
+          "ja-JP",
+          "jv-ID",
+          "ka-GE",
+          "kk-KZ",
+          "km-KH",
+          "kn-IN",
+          "ko-KR",
+          "lo-LA",
+          "lt-LT",
+          "lv-LV",
+          "mk-MK",
+          "ml-IN",
+          "mn-MN",
+          "ms-MY",
+          "mt-MT",
+          "my-MM",
+          "nb-NO",
+          "ne-NP",
+          "nl-BE",
+          "nl-NL",
+          "pl-PL",
+          "ps-AF",
+          "pt-BR",
+          "pt-PT",
+          "ro-RO",
+          "ru-RU",
+          "si-LK",
+          "sk-SK",
+          "sl-SI",
+          "so-SO",
+          "sq-AL",
+          "sr-RS",
+          "su-ID",
+          "sv-SE",
+          "sw-KE",
+          "ta-IN",
+          "te-IN",
+          "th-TH",
+          "tr-TR",
+          "uk-UA",
+          "ur-PK",
+          "uz-UZ",
+          "vi-VN",
+          "zh-CN",
+          "zh-HK",
+          "zh-TW",
+          "zu-ZA"
+        ],
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "Capabilities": [
+            "context-aware",
+            "multi-lingual",
+            "multi-style"
+          ],
+          "ModelSeries": [
+            "Multilingual"
+          ],
+          "PersonaId": [
+            "Andrew"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "TailoredScenarios": [
+            "Chat",
+            "Advertisement"
+          ],
+          "VoicePersonalities": [
+            "Confident",
+            "Casual",
+            "Warm"
+          ],
+          "ContentCategories": []
+        }
+      },
+      "status": "generated",
+      "file": "native-male-american.mp3",
+      "seconds": 10.056,
+      "sample_rate": 24000,
+      "sha256": "474546a3c11aa345adf0cb9f1b3e9ea78e65a8a593b8e43393cd5d028c939a1a",
+      "request_seconds": 0.84
+    },
+    {
+      "group": "native_locale",
+      "gender": "male",
+      "accent": "british",
+      "locale": "en-GB",
+      "service": "Microsoft Edge online TTS via edge-tts; hosted proprietary voices, not open model weights.",
+      "voice": "en-GB-RyanNeural",
+      "catalogue_metadata": {
+        "Name": "Microsoft Server Speech Text to Speech Voice (en-GB, RyanNeural)",
+        "DisplayName": "Ryan",
+        "LocalName": "Ryan",
+        "ShortName": "en-GB-RyanNeural",
+        "Gender": "Male",
+        "Locale": "en-GB",
+        "LocaleName": "English (United Kingdom)",
+        "StyleList": [
+          "cheerful",
+          "chat"
+        ],
+        "SampleRateHertz": "48000",
+        "VoiceType": "Neural",
+        "Status": "GA",
+        "VoiceTag": {
+          "Capabilities": [
+            "multi-style"
+          ],
+          "ModelSeries": [
+            "Monolingual"
+          ],
+          "PersonaId": [
+            "Ryan"
+          ],
+          "Source": [
+            "Azure"
+          ],
+          "TailoredScenarios": [
+            "Assistant",
+            "News"
+          ],
+          "VoicePersonalities": [
+            "Bright",
+            "Engaging"
+          ],
+          "ContentCategories": []
+        },
+        "WordsPerMinute": "161"
+      },
+      "status": "generated",
+      "file": "native-male-british.mp3",
+      "seconds": 12.456,
+      "sample_rate": 24000,
+      "sha256": "592f937ace7cb049d5b811fc55f2e975087fb80c5328c69e04738e0de5f97b4c",
+      "request_seconds": 1.18
+    },
+    {
+      "group": "identity_continuity",
+      "gender": "female",
+      "reference_accent_label": "indian",
+      "model": "OpenBMB/VoxCPM2",
+      "mode": "Reference plus exact transcript; no accent transformation or style instruction.",
+      "reference": "huggingface/voice-samples/voxcpm2-primary-accents/lanx-female-indian.mp3",
+      "status": "generated",
+      "file": "continuity-female.mp3",
+      "seconds": 9.624,
+      "sample_rate": 48000,
+      "sha256": "40c80b829b047a4787e4fc6ec1e15e40b3cf56b8b9b7e545a68a856e14292266",
+      "request_seconds": 22.67
+    },
+    {
+      "group": "identity_continuity",
+      "gender": "male",
+      "reference_accent_label": "british",
+      "model": "OpenBMB/VoxCPM2",
+      "mode": "Reference plus exact transcript; no accent transformation or style instruction.",
+      "reference": "huggingface/voice-samples/voxcpm2-primary-accents/lanx-male-british.mp3",
+      "status": "generated",
+      "file": "continuity-male.mp3",
+      "seconds": 10.752,
+      "sample_rate": 48000,
+      "sha256": "92bd1b78109f546e38063910fd73a9b92f558b523c27090eede2897b64125f02",
+      "request_seconds": 26.68
+    }
+  ]
+}
