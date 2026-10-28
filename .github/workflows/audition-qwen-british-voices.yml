@@ -1,0 +1,88 @@
+name: Audition Qwen British voice designs
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/audition-qwen-british-voices.yml]
+permissions:
+  contents: write
+jobs:
+  design:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install gradio_client==2.7.2 soundfile numpy
+      - name: Audition original voices with synthetic text only
+        run: |
+          python -u - <<'PY'
+          import json, shutil, time
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          from gradio_client import Client
+          root = Path('huggingface/voice-samples/qwen-design')
+          root.mkdir(parents=True, exist_ok=True)
+          text = ("Welcome to LanXgrow. Take your time, and speak in your own words. "
+                  "If a sentence feels difficult, we'll work through it together. "
+                  "Let's take the next step.")
+          style = ("An original adult {gender} British English communication coach. "
+                   "Warm, assured conversational delivery, clear articulation, natural connected speech. "
+                   "Gentle variation in pitch and emphasis, unhurried but lively pace, "
+                   "subtle human phrasing and meaningful pauses. Quiet authority, kind and supportive. "
+                   "No announcer voice, exaggerated sales pitch, breathy whisper or robotic monotone. "
+                   "Do not imitate any real person.")
+          client = Client('https://qwen-qwen3-tts.hf.space',
+              verbose=False, analytics_enabled=False)
+          records = []
+          for gender in ['male', 'female']:
+              try:
+                  start = time.monotonic()
+                  job = client.submit(text=text, language='English',
+                      voice_description=style.format(gender=gender),
+                      api_name='/generate_voice_design')
+                  result = job.result(timeout=150)
+                  audio = result[0] if isinstance(result, (list, tuple)) else result
+                  if isinstance(audio, dict):
+                      audio = audio.get('path')
+                  wave, sr = sf.read(audio)
+                  if wave.size == 0 or not np.isfinite(wave).all() or np.max(np.abs(wave)) < 0.001:
+                      raise RuntimeError('Invalid generated audio')
+                  destination = root / ('british-' + gender + '-design.wav')
+                  shutil.copyfile(audio, destination)
+                  records.append({'gender_requested': gender, 'file': destination.name,
+                      'sample_rate': sr, 'seconds': round(len(wave)/sr,2),
+                      'request_seconds': round(time.monotonic()-start,2), 'status':'generated'})
+                  print('PASS: generated ' + gender + ' voice-design audition.')
+              except Exception as exc:
+                  records.append({'gender_requested':gender, 'status':'unavailable',
+                      'error_type':type(exc).__name__, 'reason':str(exc)[:500]})
+                  print('UNAVAILABLE: ' + gender + ' voice design; ' + type(exc).__name__)
+                  # Respect demo limits rather than retrying or bypassing them.
+                  if 'quota' in str(exc).lower() or 'rate' in str(exc).lower():
+                      break
+          (root/'results.json').write_text(json.dumps(
+              {'text':text, 'instruction_template':style, 'samples':records,
+               'provider':'Qwen official public demo; not installed in LanXgrow backend',
+               'review':'Voice qualities and requested accent must be evaluated by listeners; no 98% score measured.'},indent=2))
+          (root/'README.md').write_text(
+              '# Original British voice design auditions\n\n'
+              'Generated using the Qwen official public demo with synthetic non-personal text. '
+              'No real-person reference audio or voice cloning. '
+              'These are not George or Emma; they are newly designed voices. '
+              'This demo is for audition only, not a production dependency. '
+              'Accent and delivery require human review. No 98% quality claim. '
+              'See results.json for generated or unavailable samples.\n')
+          PY
+      - name: Save test results only on development branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/qwen-design
+          git commit -m 'Record original Qwen British voice audition results'
+          git pull --rebase origin development/verify-hf-access
+          git push origin HEAD:development/verify-hf-access
