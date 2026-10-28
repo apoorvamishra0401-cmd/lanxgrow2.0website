@@ -1,0 +1,30 @@
+{
+  "text": "Welcome to LanXgrow. I'm Lan-X. Take a moment to settle in, and tell me about your day. There's no need to rush. If you're unsure of a word, we can work through it together. For a past event, try saying, 'Yesterday, I went to the market.' Now, have another go in your own words. We'll focus on one useful change at a time.",
+  "samples": [
+    {
+      "gender_requested": "male",
+      "file": "british-male-refined.wav",
+      "sample_rate": 24000,
+      "seconds": 20.22,
+      "request_seconds": 27.01,
+      "peak": 0.999969482421875,
+      "clipping_fraction": 2.060984532311085e-06,
+      "instruction": "An original adult male communication mentor with a clear standard British English accent. Speak as if having a relaxed one-to-one conversation with an adult learner, not reading an announcement. Use natural connected speech, crisp but unforced articulation and an easy, gently varied conversational rhythm. Welcome the listener with genuine-sounding warmth; sound patient and attentive when offering help. Make the example sentence clear and matter-of-fact, with gentle emphasis on 'went', never scolding. End with calm, grounded encouragement rather than sales excitement. Use subtle changes in pitch and stress that follow the meaning, short natural pauses at thought boundaries and confident sentence endings. Moderate pace, full and clear tone, warm authority without dominance. Avoid monotone, sing-song delivery, theatrical emotion, whispering, exaggerated breathiness, artificial laughter, added filler words and unnaturally slow narration. Speak only the supplied text. Do not imitate a real person. A comfortably resonant mid-low male register, not artificially deep or gravelly.",
+      "status": "generated"
+    },
+    {
+      "gender_requested": "female",
+      "file": "british-female-refined.wav",
+      "sample_rate": 24000,
+      "seconds": 25.15,
+      "request_seconds": 33.75,
+      "peak": 0.999969482421875,
+      "clipping_fraction": 1.6564793188557041e-06,
+      "instruction": "An original adult female communication mentor with a clear standard British English accent. Speak as if having a relaxed one-to-one conversation with an adult learner, not reading an announcement. Use natural connected speech, crisp but unforced articulation and an easy, gently varied conversational rhythm. Welcome the listener with genuine-sounding warmth; sound patient and attentive when offering help. Make the example sentence clear and matter-of-fact, with gentle emphasis on 'went', never scolding. End with calm, grounded encouragement rather than sales excitement. Use subtle changes in pitch and stress that follow the meaning, short natural pauses at thought boundaries and confident sentence endings. Moderate pace, full and clear tone, warm authority without dominance. Avoid monotone, sing-song delivery, theatrical emotion, whispering, exaggerated breathiness, artificial laughter, added filler words and unnaturally slow narration. Speak only the supplied text. Do not imitate a real person. A warm, rounded mid-range female register with clear projection, not high-pitched or breathy.",
+      "status": "generated"
+    }
+  ],
+  "provider": "Qwen official demo, audition only",
+  "identity_note": "New voice-design generations: exact previous speaker identity is not guaranteed.",
+  "review": "Human listening review required; no measured naturalness percentage. This is scripted example coaching, not learner analysis."
+}
