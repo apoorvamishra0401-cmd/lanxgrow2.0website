@@ -1,5 +1,5 @@
 """Audition only untested candidates permitted by voice_candidate_policy.json."""
-import hashlib,json,os,shutil,subprocess,time
+import hashlib,json,os,shutil,time
 from pathlib import Path
 import numpy as np,soundfile as sf
 from gradio_client import Client,handle_file
@@ -38,7 +38,10 @@ for key in ["cosyvoice3","miso"]:
    ref=Path(references[gender]);item["reference_sha256"]=hashlib.sha256(ref.read_bytes()).hexdigest()
    # Lossless WAV transport for reference; no pitch, speed, echo or loudness effects.
    wav=Path("/tmp/lanx-audition-"+gender+".wav")
-   subprocess.run(["ffmpeg","-v","error","-y","-i",str(ref),"-ac","1","-ar","24000",str(wav)],check=True)
+   reference_audio,reference_rate=sf.read(ref)
+   if reference_audio.ndim>1:
+    reference_audio=reference_audio[:,int(np.argmax(np.mean(reference_audio**2,axis=0)))]
+   sf.write(wav,reference_audio,reference_rate,subtype="PCM_24")
    if key=="cosyvoice3":
     endpoint="/generate_audio"
     kwargs=dict(tts_text=text,mode_value="instruct",prompt_text="",prompt_wav_upload=handle_file(str(wav)),
@@ -71,7 +74,7 @@ for key in ["cosyvoice3","miso"]:
 Only CosyVoice3 and Miso are requested. No new Kokoro, VoxCPM2, Edge or Qwen generations.
 Male reference: previously liked synthetic VibeVoice Carter clip.
 Female reference: the explicitly liked first female question clip, retained as a benchmark rather than active engine.
-References are converted to 24 kHz mono WAV without pitch, speed, denoising, reverb or loudness effects.
+References are converted to mono PCM WAV at their original sampling rate without pitch, speed, denoising, reverb or loudness effects.
 CosyVoice3 uses a short natural delivery instruction and fixed seed; Miso uses reference audio plus exact transcript.
 No attempt to force three accents from one reference. Accent-specific speaker selection is a later gate.
 Quota errors stop all remaining ZeroGPU requests. No paid upgrade, account switching or public-demo production routing.
