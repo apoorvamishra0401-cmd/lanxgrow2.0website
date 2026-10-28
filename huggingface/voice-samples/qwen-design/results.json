@@ -1,0 +1,24 @@
+{
+  "text": "Welcome to LanXgrow. Take your time, and speak in your own words. If a sentence feels difficult, we'll work through it together. Let's take the next step.",
+  "instruction_template": "An original adult {gender} British English communication coach. Warm, assured conversational delivery, clear articulation, natural connected speech. Gentle variation in pitch and emphasis, unhurried but lively pace, subtle human phrasing and meaningful pauses. Quiet authority, kind and supportive. No announcer voice, exaggerated sales pitch, breathy whisper or robotic monotone. Do not imitate any real person.",
+  "samples": [
+    {
+      "gender_requested": "male",
+      "file": "british-male-design.wav",
+      "sample_rate": 24000,
+      "seconds": 10.46,
+      "request_seconds": 17.25,
+      "status": "generated"
+    },
+    {
+      "gender_requested": "female",
+      "file": "british-female-design.wav",
+      "sample_rate": 24000,
+      "seconds": 11.26,
+      "request_seconds": 16.09,
+      "status": "generated"
+    }
+  ],
+  "provider": "Qwen official public demo; not installed in LanXgrow backend",
+  "review": "Voice qualities and requested accent must be evaluated by listeners; no 98% score measured."
+}
