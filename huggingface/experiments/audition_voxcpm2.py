@@ -71,7 +71,7 @@ for name,space,endpoint,model,kwargs in tests:
     records.append(entry)
     (root/"results.json").write_text(json.dumps(dict(
         report_script=report,conversation_script=conversation,results=records,
-        reference_provenance="Our synthetic Kokoro Michael/Bella samples, not real-person recordings.",
+        reference_provenance="Original voice-design requests; no reference audio or real-person cloning used.",
         limitations="Scripted auditions only; no live conversation, first-audio latency measurement or human quality score. Parameter changes are candidates, not proven improvements."
     ),indent=2))
 
