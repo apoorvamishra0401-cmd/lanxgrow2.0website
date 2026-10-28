@@ -91,6 +91,12 @@ for name,space,endpoint,model,kwargs in tests:
         limitations="Scripted auditions only; no live conversation, first-audio latency measurement or human quality score. Parameter changes are candidates, not proven improvements."
     ),indent=2))
 
+(root/"results.json").write_text(json.dumps(dict(
+    report_script=report,conversation_script=conversation,results=records,
+    reference_provenance="Our synthetic Kokoro Michael/Bella samples, not real-person recordings.",
+    limitations="Scripted auditions; no live conversation, first-audio latency or human quality score. Variants are not proven improvements."
+),indent=2))
+
 (root/"README.md").write_text("""# LanXgrow shortlisted male report voices and interviewer auditions
 
 Owner shortlist: VibeVoice Realtime Carter male and Chatterbox Turbo male.
