@@ -1,0 +1,139 @@
+{
+  "report_script": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+  "conversation_script": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+  "results": [
+    {
+      "name": "01-vibevoice-carter-report-a",
+      "model": "microsoft/VibeVoice-Realtime-0.5B",
+      "host": "anycoderapps/VibeVoice-Realtime-0.5B",
+      "endpoint": "/generate",
+      "parameters": {
+        "text": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+        "speaker_name": "en-Carter_man",
+        "cfg_scale": 1.3
+      },
+      "status": "unavailable",
+      "error_type": "AppError",
+      "reason": "You have exceeded your ZeroGPU runs limit. Subscribe to Hugging Face PRO to get 40 min of ZeroGPU quota a day - https://huggingface.co/subscribe/pro?from=ZeroGPU"
+    },
+    {
+      "name": "02-vibevoice-carter-report-b",
+      "model": "microsoft/VibeVoice-Realtime-0.5B",
+      "host": "anycoderapps/VibeVoice-Realtime-0.5B",
+      "endpoint": "/generate",
+      "parameters": {
+        "text": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+        "speaker_name": "en-Carter_man",
+        "cfg_scale": 1.7
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "03-chatterbox-male-report-a",
+      "model": "ResembleAI/chatterbox-turbo",
+      "host": "ResembleAI/chatterbox-turbo-demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+        "temperature": 0.65,
+        "seed_num": 42,
+        "min_p": 0.0,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2,
+        "norm_loudness": true
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "04-chatterbox-male-report-b",
+      "model": "ResembleAI/chatterbox-turbo",
+      "host": "ResembleAI/chatterbox-turbo-demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+        "temperature": 0.9,
+        "seed_num": 42,
+        "min_p": 0.0,
+        "top_p": 0.95,
+        "top_k": 1000,
+        "repetition_penalty": 1.2,
+        "norm_loudness": true
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "05-voxcpm2-male-conversation",
+      "model": "OpenBMB/VoxCPM2",
+      "host": "openbmb/VoxCPM-Demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text_input": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "control_instruction": "An adult male English communication coach with a natural American accent. Warm, grounded, clear and conversational. Speak to one learner at an easy pace. Let emphasis follow meaning, with gentle curiosity in the question and calm reassurance. No announcer delivery, exaggerated emotion, whispering or forced laughter.",
+        "reference_wav_path_input": null,
+        "use_prompt_text": false,
+        "prompt_text_input": "",
+        "cfg_value_input": 2.0,
+        "do_normalize": false,
+        "denoise": false
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "05-voxcpm2-female-conversation",
+      "model": "OpenBMB/VoxCPM2",
+      "host": "openbmb/VoxCPM-Demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text_input": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "control_instruction": "An adult female English communication coach with a natural American accent. Warm, grounded, clear and conversational. Speak to one learner at an easy pace. Let emphasis follow meaning, with gentle curiosity in the question and calm reassurance. No announcer delivery, exaggerated emotion, whispering or forced laughter.",
+        "reference_wav_path_input": null,
+        "use_prompt_text": false,
+        "prompt_text_input": "",
+        "cfg_value_input": 2.0,
+        "do_normalize": false,
+        "denoise": false
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "06-miso-male-conversation",
+      "model": "MisoLabs/MisoTTS",
+      "host": "multimodalart/MisoTTS",
+      "endpoint": "/synthesize",
+      "parameters": {
+        "text": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "ref_text": "Welcome to LanXgrow. I'm Lan-X, your English communication mentor. Take your time, and speak in your own words. We'll work through this together. Here is one way to make your meaning clearer. Say: \"Yesterday, I went to the market.\" Now try that sentence once more, at a comfortable pace. Focus on the past tense. Progress comes from practice. Let's take the next step.",
+        "speaker_id": 0,
+        "max_length_s": 35,
+        "temperature": 0.6,
+        "topk": 50
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    },
+    {
+      "name": "06-miso-female-conversation",
+      "model": "MisoLabs/MisoTTS",
+      "host": "multimodalart/MisoTTS",
+      "endpoint": "/synthesize",
+      "parameters": {
+        "text": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "ref_text": "Welcome to LanXgrow. I'm Lan-X, your English communication mentor. Take your time, and speak in your own words. We'll work through this together. Here is one way to make your meaning clearer. Say: \"Yesterday, I went to the market.\" Now try that sentence once more, at a comfortable pace. Focus on the past tense. Progress comes from practice. Let's take the next step.",
+        "speaker_id": 0,
+        "max_length_s": 35,
+        "temperature": 0.6,
+        "topk": 50
+      },
+      "status": "not_attempted",
+      "reason": "Stopped after quota/rate-limit response. No quota bypass."
+    }
+  ],
+  "reference_provenance": "Our synthetic Kokoro Michael/Bella samples, not real-person recordings.",
+  "limitations": "Scripted auditions; no live conversation, first-audio latency or human quality score. Variants are not proven improvements."
+}
