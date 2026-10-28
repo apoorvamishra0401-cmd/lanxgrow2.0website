@@ -38,7 +38,7 @@ jobs:
                     "Take your time. Speak in your own words. "
                     "Let's build your confidence, one conversation at a time.")
           client = Client('Apoorva-Mishra/lanxgrow-learning-dev',
-              hf_token=os.environ['HF_TOKEN'], verbose=False)
+              token=os.environ['HF_TOKEN'], verbose=False, analytics_enabled=False)
           records = []
           for label, model_voice, filename in [
               ('American', 'af_heart', 'voice-01-american.wav'),
