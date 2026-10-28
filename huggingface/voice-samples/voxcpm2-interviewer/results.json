@@ -1,0 +1,54 @@
+{
+  "report_script": "Your meaning came through. Let's make the past tense clearer. Instead of 'Yesterday I go to the market,' say, 'Yesterday I went to the market.' Try it once more at your own pace. Focus on that one change, then build from there.",
+  "conversation_script": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+  "results": [
+    {
+      "name": "voxcpm2-male-conversation",
+      "model": "OpenBMB/VoxCPM2",
+      "host": "openbmb/VoxCPM-Demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text_input": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "control_instruction": "An adult male English communication coach with a natural American accent. Warm, grounded, clear and conversational. Speak to one learner at an easy pace. Let emphasis follow meaning, with gentle curiosity in the question and calm reassurance. No announcer delivery, exaggerated emotion, whispering or forced laughter.",
+        "reference_wav_path_input": null,
+        "use_prompt_text": false,
+        "prompt_text_input": "",
+        "cfg_value_input": 2.0,
+        "do_normalize": false,
+        "denoise": false
+      },
+      "status": "generated",
+      "file": "voxcpm2-male-conversation.mp3",
+      "sample_rate": 48000,
+      "seconds": 12.84,
+      "peak": 0.49469178915023804,
+      "sha256": "ba585f2bcd2da257631a53d872b2091c8328cc031f93a1dfc50fd576d0a00fc9",
+      "request_seconds": 5.86
+    },
+    {
+      "name": "voxcpm2-female-conversation",
+      "model": "OpenBMB/VoxCPM2",
+      "host": "openbmb/VoxCPM-Demo",
+      "endpoint": "/generate",
+      "parameters": {
+        "text_input": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+        "control_instruction": "An adult female English communication coach with a natural American accent. Warm, grounded, clear and conversational. Speak to one learner at an easy pace. Let emphasis follow meaning, with gentle curiosity in the question and calm reassurance. No announcer delivery, exaggerated emotion, whispering or forced laughter.",
+        "reference_wav_path_input": null,
+        "use_prompt_text": false,
+        "prompt_text_input": "",
+        "cfg_value_input": 2.0,
+        "do_normalize": false,
+        "denoise": false
+      },
+      "status": "generated",
+      "file": "voxcpm2-female-conversation.mp3",
+      "sample_rate": 48000,
+      "seconds": 11.4,
+      "peak": 0.8866168856620789,
+      "sha256": "5d0fc08c29401c1badbfa4234b659c28b92dcb7b78005540fa01e4fb427d658b",
+      "request_seconds": 3.28
+    }
+  ],
+  "reference_provenance": "Our synthetic Kokoro Michael/Bella samples, not real-person recordings.",
+  "limitations": "Scripted auditions only; no live conversation, first-audio latency measurement or human quality score. Parameter changes are candidates, not proven improvements."
+}
