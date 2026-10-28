@@ -13,7 +13,7 @@
         "reference_wav_path_input": null,
         "use_prompt_text": false,
         "prompt_text_input": "",
-        "cfg_value_input": 2.0,
+        "cfg_value_input": 2,
         "do_normalize": false,
         "denoise": false
       },
@@ -36,7 +36,7 @@
         "reference_wav_path_input": null,
         "use_prompt_text": false,
         "prompt_text_input": "",
-        "cfg_value_input": 2.0,
+        "cfg_value_input": 2,
         "do_normalize": false,
         "denoise": false
       },
@@ -49,6 +49,6 @@
       "request_seconds": 3.28
     }
   ],
-  "reference_provenance": "Our synthetic Kokoro Michael/Bella samples, not real-person recordings.",
+  "reference_provenance": "Original voice-design requests; no reference audio or real-person cloning used.",
   "limitations": "Scripted auditions only; no live conversation, first-audio latency measurement or human quality score. Parameter changes are candidates, not proven improvements."
 }
