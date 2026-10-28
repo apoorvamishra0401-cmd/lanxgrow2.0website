@@ -1,0 +1,110 @@
+name: Refine Qwen mentor voices
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/refine-qwen-mentor-voices.yml]
+permissions:
+  contents: write
+jobs:
+  voices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install gradio_client==2.7.2 soundfile numpy
+      - name: Generate refined synthetic mentor samples
+        run: |
+          python -u - <<'PY'
+          import json, shutil, time
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          from gradio_client import Client
+
+          root = Path('huggingface/voice-samples/qwen-refined-v2')
+          root.mkdir(parents=True, exist_ok=True)
+          text = ("Welcome to LanXgrow. I'm Lan-X. Take a moment to settle in, and tell me about your day. "
+                  "There's no need to rush. If you're unsure of a word, we can work through it together. "
+                  "For a past event, try saying, 'Yesterday, I went to the market.' "
+                  "Now, have another go in your own words. We'll focus on one useful change at a time.")
+          common = (
+              "An original adult {gender} communication mentor with a clear standard British English accent. "
+              "Speak as if having a relaxed one-to-one conversation with an adult learner, not reading an announcement. "
+              "Use natural connected speech, crisp but unforced articulation and an easy, gently varied conversational rhythm. "
+              "Welcome the listener with genuine-sounding warmth; sound patient and attentive when offering help. "
+              "Make the example sentence clear and matter-of-fact, with gentle emphasis on 'went', never scolding. "
+              "End with calm, grounded encouragement rather than sales excitement. "
+              "Use subtle changes in pitch and stress that follow the meaning, short natural pauses at thought boundaries "
+              "and confident sentence endings. Moderate pace, full and clear tone, warm authority without dominance. "
+              "Avoid monotone, sing-song delivery, theatrical emotion, whispering, exaggerated breathiness, "
+              "artificial laughter, added filler words and unnaturally slow narration. "
+              "Speak only the supplied text. Do not imitate a real person."
+          )
+          variants = {
+              'male': " A comfortably resonant mid-low male register, not artificially deep or gravelly.",
+              'female': " A warm, rounded mid-range female register with clear projection, not high-pitched or breathy.",
+          }
+          client = Client('https://qwen-qwen3-tts.hf.space',
+              verbose=False, analytics_enabled=False)
+          records = []
+          for gender, character in variants.items():
+              instruction = common.format(gender=gender) + character
+              try:
+                  start = time.monotonic()
+                  result = client.submit(text=text, language='English',
+                      voice_description=instruction,
+                      api_name='/generate_voice_design').result(timeout=150)
+                  source = result[0] if isinstance(result, (list, tuple)) else result
+                  if isinstance(source, dict): source = source.get('path')
+                  wave, rate = sf.read(source)
+                  if not wave.size or not np.isfinite(wave).all() or np.max(np.abs(wave)) < .001:
+                      raise RuntimeError('Empty or invalid voice output')
+                  target = root / ('british-' + gender + '-refined.wav')
+                  shutil.copyfile(source, target)
+                  records.append({'gender_requested':gender,'file':target.name,
+                      'sample_rate':rate,'seconds':round(len(wave)/rate,2),
+                      'request_seconds':round(time.monotonic()-start,2),
+                      'peak':float(np.max(np.abs(wave))),
+                      'clipping_fraction':float(np.mean(np.abs(wave)>=.999)),
+                      'instruction':instruction,'status':'generated'})
+                  print('PASS: refined ' + gender + ' sample generated.')
+              except Exception as exc:
+                  records.append({'gender_requested':gender,'status':'unavailable',
+                      'reason':str(exc)[:500],'error_type':type(exc).__name__})
+                  print('UNAVAILABLE: ' + gender + '; ' + type(exc).__name__)
+                  if 'quota' in str(exc).lower() or 'rate limit' in str(exc).lower(): break
+          (root/'results.json').write_text(json.dumps(
+              {'text':text,'samples':records,
+               'provider':'Qwen official demo, audition only',
+               'identity_note':'New voice-design generations: exact previous speaker identity is not guaranteed.',
+               'review':'Human listening review required; no measured naturalness percentage. This is scripted example coaching, not learner analysis.'},
+              indent=2))
+          (root/'README.md').write_text(
+              '# Qwen mentor voice refinements v2\n\n'
+              'Original British male/female designs with contextual instructions for warmth, '
+              'natural connected delivery, clear examples and restrained encouragement. '
+              'No reference audio or real-person cloning. New voice-design generations may change timbre. '
+              'No pitch manipulation, fake breathing or inserted silences. '
+              'Only non-personal synthetic text was sent to the official public demo. '
+              'The demo is not installed or used as a customer backend. '
+              'Exact speech accuracy, accent and perceived naturalness require review.\n\n'
+              + text + '\n')
+          PY
+      - name: Save refined auditions only on development branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/qwen-refined-v2
+          git commit -m 'Save refined original Qwen mentor voice samples'
+          git pull --rebase origin development/verify-hf-access
+          git push origin HEAD:development/verify-hf-access
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen-refined-mentor-voices
+          path: huggingface/voice-samples/qwen-refined-v2/
+          retention-days: 30
