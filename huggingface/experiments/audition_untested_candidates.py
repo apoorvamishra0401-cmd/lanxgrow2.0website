@@ -1,5 +1,5 @@
 """Audition only untested candidates permitted by voice_candidate_policy.json."""
-import hashlib,json,os,shutil,time
+import hashlib,json,os,shutil,time,urllib.request
 from pathlib import Path
 import numpy as np,soundfile as sf
 from gradio_client import Client,handle_file
@@ -44,6 +44,15 @@ for key in ["cosyvoice3","miso"]:
    sf.write(wav,reference_audio,reference_rate,subtype="PCM_24")
    if key=="cosyvoice3":
     endpoint="/generate_audio"
+    requested_style="You are a helpful assistant. Speak warmly and naturally in a relaxed one-to-one conversation.<|endofprompt|>"
+    with urllib.request.urlopen("https://funaudiollm-fun-cosyvoice3-0-5b.hf.space/gradio_api/info",timeout=20) as response:
+     api_info=json.load(response)
+    params=api_info["named_endpoints"]["/generate_audio"]["parameters"]
+    instruction_param=next(p for p in params if p["parameter_name"]=="instruct_text")
+    allowed=instruction_param.get("type",{}).get("enum")
+    if allowed and requested_style not in allowed:
+     item["blocker"]="hosted_demo_control"
+     raise RuntimeError("Hosted demo only accepts preset instructions; requested mentor style is unavailable. No model-quality verdict.")
     kwargs=dict(tts_text=text,mode_value="instruct",prompt_text="",prompt_wav_upload=handle_file(str(wav)),
       prompt_wav_record=None,instruct_text="You are a helpful assistant. Speak warmly and naturally in a relaxed one-to-one conversation.<|endofprompt|>",
       seed=42,stream=False,ui_lang="En")
