@@ -1,0 +1,121 @@
+name: British Lan-X voice delivery refinements
+on:
+  push:
+    branches: [development/verify-hf-access]
+    paths: [.github/workflows/generate-lanx-british-voice-refinements.yml]
+permissions:
+  contents: write
+concurrency:
+  group: lanxgrow-british-refinements-v3
+  cancel-in-progress: false
+jobs:
+  audition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: development/verify-hf-access
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install CPU-only Kokoro audition dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y espeak-ng
+          python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install kokoro==0.9.4 transformers==5.20.2 'huggingface-hub>=1.31,<2' soundfile==0.13.1 numpy
+      - name: Render connected British delivery and two alternative voices
+        env:
+          GRADIO_ANALYTICS_ENABLED: 'False'
+        run: |
+          python -u - <<'PY'
+          import json, time
+          from pathlib import Path
+          import numpy as np
+          import soundfile as sf
+          import torch
+          from kokoro import KModel, KPipeline
+
+          torch.set_num_threads(2)
+          root = Path('huggingface/voice-samples/v3')
+          root.mkdir(parents=True, exist_ok=True)
+          model = KModel(repo_id='hexgrad/Kokoro-82M').to('cpu').eval()
+          pipelines = {code: KPipeline(lang_code=code, model=model,
+              repo_id='hexgrad/Kokoro-82M') for code in ['a', 'b']}
+          paragraphs = [
+              "Welcome to LanXgrow. I'm Lan-X, your English communication mentor.",
+              "Take your time, and speak in your own words. We'll work through this together.",
+              'Here is one way to make your meaning clearer. Say: "Yesterday, I went to the market."',
+              "Now try that sentence once more, at a comfortable pace. Focus on the past tense.",
+              "Progress comes from practice. Let's take the next step.",
+          ]
+          settings = [
+              ('01-george-connected', 'George — connected delivery', 'b', 'bm_george'),
+              ('02-emma-connected', 'Emma — connected delivery', 'b', 'bf_emma'),
+              ('03-fable-alternative', 'Fable — British male alternative', 'b', 'bm_fable'),
+              ('04-isabella-alternative', 'Isabella — British female alternative', 'b', 'bf_isabella'),
+          ]
+          results = []
+          for filename, label, code, voice in settings:
+              start = time.monotonic()
+              pieces = []
+              # Preserve sentence-to-sentence context instead of restarting each
+              # paragraph and inserting identical 320 ms silences.
+              script = ' '.join(paragraphs)
+              with torch.inference_mode():
+                  for _, _, audio in pipelines[code](script, voice=voice, speed=1.0):
+                      if audio is not None:
+                          pieces.append(audio.detach().cpu().numpy().reshape(-1))
+              if not pieces:
+                  raise RuntimeError('No audio for ' + label)
+              wave = np.concatenate(pieces)
+              fade = min(96, len(wave) // 2)
+              wave[:fade] *= np.linspace(0, 1, fade)
+              wave[-fade:] *= np.linspace(1, 0, fade)
+              if not np.isfinite(wave).all() or np.max(np.abs(wave)) < 0.001:
+                  raise RuntimeError('Invalid or silent audio for ' + label)
+              path = root / (filename + '.wav')
+              sf.write(path, wave, 24000, subtype='PCM_16')
+              readback, rate = sf.read(path)
+              if rate != 24000 or not np.isfinite(readback).all():
+                  raise RuntimeError('Invalid saved sample')
+              results.append({'label': label, 'voice': voice, 'file': path.name,
+                  'seconds': round(len(wave)/24000, 2), 'speed': 1.0,
+                  'inserted_pause_seconds': 0.0,
+                  'peak': float(np.max(np.abs(readback))),
+                  'clipped_sample_fraction': float(np.mean(np.abs(readback) >= 0.999)),
+                  'render_seconds': round(time.monotonic()-start, 2)})
+              print('PASS: ' + label + ' sample generated and read back.')
+          (root/'results.json').write_text(json.dumps(
+              {'paragraphs': paragraphs, 'samples': results,
+               'runtime': 'isolated GitHub Actions CPU audition; not a live customer backend change',
+               'quality_status': 'Requires human listening review. Kokoro has no arbitrary emotion-instruction control here.'},
+              indent=2))
+          (root/'README.md').write_text(
+              '# British Lan-X voice delivery comparison, v3\n\n'
+              'George and Emma are regenerated using the same script as v2, '
+              'with continuous text context, natural model pauses, speed 1.0 '
+              'and no inserted paragraph silences. Fable and Isabella provide '
+              'two additional British voice presets under the same settings.\n\n'
+              'This is an experiment, not a claim that human-like delivery is achieved. '
+              'No 98% matching score has been measured. No arbitrary emotion control '
+              'or pitch shifting was applied. These are synthetic coaching examples.\n\n'
+              + '\n\n'.join(paragraphs) + '\n')
+          PY
+      - name: Save auditions on the development branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add huggingface/voice-samples/v3
+          if git diff --cached --quiet; then
+            echo 'Auditions already saved.'
+          else
+            git commit -m 'Save four Lan-X mentor voice auditions with measured pacing'
+            git push origin HEAD:development/verify-hf-access
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lanx-british-voice-refinements-v3
+          path: huggingface/voice-samples/v3/
+          retention-days: 30
