@@ -1,0 +1,57 @@
+{
+  "paragraphs": [
+    "Welcome to LanXgrow. I'm Lan-X, your English communication mentor.",
+    "Take your time, and speak in your own words. We'll work through this together.",
+    "Here is one way to make your meaning clearer. Say: \"Yesterday, I went to the market.\"",
+    "Now try that sentence once more, at a comfortable pace. Focus on the past tense.",
+    "Progress comes from practice. Let's take the next step."
+  ],
+  "samples": [
+    {
+      "label": "George \u2014 connected delivery",
+      "voice": "bm_george",
+      "file": "01-george-connected.wav",
+      "seconds": 22.18,
+      "speed": 1.0,
+      "inserted_pause_seconds": 0.0,
+      "peak": 0.362518310546875,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 8.5
+    },
+    {
+      "label": "Emma \u2014 connected delivery",
+      "voice": "bf_emma",
+      "file": "02-emma-connected.wav",
+      "seconds": 20.68,
+      "speed": 1.0,
+      "inserted_pause_seconds": 0.0,
+      "peak": 0.50933837890625,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 7.73
+    },
+    {
+      "label": "Fable \u2014 British male alternative",
+      "voice": "bm_fable",
+      "file": "03-fable-alternative.wav",
+      "seconds": 18.93,
+      "speed": 1.0,
+      "inserted_pause_seconds": 0.0,
+      "peak": 0.5159912109375,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 7.08
+    },
+    {
+      "label": "Isabella \u2014 British female alternative",
+      "voice": "bf_isabella",
+      "file": "04-isabella-alternative.wav",
+      "seconds": 21.23,
+      "speed": 1.0,
+      "inserted_pause_seconds": 0.0,
+      "peak": 0.6409912109375,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 7.8
+    }
+  ],
+  "runtime": "isolated GitHub Actions CPU audition; not a live customer backend change",
+  "quality_status": "Requires human listening review. Kokoro has no arbitrary emotion-instruction control here."
+}
