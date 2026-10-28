@@ -1,0 +1,134 @@
+{
+  "model": "OpenBMB/VoxCPM2",
+  "host": "openbmb/VoxCPM-Demo",
+  "reference_provenance": "Our synthetic Style B male/female v2 outputs; no real person or commercial-service voice reference.",
+  "design_goal": "Clear, natural, engaged, supportive, context-appropriate delivery; not a measured ElevenLabs or ChatGPT equivalence.",
+  "turns": [
+    {
+      "name": "01-question",
+      "text": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+      "direction": "Ask with genuine, gentle curiosity. Reassure simply, then leave space for the learner."
+    },
+    {
+      "name": "02-clarification",
+      "text": "When you say it was difficult, do you mean finding the right words, or saying them out loud? We can start with whichever feels harder.",
+      "direction": "Thoughtful, attentive clarification. Light emphasis on the two alternatives; a natural question intonation."
+    },
+    {
+      "name": "03-feedback",
+      "text": "For a past event, say, 'Yesterday I went to the market.' Use 'went' instead of 'go.' You don't need to change the whole sentence. Try it again, then tell me what happened next.",
+      "direction": "Explain clearly and matter-of-factly. Make the contrast between went and go easy to hear. Encourage the next attempt with quiet confidence."
+    }
+  ],
+  "core_direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. ",
+  "cfg": 2.0,
+  "results": [
+    {
+      "gender": "male",
+      "turn": "01-question",
+      "text": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Ask with genuine, gentle curiosity. Reassure simply, then leave space for the learner.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-male-b.mp3",
+      "reference_sha256": "221412f448ca5aa49d34d81cb399104e35a90e4a9a99a8a0df52488fe3f9af25",
+      "status": "generated",
+      "file": "male-01-question.mp3",
+      "sample_rate": 48000,
+      "seconds": 12.504,
+      "peak": 0.8396866321563721,
+      "sha256": "c7e6b56fb14dbf440c3695d0e1b261763cb55b4b21fad76f314e90c49bac8f68",
+      "request_seconds": 15.53
+    },
+    {
+      "gender": "male",
+      "turn": "02-clarification",
+      "text": "When you say it was difficult, do you mean finding the right words, or saying them out loud? We can start with whichever feels harder.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Thoughtful, attentive clarification. Light emphasis on the two alternatives; a natural question intonation.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-male-b.mp3",
+      "reference_sha256": "221412f448ca5aa49d34d81cb399104e35a90e4a9a99a8a0df52488fe3f9af25",
+      "status": "generated",
+      "file": "male-02-clarification.mp3",
+      "sample_rate": 48000,
+      "seconds": 8.832,
+      "peak": 0.7965139150619507,
+      "sha256": "ec452b66129129835bf3948e51adbfd8642a2e135b511cc689ae1c313a185bd8",
+      "request_seconds": 16.08
+    },
+    {
+      "gender": "male",
+      "turn": "03-feedback",
+      "text": "For a past event, say, 'Yesterday I went to the market.' Use 'went' instead of 'go.' You don't need to change the whole sentence. Try it again, then tell me what happened next.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Explain clearly and matter-of-factly. Make the contrast between went and go easy to hear. Encourage the next attempt with quiet confidence.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-male-b.mp3",
+      "reference_sha256": "221412f448ca5aa49d34d81cb399104e35a90e4a9a99a8a0df52488fe3f9af25",
+      "status": "generated",
+      "file": "male-03-feedback.mp3",
+      "sample_rate": 48000,
+      "seconds": 12.504,
+      "peak": 0.8620105385780334,
+      "sha256": "721fdd00f545b34bfafd72ffae79aa5e3aac79deba485f3f8a18855f2508a5c8",
+      "request_seconds": 14.69
+    },
+    {
+      "gender": "female",
+      "turn": "01-question",
+      "text": "Take your time. Tell me about something you enjoyed recently. What happened, and what made it memorable? You don't need perfect English. Start with the part you feel most comfortable sharing.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Ask with genuine, gentle curiosity. Reassure simply, then leave space for the learner.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-female-b.mp3",
+      "reference_sha256": "ef5a9cbffd5fe7f287b2f590ed484b1d280b4edc1f3983413c54f6064fcc580b",
+      "status": "generated",
+      "file": "female-01-question.mp3",
+      "sample_rate": 48000,
+      "seconds": 10.92,
+      "peak": 0.9476314187049866,
+      "sha256": "96c31c1b95b0b78e0276e123ed0d0ac9f4dcfe75bb6c2d20a3d8750381fac626",
+      "request_seconds": 20.07
+    },
+    {
+      "gender": "female",
+      "turn": "02-clarification",
+      "text": "When you say it was difficult, do you mean finding the right words, or saying them out loud? We can start with whichever feels harder.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Thoughtful, attentive clarification. Light emphasis on the two alternatives; a natural question intonation.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-female-b.mp3",
+      "reference_sha256": "ef5a9cbffd5fe7f287b2f590ed484b1d280b4edc1f3983413c54f6064fcc580b",
+      "status": "generated",
+      "file": "female-02-clarification.mp3",
+      "sample_rate": 48000,
+      "seconds": 7.56,
+      "peak": 0.7450664043426514,
+      "sha256": "6db7671690f3d641c63b625a0401f903be44cff2ce56e2242b22bf04087e607f",
+      "request_seconds": 28.27
+    },
+    {
+      "gender": "female",
+      "turn": "03-feedback",
+      "text": "For a past event, say, 'Yesterday I went to the market.' Use 'went' instead of 'go.' You don't need to change the whole sentence. Try it again, then tell me what happened next.",
+      "direction": "Speak naturally to one learner, with engaged, grounded confidence and understated warmth. Use clear, connected words, meaning-led emphasis, varied sentence melody and brief natural pauses. Keep an everyday pace and the reference speaker's identity. Explain clearly and matter-of-factly. Make the contrast between went and go easy to hear. Encourage the next attempt with quiet confidence.",
+      "reference": "huggingface/voice-samples/voxcpm2-refined-v2/voxcpm2-female-b.mp3",
+      "reference_sha256": "ef5a9cbffd5fe7f287b2f590ed484b1d280b4edc1f3983413c54f6064fcc580b",
+      "status": "generated",
+      "file": "female-03-feedback.mp3",
+      "sample_rate": 48000,
+      "seconds": 9.96,
+      "peak": 0.6664389967918396,
+      "sha256": "1bef3478735c4105ebd97b04bb58ae72fc156690347ea86829ef844ba6438125",
+      "request_seconds": 11.4
+    }
+  ],
+  "montages": [
+    {
+      "gender": "male",
+      "file": "lanx-male-style-b-v3.wav",
+      "seconds": 35.24,
+      "sha256": "073ed7ca9c2cadd505d34459e3081771a488921d044e8d5cf0a7acc3bacc92a7",
+      "editing": "Three unaltered speech clips in sequence; 0.7 seconds silence between clips. No learner audio, pitch or speed modification."
+    },
+    {
+      "gender": "female",
+      "file": "lanx-female-style-b-v3.wav",
+      "seconds": 29.84,
+      "sha256": "4724994531f92339da6dd27e17f040a85a3c940cfd821034fb4eeea65f7f5f01",
+      "editing": "Three unaltered speech clips in sequence; 0.7 seconds silence between clips. No learner audio, pitch or speed modification."
+    }
+  ],
+  "limitations": "Scripted voice-only audition, not live listening or reasoning. No model fine-tuning, identity-similarity metric, blind listening score or streaming benchmark. Review accent, words, naturalness and identity by listening."
+}
