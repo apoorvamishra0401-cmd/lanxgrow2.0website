@@ -1,0 +1,57 @@
+{
+  "paragraphs": [
+    "Welcome to LanXgrow. I'm Lan-X, your English communication mentor.",
+    "Take your time, and speak in your own words. We'll work through this together.",
+    "Here is one way to make your meaning clearer. Say: \"Yesterday, I went to the market.\"",
+    "Now try that sentence once more, at a comfortable pace. Focus on the past tense.",
+    "Progress comes from practice. Let's take the next step."
+  ],
+  "samples": [
+    {
+      "label": "American male",
+      "voice": "am_michael",
+      "file": "01-american-male.wav",
+      "seconds": 28.98,
+      "speed": 0.95,
+      "paragraph_pause_seconds": 0.32,
+      "peak": 0.600372314453125,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 9.94
+    },
+    {
+      "label": "American female",
+      "voice": "af_bella",
+      "file": "02-american-female.wav",
+      "seconds": 27.95,
+      "speed": 0.95,
+      "paragraph_pause_seconds": 0.32,
+      "peak": 0.518646240234375,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 9.59
+    },
+    {
+      "label": "British male",
+      "voice": "bm_george",
+      "file": "03-british-male.wav",
+      "seconds": 29.18,
+      "speed": 0.95,
+      "paragraph_pause_seconds": 0.32,
+      "peak": 0.386962890625,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 10.18
+    },
+    {
+      "label": "British female",
+      "voice": "bf_emma",
+      "file": "04-british-female.wav",
+      "seconds": 26.88,
+      "speed": 0.95,
+      "paragraph_pause_seconds": 0.32,
+      "peak": 0.538360595703125,
+      "clipped_sample_fraction": 0.0,
+      "render_seconds": 9.21
+    }
+  ],
+  "runtime": "isolated GitHub Actions CPU audition; not a live customer backend change",
+  "quality_status": "Requires human listening review. Kokoro has no arbitrary emotion-instruction control here."
+}
