@@ -20,7 +20,7 @@
 - Restore the original stacked hero on phones and tablets: heading, body and CTAs first, then the full-width product visual. The user rejected the compact side-by-side mobile hero on 25 October 2026. Keep desktop two-column layout, readable type and 44px controls.
 - Service-entry CTAs lead to `/get-started`, including header Sign in. Contact page removed by user request. Use floating WhatsApp, footer email and login support links instead. Old contact URLs redirect to the welcome screen.
 - Welcome -> `/signin` -> Google, email/password, or phone/password. Do not claim a provider works unless configuration and real authentication have been verified.
-- Keep the next learner screen at the existing placeholder until the user supplies its design.
+- Learner flow approved 29 October: account entry → learner preferences → welcome video → Lan-X assessment → reports → learning Home. Never bypass preferences for a new learner. The review build uses explicitly labelled local account navigation, not real authentication.
 
 ## Account data
 - Supabase Auth owns passwords and identities. Never create a plain-text password table.
@@ -48,3 +48,9 @@
 - Home CTA is provisionally Start learning. Report purchase remains separate from subscriptions; do not invent price, access benefits or payment success.
 - Orb has distinct ready/listening/thinking/speaking/connection states with touch support and reduced-motion behaviour. Future real speaking/listening states must be driven by real media events.
 - Current implementation is frontend review only on preview/lanx-assessment-screens. No live domain promotion is authorised.
+
+## Complete frontend preview — 29 October 2026
+- Keep `/get-started` as the review entry. Old `/assessment-preview` must go through account/onboarding gates. Screen selectors belong only to `/design-review/assessment`, never the normal learner journey.
+- Current local review account state is not security. Real authentication, ownership, entitlements, payments and admin roles must be enforced server-side before customer release.
+- Keep both learning Home variants, all three Practice flows, Call, Video, Reports, Plan, Profile, Settings and support navigable in the isolated preview. Admin review contains fixtures only.
+- Never store passwords, provider keys or recordings in browser persistent storage. Do not show fabricated scores or payment success as real results.
