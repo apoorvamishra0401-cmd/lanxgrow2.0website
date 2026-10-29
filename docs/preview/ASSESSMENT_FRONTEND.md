@@ -22,7 +22,7 @@ Only `preview/lanx-assessment-screens`, Vercel staging deployment, `VITE_SMART_S
 No real accounts, provider OAuth, server sessions, daily entitlement enforcement, live AI responses, transcription, analysis, report generation, payment processing or subscription changes. No fabricated personal scores. Recorded audio/video is local to the open screen. Sample report and checkout-success designs are explicitly labelled examples; payments remain disabled. Prices and enhanced report benefits are not invented. Real backend ownership and roles remain required before release.
 
 ## Visual system
-Original official logo; supplied illustration assets extracted to WebP; warm ivory, charcoal, terracotta, champagne with Fraunces/Inter. Orb preserves the approved artwork and central brand mark while Canvas 2D independently renders depth-projected champagne paths, moving interior light and a contained spring touch response. A capped-resolution renderer pauses painting when hidden/off-screen; reduced motion uses static state treatments. Explicitly activated microphone streams drive listening illumination through a local RMS analyser. This is not a live AI, native 3D mesh or connected TTS playback. No new screenshots used as entire interactive pages.
+Original official logo; supplied illustration assets extracted to WebP; warm ivory, charcoal, terracotta, champagne with Fraunces/Inter. Orb now generates a changing sphere surface from 3D coordinates, directional lighting and flowing terracotta/champagne fields, while preserving the original central brand glyph. The old orb image is only a canvas-unavailable fallback. Rendering is capped, hidden/off-screen painting is paused, and reduced motion uses static state treatments. Explicitly activated microphone streams drive surface response through a local RMS analyser. This is not a live AI or connected TTS playback. No new screenshots used as entire interactive pages.
 
 ## Verification performed
 - TypeScript check and Vite production build.
@@ -36,8 +36,15 @@ Original official logo; supplied illustration assets extracted to WebP; warm ivo
 ## Remaining device/release checks
 Actual camera/microphone permission and recording on target devices, video upload duration rejection/acceptance, Safari/Android media support, slow-network behaviour and full accessibility audit. The automated file picker test timed out, so video selection is not claimed verified. Vercel preview is authentication-protected; remote rendered-app QA cannot be claimed without authorized access. The owner can open the deployment while signed into Vercel.
 
-## Orb refinement verification — 29 October
+## Earlier overlay candidate verification — 29 October
 - Local Chrome desktop and 390px embedded phone viewport: enhanced canvas active, no layout overlay, brand mark preserved. Phone canvas measured 331px, bounded by a 520px maximum backing resolution.
 - Generated audio fixture (not microphone speech): listening input rose from 27 to 100 on increasing amplitude and settled to 0 after stopping; all ready/listening/thinking/speaking/connection states exercised. Fixture is removed from deployable source.
 - Listening uses the actual stream created by explicit recording in assessment and AI Call. No extra permission prompt or network upload is added by the orb. Real phone microphone testing and TTS playback synchronisation remain outstanding.
 - Browser console contains existing React Router future warnings and extension metadata errors; no orb application runtime error observed after the Canvas implementation. Initial WebGL experiment was discarded because the testing browser does not support WebGL.
+
+## Fluid surface revision
+The previous image-plus-overlay version was rejected by the owner. The enhanced renderer now generates its own sphere pixels from a time-varying 3D surface field, including liquid colour folds, directional lighting, a softly changing silhouette and touch deformation. It does not draw the old orb artwork during normal rendering; that file is only an unsupported-canvas fallback. The original brand glyph remains a separate small central layer. No WebGL/GPU dependency was added.
+
+Surface checks: 22,022 pixels changed across time in the 200px reference render; changing audio energy affected 1,905 edge pixels. Transparent corners and opaque centre passed. Mean software surface update was 6.11ms on the development host (not a phone-performance guarantee). Phone viewports use a 144px surface buffer, compact instances 80px, while large viewport instances use 200px. Actual low-end phone performance remains a release check.
+
+Final visual checks: generated surface rendered on the actual assessment intro in desktop Chrome and a 390×844 iframe (375px inner content width, no document overflow). A six-second motion study was rendered with the same surface module for reviewing the changing folds and silhouette; it is not a microphone or AI conversation recording.
