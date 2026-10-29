@@ -39,3 +39,12 @@
 - On phones use the vertical mobile drawer, with touch and keyboard access, natural scrolling and safe-area spacing. No separate back button is required for main-site navigation.
 - Preserve complete graphics, feature content and activity availability on phones. Reflow layouts rather than shrinking a desktop canvas. Tap/swipe/scroll must provide the actions available through desktop hover.
 - Sign in now links directly to /signin, Sign up to /signup, and Get started to /get-started.
+
+## Learner assessment design — 29 October 2026
+- All new learner screens must use the existing website and supplied-screen colour family: warm ivory, charcoal, muted terracotta and restrained champagne highlights. Reuse existing typography and tokens.
+- Use the supplied official LanXgrow logo; do not invent a replacement mark.
+- Existing onboarding welcome video hands off to Meet Lan-X, then setup, conversation, processing, reports and the authenticated learning Home. Do not redirect this CTA to the public marketing homepage.
+- Retain both existing and new learning Home designs for design-team review. Do not delete either until the owner chooses.
+- Home CTA is provisionally Start learning. Report purchase remains separate from subscriptions; do not invent price, access benefits or payment success.
+- Orb has distinct ready/listening/thinking/speaking/connection states with touch support and reduced-motion behaviour. Future real speaking/listening states must be driven by real media events.
+- Current implementation is frontend review only on preview/lanx-assessment-screens. No live domain promotion is authorised.
