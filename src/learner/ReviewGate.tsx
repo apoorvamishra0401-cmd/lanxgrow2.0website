@@ -6,11 +6,12 @@ import {getCurrentUser} from '@/lib/auth';
 import {loadCloudProfile,verificationEnabled,type CloudProfile} from '@/auth/registration';
 import {VerifiedLearnerContext} from '@/auth/learnerContext';
 import {setReviewOwner} from './storageScope';
+import {readProfileDraft} from '@/auth/profileDraft';
 import {initial,saveReview} from './state';
 function VerifiedGate({children}:{children:ReactNode}){
  const {session,loading}=useAuthSession();const [profile,setProfile]=useState<CloudProfile|null>(null),[error,setError]=useState(''),[retry,setRetry]=useState(0);
  useEffect(()=>{let active=true;setProfile(null);setError('');if(!session)return;
-  (async()=>{try{const user=await getCurrentUser();if(!user||user.id!==session.userId)throw Error('Please sign in again.');const result=await loadCloudProfile();if(!active)return;setReviewOwner(user.id);saveReview(result.state||initial());setProfile(result);}catch(e){if(active)setError(e instanceof Error?e.message:'Could not load your account.');}})();
+  (async()=>{try{const user=await getCurrentUser();if(!user||user.id!==session.userId)throw Error('Please sign in again.');const result=await loadCloudProfile();if(!active)return;setReviewOwner(user.id);const pending=readProfileDraft(localStorage,'lanxgrow.profile.pending.v1.'+user.id);const cloud=result.state||initial();saveReview(pending&&(!cloud.completedAt||pending.completedAt)?{...pending,profile:{...initial().profile,...pending.profile},completedAt:cloud.completedAt||null}:cloud);setProfile(result);}catch(e){if(active)setError(e instanceof Error?e.message:'Could not load your account.');}})();
   return()=>{active=false;setReviewOwner(null);};
  },[session?.userId,retry]);
  if(loading)return <main className="af-root"><div className="af-shell"><p role="status">Restoring your session…</p></div></main>;

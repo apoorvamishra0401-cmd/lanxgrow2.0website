@@ -1,3 +1,4 @@
+import {acknowledgeProfileDraft,markProfileDraft} from './profileDraft';
 import {getClient,getAuthConfig} from '@/lib/auth';
 import type {ReviewState} from '@/learner/state';
 export const verificationEnabled=import.meta.env.VITE_AUTH_VERIFICATION==='true';
@@ -18,6 +19,6 @@ export async function finishRegistration(grant:VerificationGrant,password:string
 export type CloudProfile={state:ReviewState|null;consentCurrent:boolean;homeScreenRequested:boolean;verification:{channel:Channel;identity:string;verified_at:string|null}};
 export function loadCloudProfile(){return registrationRequest<CloudProfile>({action:'profile-get'},true);}
 const saveQueues=new Map<string,Promise<unknown>>();
-export function saveCloudProfile(state:ReviewState,ownerId:string){const task=(saveQueues.get(ownerId)||Promise.resolve()).catch(()=>{}).then(()=>registrationRequest<{saved:boolean}>({action:'profile-save',state},true,ownerId));saveQueues.set(ownerId,task);void task.finally(()=>{if(saveQueues.get(ownerId)===task)saveQueues.delete(ownerId);}).catch(()=>{});return task;}
+export function saveCloudProfile(state:ReviewState,ownerId:string){const draftKey='lanxgrow.profile.pending.v1.'+ownerId;markProfileDraft(localStorage,draftKey,state);const task=(saveQueues.get(ownerId)||Promise.resolve()).catch(()=>{}).then(()=>registrationRequest<{saved:boolean;state?:ReviewState}>({action:'profile-save',state},true,ownerId).then(result=>{acknowledgeProfileDraft(localStorage,draftKey,state);return result;}));saveQueues.set(ownerId,task);void task.finally(()=>{if(saveQueues.get(ownerId)===task)saveQueues.delete(ownerId);}).catch(()=>{});return task;}
 
 export function requestHomeScreen(){return registrationRequest<{saved:boolean}>({action:'home-screen-request'},true);}

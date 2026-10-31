@@ -1,5 +1,6 @@
 import {createClient} from 'npm:@supabase/supabase-js@2.118.0';
 import {readProof,type Channel} from './proof.ts';
+import {emptyProfile,firstIncompleteStep} from './onboarding.ts';
 const CLIENT_ID='16602682226704766067'; // Public client ID supplied by the owner.
 const POLICY='2026-10-25.1';
 const url=Deno.env.get('SUPABASE_URL')||'',secret=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')||'';
@@ -63,12 +64,15 @@ Deno.serve(async(req:Request)=>{
    const {data:consentForSave}=await db.from('legal_consents').select('user_id').eq('user_id',user.id).eq('policy_version',POLICY).maybeSingle();if(!consentForSave)return reply({error:'Please accept the current policies before onboarding.'},403);
    const state=body.state;if(!state||state.version!==1||!Number.isInteger(state.step)||state.step<0||state.step>14||!state.profile||!Array.isArray(state.profile.goals)||!Array.isArray(state.profile.interests)||JSON.stringify(state).length>12000)return reply({error:'Please check your profile details.'},400);
    const profile=state.profile;const fields=['name','mobile','whatsapp','email','age','city','state','pincode','category','education','board','work','experience','minutes','commitment','otherGoal','otherInterest'];if(fields.some(key=>profile[key]!==undefined&&(typeof profile[key]!=='string'||profile[key].length>500))||[profile.goals,profile.interests].some(a=>a.length>30||a.some((v:unknown)=>typeof v!=='string'||v.length>100)))return reply({error:'Please check your profile details.'},400);
-   if(state.completedAt&&(state.step!==14||String(profile.name||'').trim().length<2||!/^\+?[1-9][\d\s()-]{7,18}$/.test(profile.mobile||'')||!/^\S+@[^\s@]+\.[^\s@]+$/.test(profile.email||'')||!profile.state||!profile.city||!/^[1-9]\d{5}$/.test(profile.pincode||'')||parseInt(profile.minutes,10)<20||!Number.isFinite(parseInt(profile.minutes,10))||profile.commitment!=='Yes, I can commit'||!profile.goals.length||!profile.interests.length))return reply({error:'Please finish your onboarding details and daily commitment.'},400);
+   const checkedProfile={...emptyProfile(),...profile,...(verification.channel==='email'?{email:verification.identity}:{mobile:verification.identity})};
+   if(state.completedAt&&(state.step!==14||firstIncompleteStep(checkedProfile)<14))return reply({error:'Please finish your onboarding details and daily commitment.'},400);
+   if(state.step===14&&!state.completedAt)return reply({error:'Please finish onboarding before continuing.'},400);
    const {data:existing}=await db.from('learner_onboarding').select('state').eq('user_id',user.id).maybeSingle();
+   if(existing?.state?.completedAt&&!state.completedAt)return reply({error:'Your onboarding is already complete. Reload your saved profile before making changes.'},409);
    // Completing onboarding can set a trial start once, never reset it through edits.
    const completed=existing?.state?.completedAt||(state.completedAt?new Date().toISOString():null);
-   const sanitized={...state,completedAt:completed,profile:{...state.profile,...(verification.channel==='email'?{email:verification.identity}:{mobile:verification.identity})}};
-   const {error:saveError}=await db.from('learner_onboarding').upsert({user_id:user.id,state:sanitized,updated_at:new Date().toISOString()});if(saveError)throw saveError;return reply({saved:true});
+   const sanitized={...state,completedAt:completed,profile:checkedProfile};
+   const {error:saveError}=await db.from('learner_onboarding').upsert({user_id:user.id,state:sanitized,updated_at:new Date().toISOString()});if(saveError)throw saveError;return reply({saved:true,state:sanitized});
   }
   return reply({error:'Unknown request.'},400);
  }catch{return reply({error:'Verification could not finish. Please retry. No unverified account has been accepted.'},400);}
