@@ -23,3 +23,11 @@ Supabase development Phone provider is OFF. Enable under Authentication → Sign
 Quotas are not assumed unlimited. Do not log proof URLs, OTPs, grants or passwords. Expired receipt/rate bucket cleanup needs an operational retention policy before broad release.
 
 Review /signup on the new Vercel staging deployment. Vercel protection may require owner login; no protection bypass is included.
+
+
+## Latest owner revision — phone without OTP
+Phone signup now uses phone number + password + confirmation + policy consent. Email still uses Phone.Email verification. Google button uses Supabase OAuth and remains disabled until configured. Phone provider must be enabled AND phone confirmations disabled (phone_autoconfirm=true); never enter fake Twilio credentials. Config blocks no-OTP phone signup unless both settings match, to avoid sending an unintended SMS. Ordinary phone/password sign-in only needs phone provider enabled.
+
+New native phone contacts have provider=unverified-phone and verified_at=null, even if Supabase internally auto-confirms the identity for password login. This is not proof of ownership. Existing actually verified records are retained. The nullable timestamp migration is in supabase/setup/unverified-phone-accounts.sql and was applied only to development.
+
+Current actual settings: phone=false, phone_autoconfirm=false, google=false, email=true. Therefore full phone signup/login and Google OAuth remain configuration-blocked, not verified working. Phone password recovery remains unavailable; an unverified number must never alone authorize password reset. Owner's previous OTP-reset proposal requires a fresh verified recovery method before implementation.

@@ -56,9 +56,9 @@
 - Never store passwords, provider keys or recordings in browser persistent storage. Do not show fabricated scores or payment success as real results.
 
 ## Verified accounts — 31 October 2026
-- Signup: Phone.Email phone OR email OTP, then password and current policy agreement. One verified channel is sufficient.
+- Latest owner decision: phone signup uses number + password without OTP; label/store phone as unverified. Email retains OTP; Google uses configured OAuth. Current policy agreement remains required.
 - VITE_AUTH_VERIFICATION builds use real Supabase sessions and server identity, never local review flags.
 - Use development project lanxgrow-auth-development (kzjvvwuyigiclryoqpkv), never production for this work.
-- Phone provider must be enabled before phone/password login works; never invent SMS credentials.
+- Phone provider must be enabled with phone confirmations disabled for the owner-approved no-OTP flow. Never invent SMS credentials. Native phone account creation must not be mistaken for proof of number ownership.
 - Keep passwords in Supabase Auth; owner-only profile/verification/consent access. Never log or persist OTPs, proof URLs, grants or passwords in browser profile storage.
 - Restore and refresh sessions on the same browser. Clearing browser data or revoked sessions may require signing in again.

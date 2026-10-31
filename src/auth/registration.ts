@@ -15,7 +15,7 @@ export async function finishRegistration(grant:VerificationGrant,password:string
  const {session}=await registrationRequest<{session:{access_token:string;refresh_token:string}}>({action:'complete',grant:grant.grant,password,agreed,policyVersion});
  const client=await getClient();if(!client)throw Error('Sign-in is unavailable.');const {error}=await client.auth.setSession(session);if(error)throw Error('Your account was created. Please sign in to continue.');
 }
-export type CloudProfile={state:ReviewState|null;consentCurrent:boolean;verification:{channel:Channel;identity:string;verified_at:string}};
+export type CloudProfile={state:ReviewState|null;consentCurrent:boolean;verification:{channel:Channel;identity:string;verified_at:string|null}};
 export function loadCloudProfile(){return registrationRequest<CloudProfile>({action:'profile-get'},true);}
 const saveQueues=new Map<string,Promise<unknown>>();
 export function saveCloudProfile(state:ReviewState,ownerId:string){const task=(saveQueues.get(ownerId)||Promise.resolve()).catch(()=>{}).then(()=>registrationRequest<{saved:boolean}>({action:'profile-save',state},true,ownerId));saveQueues.set(ownerId,task);void task.finally(()=>{if(saveQueues.get(ownerId)===task)saveQueues.delete(ownerId);}).catch(()=>{});return task;}
