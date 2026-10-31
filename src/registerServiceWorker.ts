@@ -1,6 +1,7 @@
 /** HTTPS production only; never intercept Vite's development server. */
 export function registerServiceWorker() {
-  if (import.meta.env.VITE_SMART_SHOWCASE === 'true') return;
+  const learnerInstall=import.meta.env.VITE_AUTH_VERIFICATION==='true';
+  if (import.meta.env.VITE_SMART_SHOWCASE === 'true' && !learnerInstall) return;
   if (!import.meta.env.PROD || !('serviceWorker' in navigator) || !window.isSecureContext) return;
   let reloading = false;
   let wasControlled = Boolean(navigator.serviceWorker.controller);
@@ -10,7 +11,7 @@ export function registerServiceWorker() {
   });
   const start = async () => {
     try {
-      const registration = await navigator.serviceWorker.register('/service-worker.js', { scope: '/', updateViaCache: 'none' });
+      const registration = await navigator.serviceWorker.register(learnerInstall?'/learner-service-worker.js':'/service-worker.js', { scope: '/', updateViaCache: 'none' });
       const notify = () => window.dispatchEvent(new Event('lanxgrow:update-ready'));
       if (registration.waiting) notify();
       registration.addEventListener('updatefound', () => {

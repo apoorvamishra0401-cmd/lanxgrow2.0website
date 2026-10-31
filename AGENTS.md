@@ -62,3 +62,8 @@
 - Phone provider must be enabled with phone confirmations disabled for the owner-approved no-OTP flow. Never invent SMS credentials. Native phone account creation must not be mistaken for proof of number ownership.
 - Keep passwords in Supabase Auth; owner-only profile/verification/consent access. Never log or persist OTPs, proof URLs, grants or passwords in browser profile storage.
 - Restore and refresh sessions on the same browser. Clearing browser data or revoked sessions may require signing in again.
+
+## Home Screen agreement and Google — 31 October 2026
+- Owner requires a separate Home Screen agreement at signup, alongside legal consent. Record it separately in home_screen_requests; never mark installation completed merely from a checkbox.
+- Offer native install only after a learner gesture and available browser event; otherwise show manual instructions. Do not force installation on unsupported browsers or enable notifications.
+- Google sign-in must use owner-supplied Google Cloud Web OAuth credentials stored only in Supabase provider settings. Never put OAuth client secrets in frontend/env VITE variables or pretend Google works when provider is off.
