@@ -6,6 +6,7 @@ import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
 import ReviewGate from '@/learner/ReviewGate';
 import { lazy, Suspense } from 'react';
+const VerifiedAccount = lazy(() => import('@/auth/VerifiedAccount'));
 const ReviewAccountPage = lazy(() => import('@/learner/reviewAccount'));
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
@@ -37,6 +38,7 @@ import NotFound from '@/pages/NotFound';
 export default function App() {
   const { pathname } = useLocation();
   const review = import.meta.env.VITE_SMART_SHOWCASE === 'true';
+  const verifiedAuth = import.meta.env.VITE_AUTH_VERIFICATION === 'true';
   return (
     <>
     {!pathname.startsWith('/design-review') && !pathname.startsWith('/smart-ai') && pathname !== '/assessment-preview' && pathname !== '/app-preview' && pathname !== '/practice-preview' && <FloatingWhatsApp />}
@@ -51,8 +53,8 @@ export default function App() {
       {review && <Route path="/design-review/admin" element={<Suspense fallback={<p>Opening admin design…</p>}><AdminReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
       <Route path="/get-started" element={<GetStarted />} />
-      <Route path="/signin" element={review?<Suspense fallback={<p>Opening sign in…</p>}><ReviewAccountPage mode="signin"/></Suspense>:<SignIn />} />
-      <Route path="/signup" element={review?<Suspense fallback={<p>Opening account setup…</p>}><ReviewAccountPage mode="signup"/></Suspense>:<SignUp />} />
+      <Route path="/signin" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signin"/></Suspense>:review?<Suspense fallback={<p>Opening sign in…</p>}><ReviewAccountPage mode="signin"/></Suspense>:<SignIn />} />
+      <Route path="/signup" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signup"/></Suspense>:review?<Suspense fallback={<p>Opening account setup…</p>}><ReviewAccountPage mode="signup"/></Suspense>:<SignUp />} />
       <Route path="/consent" element={<Consent />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
@@ -61,7 +63,7 @@ export default function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/contact-us/*" element={<Navigate to="/get-started" replace />} />
-        <Route path="/forgot-password" element={review?<Suspense fallback={<p>Opening account recovery…</p>}><ReviewAccountPage mode="reset"/></Suspense>:<ResetPassword />} />
+        <Route path="/forgot-password" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="reset"/></Suspense>:review?<Suspense fallback={<p>Opening account recovery…</p>}><ReviewAccountPage mode="reset"/></Suspense>:<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth-callback" element={<AuthCallback />} />
         <Route path="/placeholder" element={<Placeholder />} />

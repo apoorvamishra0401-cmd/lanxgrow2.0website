@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LanXgrow verification</title><style>body{margin:0;background:transparent;font:15px system-ui;color:#6b5949}#status{font-size:13px;text-align:center}button{min-height:52px!important;border-radius:28px!important;background:#ab5735!important;color:#fff!important;width:100%!important;justify-content:center!important}.pe_signin_button,.pe_verify_email{width:100%;min-height:54px}a{display:none}</style></head><body><div id="button"></div><p id="status">Loading verification…</p><script>
+(()=>{
+ const params=new URLSearchParams(location.search),channel=params.get('channel'),clientId=params.get('clientId');
+ if(!['phone','email'].includes(channel)||!/^\d{10,30}$/.test(clientId||'')){document.getElementById('status').textContent='Verification configuration is unavailable.';return;}
+ const send=(data)=>parent.postMessage({type:'lanxgrow.phone-email',channel,...data},location.origin);
+ const receive=(result)=>{if(typeof result?.user_json_url==='string')send({user_json_url:result.user_json_url});};
+ window.phoneEmailListener=receive;window.phoneEmailReceiver=receive;
+ const host=document.getElementById('button');host.className=channel==='phone'?'pe_signin_button':'pe_verify_email';host.setAttribute('data-client-id',clientId);
+ const observer=new MutationObserver(()=>{const text=document.getElementById(channel==='phone'?'btn_ph_login_text':'btn_email_login_text');const label=channel==='phone'?'Verify phone number':'Verify email address';if(text&&text.textContent!==label)text.textContent=label;});observer.observe(host,{childList:true,subtree:true,characterData:true});
+ const script=document.createElement('script');script.src=channel==='phone'?'https://www.phone.email/sign_in_button_v1.js':'https://www.phone.email/verify_email_v1.js';script.async=true;
+ script.onload=()=>{document.getElementById('status').textContent='';};script.onerror=()=>{document.getElementById('status').textContent='Could not load verification. Please reload and try again.';send({error:true});};document.body.appendChild(script);
+})();
+</script></body></html>

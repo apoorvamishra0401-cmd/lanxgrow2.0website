@@ -27,6 +27,7 @@ export function useAuthSession() {
     let unsubscribe: (() => void) | undefined;
 
     void (async () => {
+      try {
       const stop = await subscribeToAuth((next) => {
         if (!active) return;
         setSession(next);
@@ -44,6 +45,7 @@ export function useAuthSession() {
       if (!active) return;
       setSession(current);
       setLoading(false);
+      } catch { if(active){setSession(null);setLoading(false);} }
     })();
 
     return () => {

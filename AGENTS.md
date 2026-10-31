@@ -54,3 +54,11 @@
 - Current local review account state is not security. Real authentication, ownership, entitlements, payments and admin roles must be enforced server-side before customer release.
 - Keep both learning Home variants, all three Practice flows, Call, Video, Reports, Plan, Profile, Settings and support navigable in the isolated preview. Admin review contains fixtures only.
 - Never store passwords, provider keys or recordings in browser persistent storage. Do not show fabricated scores or payment success as real results.
+
+## Verified accounts — 31 October 2026
+- Signup: Phone.Email phone OR email OTP, then password and current policy agreement. One verified channel is sufficient.
+- VITE_AUTH_VERIFICATION builds use real Supabase sessions and server identity, never local review flags.
+- Use development project lanxgrow-auth-development (kzjvvwuyigiclryoqpkv), never production for this work.
+- Phone provider must be enabled before phone/password login works; never invent SMS credentials.
+- Keep passwords in Supabase Auth; owner-only profile/verification/consent access. Never log or persist OTPs, proof URLs, grants or passwords in browser profile storage.
+- Restore and refresh sessions on the same browser. Clearing browser data or revoked sessions may require signing in again.

@@ -74,7 +74,7 @@ export function isAuthConfigured(): boolean {
 
 let clientPromise: Promise<SupabaseClient> | null = null;
 
-async function getClient(): Promise<SupabaseClient | null> {
+export async function getClient(): Promise<SupabaseClient | null> {
   const config = getAuthConfig();
   if (!config) return null;
 
@@ -261,7 +261,7 @@ export async function signOut(): Promise<AuthResult> {
   if (!client) return notConfigured();
 
   try {
-    const { error } = await client.auth.signOut();
+    const { error } = await client.auth.signOut({scope:import.meta.env.VITE_AUTH_VERIFICATION==='true'?'local':'global'});
     if (error) return toAuthError(error);
     return { ok: true, data: undefined };
   } catch (error) {
