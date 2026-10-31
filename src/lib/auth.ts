@@ -85,7 +85,7 @@ export async function getClient(): Promise<SupabaseClient | null> {
           persistSession: true,
           autoRefreshToken: true,
           flowType: 'pkce',
-          detectSessionInUrl: true,
+          detectSessionInUrl: false,
         },
       }),
     );
@@ -156,7 +156,7 @@ function toAuthError(error: unknown): { ok: false; code: AuthErrorCode; message:
     return {
       ok: false,
       code: 'weak-password',
-      message: 'Please choose a stronger password. It should be at least 6 characters.',
+      message: 'Please choose a stronger password. It should be at least 8 characters.',
     };
   }
 
@@ -293,8 +293,8 @@ export async function resetPasswordForEmail(email: string): Promise<AuthResult> 
 
   try {
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    const { error } = await client.auth.resetPasswordForEmail(email, {
-      redirectTo: origin + '/reset-password',
+    const { error } = await client.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+      redirectTo: origin + '/auth-callback',
     });
 
     if (error) return toAuthError(error);
