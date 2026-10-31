@@ -2,3 +2,5 @@
 
 .home-screen-note{display:block;margin-top:8px;font-size:12px;line-height:1.6;color:#71634e}.home-screen-install{margin:16px 0}.home-screen-install .af-panel p{font-size:14px;line-height:1.6}
 .home-screen-agreement{display:flex;align-items:flex-start;gap:12px;margin:18px 0;font-size:14px;line-height:1.6;min-height:44px;cursor:pointer}.home-screen-agreement input{flex:none;width:20px;height:20px;margin-top:3px}.home-screen-agreement>span{min-width:0}.home-screen-install button{min-height:44px}.home-screen-install .af-panel{padding:16px;border:1px solid #d4c4a8;border-radius:16px;background:#faf4e9}
+
+.home-screen-reminder{margin:16px 0;padding:18px;border:1px solid #d4c4a8;border-radius:18px;background:#faf4e9}.home-screen-reminder>p{margin:8px 0;font-size:14px;line-height:1.6}.home-screen-reminder .home-screen-install{margin-bottom:0}.home-screen-agreement em{font-size:12px;font-style:normal;color:#71634e}

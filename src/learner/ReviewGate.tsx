@@ -16,7 +16,7 @@ function VerifiedGate({children}:{children:ReactNode}){
  if(loading)return <main className="af-root"><div className="af-shell"><p role="status">Restoring your session…</p></div></main>;
  if(!session)return <Navigate to="/signin" replace/>;
  if(error)return <main className="af-root"><div className="af-shell"><h1>Let’s reconnect.</h1><p role="alert">{error}</p><button className="af-secondary" onClick={()=>setRetry(r=>r+1)}>Try again</button></div></main>;
- if(profile&&(!profile.consentCurrent||!profile.homeScreenRequested))return <Navigate to="/consent" replace/>;
+ if(profile&&!profile.consentCurrent)return <Navigate to="/consent" replace/>;
  if(!profile)return <main className="af-root"><div className="af-shell"><p role="status">Loading your learning profile…</p></div></main>;
  return <VerifiedLearnerContext.Provider value={{userId:session.userId,verification:profile.verification}}><div key={session.userId}>{children}</div></VerifiedLearnerContext.Provider>;
 }

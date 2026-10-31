@@ -41,3 +41,9 @@ Home Screen agreement is required separately from legal consent. Server enforces
 Preview manifest uses /app-preview as start URL; install support worker never caches account/session/profile responses. Browser install requires a learner gesture and separate browser confirmation. Safari/manual instructions cover unsupported install prompts. No notification permission is requested. Checkbox does not silently install, and actual installation is not an access prerequisite on unsupported devices.
 
 Stable preview branch origin (confirmed by Vercel): https://lanxgrow-learner-rev-git-5c58d2-apoorvamishra0401-cmds-projects.vercel.app. Its exact origin is allowed by the development Edge Function. Add this origin to the Google Web client's authorized origins if required, and its /auth-callback URL to Supabase's redirect allowlist. Do not promote it to live domains. Vercel authentication protection can require owner sign-in before OAuth testing.
+
+
+## Latest revision: optional installation
+The owner's newer instruction supersedes mandatory Home Screen agreement. Signup and onboarding do not require it; only legal consent gates access. Receipt records include home_screen_requested=false by default. The signup trigger inserts an agreement only when requested. Native phone/OAuth optional preference persistence is best effort and never blocks access.
+
+Home Screen checkbox is optional, and can trigger a native prompt only when supported and deliberately clicked. Learning Home offers a non-blocking reminder. Not now suppresses it for seven days locally per account. Actual installation is never fabricated from a checkbox.

@@ -67,3 +67,9 @@
 - Owner requires a separate Home Screen agreement at signup, alongside legal consent. Record it separately in home_screen_requests; never mark installation completed merely from a checkbox.
 - Offer native install only after a learner gesture and available browser event; otherwise show manual instructions. Do not force installation on unsupported browsers or enable notifications.
 - Google sign-in must use owner-supplied Google Cloud Web OAuth credentials stored only in Supabase provider settings. Never put OAuth client secrets in frontend/env VITE variables or pretend Google works when provider is off.
+
+## Updated Home Screen choice — 31 October 2026
+- Latest owner instruction supersedes the mandatory Home Screen rule: adding the app is OPTIONAL. Signup, OAuth, legal consent and onboarding must continue when unchecked or declined.
+- Only Terms/Privacy acceptance remains required. Never require a home_screen_requests row for learner access.
+- A supported native install prompt may open from a deliberate checkbox interaction. Actual installation still requires browser confirmation.
+- Learning Home can show a dismissible install reminder; Not now suppresses it for seven days on that device/account. Never interrupt activities or repeatedly force OS prompts.
