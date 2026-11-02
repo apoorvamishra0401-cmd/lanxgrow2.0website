@@ -1,5 +1,5 @@
 import {createClient} from 'npm:@supabase/supabase-js@2.118.0';
-import {skills,firstUnfinished,type JourneySession,type Skill,type Answer} from './domain.ts';
+import {skills,firstUnfinished,responseIssue,type JourneySession,type Skill,type Answer} from './domain.ts';
 import {selectTopic} from './content.ts';
 const url=Deno.env.get('SUPABASE_URL')||'';
 if(!url.includes('kzjvvwuyigiclryoqpkv.supabase.co'))throw Error('Development project mismatch');
@@ -31,8 +31,31 @@ Deno.serve(async req=>{
    const topic=selectTopic(profile.state.profile.interests||[],(count||0)+1);
    const {data,error}=await db.rpc('start_learning_practice',{p_user_id:user.id,p_topic:topic});if(error)throw error;return reply({session:data});
   }
-  if(!['save','submit'].includes(body.action)||typeof body.id!=='string')return reply({error:'Unknown request.'},400);
+  if(!['save','submit','improve'].includes(body.action)||typeof body.id!=='string')return reply({error:'Unknown request.'},400);
   const {data:session,error}=await db.from('practice_sessions').select('*').eq('id',body.id).eq('user_id',user.id).maybeSingle();if(error)throw error;if(!session)return reply({error:'Practice session not found.'},404);
+  if(body.action==='improve'){
+   const skill=body.skill as Skill,index=body.index;
+   if(session.status!=='reviewed'||!session.report?.skills?.[skill])return reply({error:'Your feedback must be ready before an improvement attempt.'},409);
+   if(!skills.includes(skill)||!Number.isInteger(index)||index<0||index>=(session.kind==='milestone'?5:1))return reply({error:'Choose a valid response.'},400);
+   const original=session.responses?.[skill]?.[index];
+   if(!original)return reply({error:'Your first response could not be found.'},400);
+   if(original.improvement)return reply({session});
+   if(body.revision!==session.updated_at)return reply({error:'This review changed in another tab. Reload before submitting.'},409);
+   const a=body.answer;if(!a||typeof a.text!=='string'||a.text.length>12000)return reply({error:'Please check your revised response.'},400);
+   const answer:Answer={text:a.text};
+   if(a.audioPath!==undefined){
+    if(typeof a.audioPath!=='string'||!new RegExp(`^${user.id}/${session.id}/[a-z0-9-]+\\.(webm|mp4|ogg|wav|mp3)$`).test(a.audioPath))return reply({error:'Please save a valid recording.'},400);
+    const {data,error}=await db.storage.from('practice-media').createSignedUrls([a.audioPath],60);
+    if(error||!data?.[0]?.signedUrl||data[0].error)return reply({error:'Your recording has not finished uploading. Please retry.'},400);
+    answer.audioPath=a.audioPath;
+   }
+   const issue=responseIssue(skill,answer,session.day_index);if(issue)return reply({error:issue},400);
+   const now=new Date().toISOString(),responses={...session.responses};
+   responses[skill]=[...responses[skill]];responses[skill][index]={...original,improvement:{...answer,submittedAt:now}};
+   const {data:saved,error}=await db.from('practice_sessions').update({responses,updated_at:now}).eq('id',session.id).eq('user_id',user.id).eq('status','reviewed').eq('updated_at',body.revision).select(columns).maybeSingle();
+   if(error)throw error;if(!saved)return reply({error:'This response changed in another tab. Reload to see the saved attempt.'},409);
+   return reply({session:saved});
+  }
   if(session.status!=='draft')return reply({session});
   if(body.revision!==session.updated_at)return reply({error:'This practice changed in another tab. Reload to continue with the latest saved answers.'},409);
   const responses:Partial<Record<Skill,Answer[]>>={};const paths:string[]=[];

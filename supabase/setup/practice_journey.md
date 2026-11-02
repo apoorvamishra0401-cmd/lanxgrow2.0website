@@ -28,3 +28,10 @@ The `practice_journey.sql` setup and `learning-practice` Edge Function are prepa
 - UI completion records the eight expressions presented. Correct independent usage requires actual reviewed evidence and is never inferred from exposure alone.
 
 Phone provider setup and real Google/email authentication tests remain pending separately.
+
+## Approved response and review rules (2 November)
+- Writing minimum: 50 words on days 1–15; 100 on later learning days. Shared frontend/server validation counts words, never grammar or matching suggested expressions. Listening accepts a nonblank original summary; saved audio remains required for reading/speaking.
+- Local text drafts retain only text for seven days from initial creation. No raw audio or signed paths are persisted. Review metadata is tab-local; refresh requires recording again. Full cross-device drafts require the pending backend setup.
+- Feedback rubric draft: (1) describe what the response communicated clearly, supported by an excerpt; (2) at most three actionable priorities, ordered by effect on meaning; (3) quote the learner accurately and give a meaning-preserving improvement; (4) propose one relevant next exercise. No generic praise, invented mistakes, inferred emotions, guaranteed improvement or level without evidence. Missing evidence must be explicitly left unassessed. Reviewer must verify against representative learner samples before automated reports are enabled.
+- `improve` is a source-prepared endpoint: feedback must exist on a reviewed session; each response gets one attempt. It preserves the original answer/report, appends the revision with a server timestamp, uses optimistic locking and never creates another learning session. Re-analysis is separately pending; revised input is not itself evidence of improvement. Test parallel requests and ownership before activation.
+- Raw media deletion after successful analysis and seven-day expiry of abandoned server drafts still require an operational analysis/cleanup worker. Do not claim either is running from frontend changes alone.

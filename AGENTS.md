@@ -91,3 +91,12 @@
 - Derive the next task from completed learning days and submitted milestones. After days 15, 30, 45, etc., complete the milestone before the next block opens.
 - Missing earlier milestones remain due even if older imported progress extends past a boundary. Marks do not block progression once the required milestone is completed.
 - Design review follows the same sequence with explicitly labelled in-tab sample progress; it never changes account progress or backend entitlements.
+
+## Original responses and feedback — 2 November 2026
+- Expressions are optional inspiration, never matching requirements. Grammar mistakes do not block submission.
+- Writing needs 50 words for learning days 1–15, then 100 words from day 16; count words in real time and explain every blocked Continue action. Listening text has no writing-length requirement. Speaking/read-aloud still need saved audio.
+- Optional hints are guiding questions only, not complete model answers.
+- Text-only local drafts expire seven days from creation; do not extend expiry with edits. No raw audio, audio paths, signed URLs or credentials in persisted drafts. Account syncing remains separately unverified.
+- Feedback structure: what was clear, at most three priorities, learner evidence with guidance, then next practice. Do not fabricate feedback or scores to demonstrate a retry.
+- One improvement attempt per response after feedback; preserve the original, never charge another daily session, and distinguish revised input from re-analysis. Endpoint must enforce one attempt and ownership.
+- Delete original raw recordings after successful analysis, retain reports/transcripts. Analysis, deletion jobs and connected Practice deployment still require verified backend work.

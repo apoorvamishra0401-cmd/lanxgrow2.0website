@@ -45,6 +45,6 @@ grant execute on function public.start_learning_practice(uuid,text) to service_r
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
 values('practice-media','practice-media',false,26214400,array['audio/webm','audio/mp4','audio/ogg','audio/wav','audio/mpeg','audio/x-m4a']) on conflict(id) do nothing;
 drop policy if exists practice_audio_owner_insert on storage.objects;
-create policy practice_audio_owner_insert on storage.objects for insert to authenticated with check(bucket_id='practice-media' and (storage.foldername(name))[1]=(select auth.uid())::text and exists(select 1 from public.practice_sessions s where s.user_id=(select auth.uid()) and s.status='draft' and s.id::text=(storage.foldername(name))[2]));
+create policy practice_audio_owner_insert on storage.objects for insert to authenticated with check(bucket_id='practice-media' and (storage.foldername(name))[1]=(select auth.uid())::text and exists(select 1 from public.practice_sessions s where s.user_id=(select auth.uid()) and (s.status='draft' or (s.status='reviewed' and s.report is not null)) and s.id::text=(storage.foldername(name))[2]));
 drop policy if exists practice_audio_owner_read on storage.objects;
 create policy practice_audio_owner_read on storage.objects for select to authenticated using(bucket_id='practice-media' and (storage.foldername(name))[1]=(select auth.uid())::text);
