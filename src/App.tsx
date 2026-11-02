@@ -52,7 +52,7 @@ export default function App() {
       {review && <Route path="/design-review/practice" element={<Suspense fallback={<p>Opening journey review…</p>}><PracticeReview /></Suspense>} />}
       {review && <Route path="/design-review/assessment" element={<Suspense fallback={<p>Opening screen review…</p>}><AssessmentFlow reviewMode /></Suspense>} />}
       {review && <Route path="/design-review/admin" element={<Suspense fallback={<p>Opening admin design…</p>}><AdminReview /></Suspense>} />}
-      <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
+      <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#FFFEFD',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signin"/></Suspense>:review?<Suspense fallback={<p>Opening sign in…</p>}><ReviewAccountPage mode="signin"/></Suspense>:<SignIn />} />
       <Route path="/signup" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signup"/></Suspense>:review?<Suspense fallback={<p>Opening account setup…</p>}><ReviewAccountPage mode="signup"/></Suspense>:<SignUp />} />

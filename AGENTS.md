@@ -29,7 +29,7 @@
 
 ## SMART AI
 - SMART AI marketing content uses the owner’s seven mentor-first pillars (25 October revision), not the six homepage product areas. Preserve underlying activity history identifiers; do not alter other homepage content.
-- Black #111111 / blue #00BDEB / orange #FF861C follow the footer logo lighting; these are proposed page tokens, not asserted official corporate specifications.
+- Black #111111 / blue #00BDEB / orange #FF871D follow the footer logo lighting; these are proposed page tokens, not asserted official corporate specifications.
 - Scripted conversation and browser-local recording must be labelled clearly. Never fabricate AI scores or grant mastery for opening an activity.
 - Prepare Supabase schema only until an isolated development database is identified. Customer rows must be owner-only; admin access requires a server-controlled role.
 
@@ -100,3 +100,9 @@
 - Feedback structure: what was clear, at most three priorities, learner evidence with guidance, then next practice. Do not fabricate feedback or scores to demonstrate a retry.
 - One improvement attempt per response after feedback; preserve the original, never charge another daily session, and distinguish revised input from re-analysis. Endpoint must enforce one attempt and ownership.
 - Delete original raw recordings after successful analysis, retain reports/transcripts. Analysis, deletion jobs and connected Practice deployment still require verified backend work.
+
+## Approved subtle palette revision — 2 November 2026
+- Website and app code use LanXgrow orange #FF871D (replaces #FF861C), terracotta #B85D39 (replaces #B85C38), and near-white #FFFEFD (replaces literal pure-white UI styling). Preserve alpha in translucent whites.
+- Reuse index.css tokens and Tailwind palette in future app screens. Cyan #00BDEB, ivory, charcoal and remaining shades stay as established.
+- Keep third-party Google/WhatsApp identity colours intact. Preserve the supplied official raster logo and product screenshots; the code palette revision does not recolour embedded image/video pixels.
+- This cosmetic adjustment is not a claim of colour uniqueness or trademark clearance. Keep deployment isolated to the preview branch until production publication is explicitly requested.

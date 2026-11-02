@@ -4,6 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        // LanXgrow-owned white; third-party SVG assets keep their supplied colours.
+        white: '#FFFEFD',
         // Warm ivory / alabaster surfaces
         ivory: {
           DEFAULT: '#FAF7F2',
@@ -30,7 +32,7 @@ export default {
           200: '#EDC7B5',
           300: '#E0A588',
           400: '#CE7F5C',
-          500: '#B85C38',
+          500: '#B85D39',
           600: '#9E4B2C',
           700: '#7E3B22',
           800: '#5F2C1A',
