@@ -18,3 +18,9 @@ export function nextLearningStep(completedDays:number,milestoneDays:number[]){
  const due=completedDays>0&&completedDays%15===0&&!milestoneDays.includes(completedDays);
  return {kind:due?'milestone' as const:'daily' as const,day:due?completedDays:completedDays+1};
 }
+// A learning target is not an awarded level or a promise about completion time.
+export function nextCefrTarget(level:NonNullable<SkillInsight['cefr']>):string {
+ const levels=['Pre-A1','A1','A2','B1','B2','C1','C2'];
+ const index=levels.indexOf(level);
+ return level==='C2'?'Specialised communication within C2':levels[index+1];
+}

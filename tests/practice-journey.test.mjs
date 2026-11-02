@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import ts from 'typescript';
 const source=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const load=async p=>import('data:text/javascript;base64,'+Buffer.from(ts.transpileModule(source(p),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2020}}).outputText).toString('base64'));
-const {skills,firstUnfinished,questionCount,answered,nextLearningStep,reportFocus}=await load('src/learner/journey/domain.ts');
+const {skills,firstUnfinished,questionCount,answered,nextLearningStep,reportFocus,nextCefrTarget}=await load('src/learner/journey/domain.ts');
 const {topics,vocabulary,prompts,selectTopic}=await load('src/learner/journey/content.ts');
 const session=(kind='daily')=>({kind,responses:{}});
 test('four skills run in the confirmed order',()=>assert.deepEqual(skills,['listening','reading','writing','speaking']));
@@ -35,3 +35,5 @@ test('blank, missing and malformed answers do not count as completion',()=>{
 test('server and frontend share identical completion rules',()=>{
  assert.equal(source('src/learner/journey/domain.ts'),source('supabase/functions/learning-practice/domain.ts'));
 });
+
+test('current assessed level stays separate from the next target; C2 never becomes C3',()=>{assert.equal(nextCefrTarget('A2'),'B1');assert.equal(nextCefrTarget('B2'),'C1');assert.equal(nextCefrTarget('C2'),'Specialised communication within C2');});
