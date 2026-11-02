@@ -49,6 +49,7 @@ export default function App() {
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/app-preview" element={<Suspense fallback={<p>Opening your learning space…</p>}><ReviewGate><LearnerPreview /></ReviewGate></Suspense>} />}
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/assessment-preview" element={<Suspense fallback={<p>Opening Lan-X…</p>}><Navigate to="/app-preview?begin=1" replace /></Suspense>} />}
+      {review && <Route path="/design-review/practice" element={<Suspense fallback={<p>Opening journey review…</p>}><PracticeReview /></Suspense>} />}
       {review && <Route path="/design-review/assessment" element={<Suspense fallback={<p>Opening screen review…</p>}><AssessmentFlow reviewMode /></Suspense>} />}
       {review && <Route path="/design-review/admin" element={<Suspense fallback={<p>Opening admin design…</p>}><AdminReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />

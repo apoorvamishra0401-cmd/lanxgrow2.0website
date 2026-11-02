@@ -73,3 +73,15 @@
 - Only Terms/Privacy acceptance remains required. Never require a home_screen_requests row for learner access.
 - A supported native install prompt may open from a deliberate checkbox interaction. Actual installation still requires browser confirmation.
 - Learning Home can show a dismissible install reminder; Not now suppresses it for seven days on that device/account. Never interrupt activities or repeatedly force OS prompts.
+
+## Connected Practice journey — 2 November 2026
+- Home → Practice runs Listening → Reading → Writing → Speaking → one combined report. Do not restore separate timed practice entries.
+- No countdown or duration cutoff in combined Practice. Calls and standalone Video Assessment keep their separate access rules. Daily usage frequency is separate from duration.
+- Two useful expressions per skill: eight per completed learning day. Exposure and correct independent use are separate evidence.
+- Curriculum progress counts completed learning days, not elapsed calendar days. Every fifteen completed learning days opens a five-question-per-skill milestone (twenty total).
+- Completing a milestone opens the next block even when marks are low; reviewed weaker skills receive more focus during the next fifteen learning days. No invented pass threshold.
+- Account onboarding, welcome video and initial assessment still precede learning Home. Baseline is intended as a brief 2–3 minute conversation; an initial speaking estimate does not establish all four CEFR skills.
+- CEFR estimates require actual reviewed evidence; current level and next target are separate. Do not invent scores, C3, mastery, or guaranteed monthly advancement.
+- Original passages are editorial seed content, not attributed news or celebrity quotes. Research/source ingestion and the full three-month curriculum remain to be authored and verified.
+- Real model analysis, pronunciation evidence, report narration, and adaptive content generation are not implied by frontend completion or stored recordings.
+- Keep all changes on the separate Vercel preview and development Supabase. Phone configuration and real Google/email auth tests remain explicitly pending.
