@@ -85,3 +85,9 @@
 - Original passages are editorial seed content, not attributed news or celebrity quotes. Research/source ingestion and the full three-month curriculum remain to be authored and verified.
 - Real model analysis, pronunciation evidence, report narration, and adaptive content generation are not implied by frontend completion or stored recordings.
 - Keep all changes on the separate Vercel preview and development Supabase. Phone configuration and real Google/email auth tests remain explicitly pending.
+
+## Automatic Practice milestones — 2 November 2026
+- Learners never select Daily versus Milestone, including the default separate preview. Do not show a journey-kind selector.
+- Derive the next task from completed learning days and submitted milestones. After days 15, 30, 45, etc., complete the milestone before the next block opens.
+- Missing earlier milestones remain due even if older imported progress extends past a boundary. Marks do not block progression once the required milestone is completed.
+- Design review follows the same sequence with explicitly labelled in-tab sample progress; it never changes account progress or backend entitlements.

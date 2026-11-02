@@ -37,3 +37,11 @@ test('server and frontend share identical completion rules',()=>{
 });
 
 test('current assessed level stays separate from the next target; C2 never becomes C3',()=>{assert.equal(nextCefrTarget('A2'),'B1');assert.equal(nextCefrTarget('B2'),'C1');assert.equal(nextCefrTarget('C2'),'Specialised communication within C2');});
+
+test('automatic sequencing blocks the next learning block until every due milestone is submitted',()=>{
+ assert.deepEqual(nextLearningStep(14,[]),{kind:'daily',day:15});
+ assert.deepEqual(nextLearningStep(15,[]),{kind:'milestone',day:15});
+ assert.deepEqual(nextLearningStep(16,[]),{kind:'milestone',day:15});
+ assert.deepEqual(nextLearningStep(31,[15]),{kind:'milestone',day:30});
+ assert.deepEqual(nextLearningStep(31,[15,30]),{kind:'daily',day:32});
+});

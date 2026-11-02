@@ -15,8 +15,10 @@ export function reportFocus(report:PracticeReport|null):Skill[]{
  return skills.filter(skill=>(report.focus||[]).includes(skill)||Boolean(report.skills[skill]?.improvements.length));
 }
 export function nextLearningStep(completedDays:number,milestoneDays:number[]){
- const due=completedDays>0&&completedDays%15===0&&!milestoneDays.includes(completedDays);
- return {kind:due?'milestone' as const:'daily' as const,day:due?completedDays:completedDays+1};
+ for(let boundary=15;boundary<=completedDays;boundary+=15){
+  if(!milestoneDays.includes(boundary))return {kind:'milestone' as const,day:boundary};
+ }
+ return {kind:'daily' as const,day:completedDays+1};
 }
 // A learning target is not an awarded level or a promise about completion time.
 export function nextCefrTarget(level:NonNullable<SkillInsight['cefr']>):string {

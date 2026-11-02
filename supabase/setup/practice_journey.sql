@@ -22,12 +22,13 @@ grant select on public.practice_sessions to authenticated;
 grant all on public.practice_sessions to service_role;
 create or replace function public.start_learning_practice(p_user_id uuid,p_topic text)
 returns public.practice_sessions language plpgsql security invoker set search_path=public,pg_catalog as $$
-declare completed integer; milestone_needed boolean; result public.practice_sessions; next_day integer; next_kind text;
+declare completed integer; milestone_needed boolean; result public.practice_sessions; next_day integer; next_kind text; pending_boundary integer;
 begin
  perform pg_advisory_xact_lock(hashtextextended(p_user_id::text,0));
  select count(*) into completed from public.practice_sessions where user_id=p_user_id and kind='daily' and status in ('submitted','reviewed');
- milestone_needed:=completed>0 and completed%15=0 and not exists(select 1 from public.practice_sessions where user_id=p_user_id and kind='milestone' and day_index=completed and status in ('submitted','reviewed'));
- if milestone_needed then next_day:=completed;next_kind:='milestone';
+ select min(boundary) into pending_boundary from generate_series(15,completed,15) as boundary where not exists(select 1 from public.practice_sessions where user_id=p_user_id and kind='milestone' and day_index=boundary and status in ('submitted','reviewed'));
+ milestone_needed:=pending_boundary is not null;
+ if milestone_needed then next_day:=pending_boundary;next_kind:='milestone';
   select topic_key into p_topic from public.practice_sessions where user_id=p_user_id and kind='daily' and status in ('submitted','reviewed') order by day_index desc limit 1;
  else
   select * into result from public.practice_sessions where user_id=p_user_id and kind='daily' and practice_date=(now() at time zone 'Asia/Kolkata')::date;
