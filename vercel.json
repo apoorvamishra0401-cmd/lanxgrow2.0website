@@ -2,10 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/interview-prep",
-      "destination": "/pages/interview-prep-content.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
