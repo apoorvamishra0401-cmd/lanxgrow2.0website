@@ -20,7 +20,7 @@ export default function InterviewPrep() {
     const template = documentCopy.querySelector('#interview-story-template');
     shadow.replaceChildren();
     const extra = document.createElement('style');
-    extra.textContent = ':host{display:block;background:#faf7f2;color:#1d1a16;font:16px/1.75 Inter,system-ui,sans-serif}main{display:block}';
+    extra.textContent = ':host{display:block;--ivory:#faf7f2;--paper:#fffdfa;--sand:#f1eae0;--line:#e7dfd4;--ink:#1d1a16;--muted:#6b6459;--accent:#b85c38;--deep:#7e3b22;--tint:#f6e2d8;background:var(--ivory);color:var(--ink);font:16px/1.75 Inter,system-ui,sans-serif}main{display:block}';
     shadow.appendChild(extra);
     for (const sheet of sheets) shadow.appendChild(sheet.cloneNode(true));
     if (page) shadow.appendChild(page.cloneNode(true));
