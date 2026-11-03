@@ -22,6 +22,7 @@ export function PageIntro({
 }) {
   const { pathname } = useLocation();
   const showStart = ['/about', '/services', '/faq', '/privacy', '/account'].includes(pathname);
+  const entryCopy: Record<string,string> = { '/about': 'Start Your First Conversation', '/services': 'See Where You Can Improve', '/faq': 'Try a Free 1-Min Interview', '/privacy': 'Try a Free 1-Min Interview', '/account': 'Try a Free 1-Min Interview' };
   return (
     <header className="lx-page-intro border-b border-line bg-ivory-50 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24 lg:pt-24">
       <Container>
@@ -31,7 +32,7 @@ export function PageIntro({
             <h1 className="mt-6 max-w-2xl font-display text-display-sm text-ink-900 sm:text-display-md">
               {heading}
             </h1>
-            {showStart && <div className="mt-7"><Button to="/get-started" withArrow>Get started</Button></div>}
+            {showStart && <div className="mt-7"><Button to="/diagnostic" withArrow>{entryCopy[pathname] || "Try a Free 1-Min Interview"}</Button></div>}
           </Reveal>
 
           {(supporting || aside) && (
