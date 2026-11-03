@@ -10,6 +10,8 @@ const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
 const LearnerPreview = lazy(() => import('@/learner/LearnerPreview'));
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
+import InterviewPrep from '@/pages/InterviewPrep';
+import Diagnostic from '@/pages/Diagnostic';
 import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
 import SignIn from '@/pages/SignIn';
@@ -47,8 +49,11 @@ export default function App() {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/interview-prep" element={<InterviewPrep />} />
+        <Route path="/diagnostic" element={<Diagnostic />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/interview-prep.html" element={<Navigate to="/interview-prep" replace />} />
         <Route path="/contact/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/contact-us/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
