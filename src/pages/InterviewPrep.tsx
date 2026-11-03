@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import originalDocument from '@/content/interview-original.html?raw';
 import { initializeInterviewStory } from './interviewStory';
 import { usePageMeta } from '@/hooks/usePageMeta';
@@ -10,6 +11,7 @@ import { usePageMeta } from '@/hooks/usePageMeta';
 export default function InterviewPrep() {
   usePageMeta('Interview Prep', 'Practice interviews and develop confident professional communication with LanXgrow.');
   const host = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const element = host.current;
     if (!element) return;
@@ -28,7 +30,7 @@ export default function InterviewPrep() {
     // Navigation remains in React: redirect all entry CTAs to a single diagnostic.
     const onClick = (event: Event) => {
       const origin = (event.target as Element).closest('a[href="/get-started"],a[href="/signin"],a[href="/signup"]');
-      if (origin) { event.preventDefault(); window.history.pushState({}, '', '/diagnostic'); window.dispatchEvent(new PopStateEvent('popstate')); }
+      if (origin) { event.preventDefault(); navigate('/diagnostic'); }
     };
     shadow.addEventListener('click', onClick);
     const trackButtons = [...shadow.querySelectorAll<HTMLElement>('[data-track]')];
@@ -40,6 +42,6 @@ export default function InterviewPrep() {
     trackButtons.forEach(button => button.addEventListener('click', onTrack));
     const disposeStory = initializeInterviewStory(shadow);
     return () => { shadow.removeEventListener('click', onClick); trackButtons.forEach(button => button.removeEventListener('click', onTrack)); disposeStory(); };
-  }, []);
+  }, [navigate]);
   return <div ref={host} className="w-full" aria-label="LanXgrow Interview Preparation" />;
 }
