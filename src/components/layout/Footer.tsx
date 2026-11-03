@@ -32,6 +32,7 @@ export function Footer() {
                 <li key={item.to}>
                   <Link
                     to={item.to}
+                    reloadDocument={item.to === '/interview-prep'}
                     className="inline-block py-1.5 text-[0.9375rem] text-ivory-100/80 transition-colors duration-200 hover:text-terracotta-300"
                   >
                     {item.label}
