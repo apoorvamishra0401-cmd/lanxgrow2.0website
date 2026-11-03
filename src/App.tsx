@@ -13,8 +13,10 @@ const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
 const PracticeReview = lazy(() => import('@/learner/PracticeReview'));
 const AssessmentFlow = lazy(() => import('@/learner/assessment/AssessmentFlow'));
 const AdminReview = lazy(() => import('@/learner/AdminReview'));
-const LearnerPreview = lazy(() => import('@/learner/LearnerPreview'));
-import GetStarted from '@/pages/GetStarted';
+const LearnerEntry = lazy(() => import('@/interview/LearnerEntry'));
+import AudienceEntry from '@/interview/AudienceEntry';
+import { InterviewDraftProvider } from '@/interview/InterviewDraft';
+const InterviewFirst = lazy(() => import('@/interview/InterviewFirst'));
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
@@ -40,20 +42,21 @@ export default function App() {
   const review = import.meta.env.VITE_SMART_SHOWCASE === 'true';
   const verifiedAuth = import.meta.env.VITE_AUTH_VERIFICATION === 'true';
   return (
-    <>
-    {!pathname.startsWith('/design-review') && !pathname.startsWith('/smart-ai') && pathname !== '/assessment-preview' && pathname !== '/app-preview' && pathname !== '/practice-preview' && <FloatingWhatsApp />}
+    <InterviewDraftProvider>
+    {pathname !== '/interview' && !pathname.startsWith('/design-review') && !pathname.startsWith('/smart-ai') && pathname !== '/assessment-preview' && pathname !== '/app-preview' && pathname !== '/practice-preview' && <FloatingWhatsApp />}
     <PwaStatus />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/practice-preview" element={<Suspense fallback={<p>Opening Practice…</p>}><PracticeReview /></Suspense>} />}
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
-      {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/app-preview" element={<Suspense fallback={<p>Opening your learning space…</p>}><ReviewGate><LearnerPreview /></ReviewGate></Suspense>} />}
+      {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/app-preview" element={<Suspense fallback={<p>Opening your learning space…</p>}><ReviewGate><LearnerEntry /></ReviewGate></Suspense>} />}
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/assessment-preview" element={<Suspense fallback={<p>Opening Lan-X…</p>}><Navigate to="/app-preview?begin=1" replace /></Suspense>} />}
       {review && <Route path="/design-review/practice" element={<Suspense fallback={<p>Opening journey review…</p>}><PracticeReview /></Suspense>} />}
       {review && <Route path="/design-review/assessment" element={<Suspense fallback={<p>Opening screen review…</p>}><AssessmentFlow reviewMode /></Suspense>} />}
       {review && <Route path="/design-review/admin" element={<Suspense fallback={<p>Opening admin design…</p>}><AdminReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#FFFEFD',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
-      <Route path="/get-started" element={<GetStarted />} />
+      <Route path="/get-started" element={<AudienceEntry />} />
+      <Route path="/interview" element={<Suspense fallback={<p>Opening your interview…</p>}><InterviewFirst /></Suspense>} />
       <Route path="/signin" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signin"/></Suspense>:review?<Suspense fallback={<p>Opening sign in…</p>}><ReviewAccountPage mode="signin"/></Suspense>:<SignIn />} />
       <Route path="/signup" element={verifiedAuth?<Suspense fallback={<p>Opening account…</p>}><VerifiedAccount mode="signup"/></Suspense>:review?<Suspense fallback={<p>Opening account setup…</p>}><ReviewAccountPage mode="signup"/></Suspense>:<SignUp />} />
       <Route path="/consent" element={<Consent />} />
@@ -74,6 +77,6 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
-    </>
+    </InterviewDraftProvider>
   );
 }

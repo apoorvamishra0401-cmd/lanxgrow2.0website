@@ -106,3 +106,13 @@
 - Reuse index.css tokens and Tailwind palette in future app screens. Cyan #00BDEB, ivory, charcoal and remaining shades stay as established.
 - Keep third-party Google/WhatsApp identity colours intact. Preserve the supplied official raster logo and product screenshots; the code palette revision does not recolour embedded image/video pixels.
 - This cosmetic adjustment is not a claim of colour uniqueness or trademark clearance. Keep deployment isolated to the preview branch until production publication is explicitly requested.
+
+## Interview-first audience routing — 3 November 2026
+- Latest owner instruction supersedes the universal account-first journey for career learners. Get started identifies Student, Fresher or Working Professional.
+- Students retain the existing account, consent, onboarding, welcome and learning flow. Freshers and working professionals open the interview introduction first.
+- The supplied phase-one ZIP is an audio introduction recorder, not evidence of deployed AI or an entire interview platform.
+- Reuse the official raster logo and current website fonts and colour tokens.
+- Interview drafts contain audio in memory only. Account setup opens in another tab so OAuth can complete without losing the original recording. Refresh clears an unsent recording.
+- Server identity and current legal consent are required before AI submission. Collect explicit processing agreement naming Groq before sending audio and transcript there.
+- The owner requested a working live release. Release requires actual provider, account, persistence, isolation and device acceptance checks.
+- Automatic approval review rejected deployment of interview-assessment because explicit authorization for sending learner audio/transcript to Groq was missing. Do not retry this deployment or indirectly enable the same transmission until the owner specifically authorizes that payload and destination.
