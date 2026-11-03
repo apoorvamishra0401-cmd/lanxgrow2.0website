@@ -28,7 +28,7 @@ export function ResearchStories() {
           </Reveal>
         </article>)}
       </div>
-      <div className="research-end"><p>Independent research informs the context. Your journey is your own.</p><Button to="/get-started" withArrow>Find your starting point</Button></div>
+      <div className="research-end"><p>Independent research informs the context. Your journey is your own.</p><Button to="/diagnostic" withArrow>Find Your Starting Point</Button></div>
     </div>
   </section>;
 }
