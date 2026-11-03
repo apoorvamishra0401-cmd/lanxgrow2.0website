@@ -38,7 +38,7 @@ export const footerNav: NavItem[] = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Terms', to: '/terms' },
-  { label: 'Sign in', to: '/get-started' },
+  { label: 'Free Speaking Check', to: '/diagnostic' },
 ];
 
 /**
@@ -62,7 +62,7 @@ export const hasPublishedContactChannels = Boolean(
 
 /** Shared CTA targets so every button across the site stays consistent. */
 export const cta = {
-  getStarted: { label: 'Get started', to: '/get-started' },
+  getStarted: { label: 'Try a Free 1-Min Interview', to: '/diagnostic' },
   exploreExperience: { label: 'Explore the experience', to: '#experience' },
-  talkToUs: { label: 'Get started', to: '/get-started' },
+  talkToUs: { label: 'Check Your Speaking Level', to: '/diagnostic' },
 } as const;
