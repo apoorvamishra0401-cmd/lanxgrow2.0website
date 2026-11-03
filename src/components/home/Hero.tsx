@@ -34,8 +34,8 @@ export function Hero() {
               <Button to={homeHero.primaryCta.to} size="lg" withArrow>
                 {homeHero.primaryCta.label}
               </Button>
-              <Button to="/get-started" variant="secondary" size="lg">
-                Get started
+              <Button to={homeHero.secondaryCta.to} variant="secondary" size="lg">
+                {homeHero.secondaryCta.label}
               </Button>
             </div>
           </div>
