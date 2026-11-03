@@ -89,6 +89,7 @@ export function Header() {
                 <li key={item.to}>
                   <NavLink
                     to={item.to}
+                    reloadDocument={item.to === '/interview-prep'}
                     end={item.to === '/'}
                     className={({ isActive }) =>
                       cn(
@@ -153,6 +154,7 @@ export function Header() {
                 <li key={item.to}>
                   <NavLink
                     to={item.to}
+                    reloadDocument={item.to === '/interview-prep'}
                     end={item.to === '/'}
                     className={({ isActive }) =>
                       cn(
