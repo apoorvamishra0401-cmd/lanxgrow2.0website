@@ -7,11 +7,10 @@ import VoiceInput from './VoiceInput';
 // A small, private-in-session conversational fallback. It uses the user's last
 // answers instead of cycling through fixed questions. No external AI inference.
 function nextReply(input:string, history:{role:'coach'|'you';text:string}[], gentle:boolean) {
- const value=input.trim(), lower=value.toLowerCase();
+ const value=input.trim();
  const previous=[...history].reverse().find(m=>m.role==='you')?.text.toLowerCase()||'';
  const name=value.match(/(?:my name is|i am called|call me|मेरा नाम)\s+([\p{L}][\p{L}\s'-]{0,32})/iu)?.[1]?.trim().split(/\s+/).slice(0,2).join(' ');
  const workplace=value.match(/(?:i work (?:at|for|in)|i'm working (?:at|for)|i work with)\s+([^.!?,]{2,50})/i)?.[1]?.trim();
- const role=value.match(/(?:i (?:am|work as) (?:a |an )?|my role is |my job is )((?:software |sales |customer |hr |marketing |operations |support |data |business |project )?[\w -]{3,35})/i)?.[1]?.trim();
  if (/^(hi|hello|hey|namaste|नमस्ते|नमस्कार)[!.\s]*$/i.test(value)) return 'Hello! It is nice to meet you. What should I call you?';
  if (name) return `Lovely to meet you, ${name}. What do you enjoy doing in your day?`;
  if (workplace) return `That sounds interesting. What is your role at ${workplace}, and what do you enjoy most about it?`;
