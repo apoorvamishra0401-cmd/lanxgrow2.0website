@@ -13,7 +13,6 @@ export default function Diagnostic() {
   const [identity, setIdentity] = useState({name:'',email:'',phone:'',whatsapp:'',age:''});
   const recorder = useRef<MediaRecorder | null>(null);
   const stream = useRef<MediaStream | null>(null);
-  const [capture, setCapture] = useState(false);
   useEffect(() => () => { recorder.current?.state === 'recording' && recorder.current.stop(); stream.current?.getTracks().forEach(track => track.stop()); }, []);
   async function begin() {
     try {
@@ -25,7 +24,6 @@ export default function Diagnostic() {
       recorded.ondataavailable = () => {}; // Private preview: audio stays on device and is discarded.
       recorded.start();
       setStatus('recording');
-      setCapture(true);
     } catch { setStatus('unavailable'); }
   }
   function finish() {
