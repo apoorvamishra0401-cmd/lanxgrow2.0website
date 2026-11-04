@@ -21,10 +21,10 @@ export function WhyLanXgrow() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      if (!track.current || window.matchMedia('(max-width: 767px), (max-height: 600px)').matches) return;
+      if (!track.current || window.matchMedia('(max-height: 600px)').matches) return;
       const rect = track.current.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
-      const p = Math.max(0, Math.min(1, (88 - rect.top) / Math.max(1, travel)));
+      const p = Math.max(0, Math.min(1, ((window.innerWidth < 768 ? 76 : 88) - rect.top) / Math.max(1, travel)));
       setProgress(p);
       setActive(Math.min(features.length - 1, Math.floor(p * features.length)));
     };
@@ -36,9 +36,9 @@ export function WhyLanXgrow() {
   }, []);
   const select = (index: number) => {
     if (!track.current) return;
-    if (window.matchMedia('(max-width: 767px), (max-height: 600px)').matches) { setActive(index); setHovered(null); return; }
+    if (window.matchMedia('(max-height: 600px)').matches) { setActive(index); setHovered(null); return; }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const top = window.scrollY + track.current.getBoundingClientRect().top - 88;
+    const top = window.scrollY + track.current.getBoundingClientRect().top - (window.innerWidth < 768 ? 76 : 88);
     const travel = track.current.offsetHeight - window.innerHeight;
     window.scrollTo({ top: top + travel * ((index + 0.35) / features.length), behavior: reduced ? 'instant' : 'smooth' });
   };
@@ -65,7 +65,7 @@ export function WhyLanXgrow() {
             </div>
             <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
           </div>
-          <div className="feature-mobile-controls"><button type="button" disabled={active === 0} onClick={() => select(active - 1)} aria-label="Previous feature">←</button><p>Tap a feature or swipe the preview.<br />{active + 1} of {features.length}</p><button type="button" disabled={active === features.length - 1} onClick={() => select(active + 1)} aria-label="Next feature">→</button></div>
+          <div className="feature-mobile-controls"><button type="button" disabled={active === 0} onClick={() => select(active - 1)} aria-label="Previous feature">←</button><p>Scroll to explore, or tap a feature.<br />{active + 1} of {features.length}</p><button type="button" disabled={active === features.length - 1} onClick={() => select(active + 1)} aria-label="Next feature">→</button></div>
         </div>
       </div>
     </section>

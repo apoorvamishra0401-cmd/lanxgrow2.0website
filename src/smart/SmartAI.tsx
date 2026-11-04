@@ -7,7 +7,7 @@ import type { AreaId, Mode, Store } from './model';
 import type { CompanionState } from './Companion';
 import Conversation from './Conversation';
 import { getCurrentUser } from '@/lib/auth';
-import { consumeTrial, trialUsed, TRIAL_LIMIT } from './trial';
+import { consumeTrial, trialUsed, trialResetAt, TRIAL_LIMIT } from './trial';
 import TrialInvite from './TrialInvite';
 import SevenPillars from './SevenPillars';
 import { MiniCourse, StoryPractice, WrittenPractice } from './Lessons';
@@ -30,7 +30,7 @@ export default function SmartAI(){
  const celebrate=()=>{setCharacter('encouragement');clearTimeout(animationReset.current);animationReset.current=setTimeout(()=>setCharacter('idle'),2200);};
  const save=(area:AreaId,words=0,seconds=0,kind='guided activity')=>{setStore(s=>({...s,attempts:[...s.attempts,{id:crypto.randomUUID(),area,topic,words,seconds,date:new Date().toISOString(),kind}].slice(-30)}));celebrate();};
  const open=(value:Mode)=>{setUsed(trialUsed());setGateOnEntry(Boolean((value==='talk'||value==='call')&&!signedIn&&trialUsed()>=TRIAL_LIMIT));setMode(value);setCharacter(value==='call'||value==='talk'?'listening':value?'thinking':'idle');};
- useEffect(()=>{let alive=true;void getCurrentUser().then(user=>{if(alive)setSignedIn(Boolean(user));}).catch(()=>{});const sync=()=>setUsed(trialUsed());window.addEventListener('storage',sync);window.addEventListener('focus',sync);return()=>{alive=false;window.removeEventListener('storage',sync);window.removeEventListener('focus',sync);};},[]);
+ useEffect(()=>{let alive=true;void getCurrentUser().then(user=>{if(alive)setSignedIn(Boolean(user));}).catch(()=>{});const sync=()=>setUsed(trialUsed());const timer=window.setInterval(sync,30000);window.addEventListener('storage',sync);window.addEventListener('focus',sync);return()=>{alive=false;clearInterval(timer);window.removeEventListener('storage',sync);window.removeEventListener('focus',sync);};},[]);
  const consume=()=>{if(signedIn)return true;const allowed=consumeTrial();setUsed(trialUsed());return allowed;};
  return <div className="sx-page">
   <nav className="sx-page-tools sx-shell" aria-label="AI learning tools"><a href="#sx-journey">Our approach</a><a href="#sx-labs">Try the labs</a></nav>
@@ -40,13 +40,13 @@ export default function SmartAI(){
    <div className="sx-character-scene"><div className="sx-scene-grid" aria-hidden="true"/><div className="sx-character-label"><span className="sx-dot"/>LAN-X <span>Your communication companion</span></div><Suspense fallback={<div className="sx-loading" role="status">Lan-X is arriving…</div>}><Companion state={character} paused={Boolean(mode)}/></Suspense></div>
   </section>
   <SevenPillars open={open}/>
-  <section className="sx-final sx-shell"><p className="sx-eyebrow">Your voice is worth the practice.</p><h2>A thought today.<br/>A clearer <em>voice tomorrow.</em></h2><p>Try a small activity. Find something to say.<br/>Take your next step with LanXgrow.</p><button className="sx-primary" onClick={()=>open('talk')}>Begin a guided conversation ↗</button><p className="sx-small">Three complimentary guided demo replies. Sign in to continue your journey.</p></section>
+  <section className="sx-final sx-shell"><p className="sx-eyebrow">Your voice is worth the practice.</p><h2>A thought today.<br/>A clearer <em>voice tomorrow.</em></h2><p>Try a small activity. Find something to say.<br/>Take your next step with LanXgrow.</p><button className="sx-primary" onClick={()=>open('talk')}>Begin a guided conversation ↗</button><p className="sx-small">10 complimentary guided messages every 10 days. Type or speak; both share the same allowance.</p></section>
   </main>
   <footer className="sx-footer"><div className="sx-shell"><div className="sx-footer-top"><Link to="/">LanXgrow</Link><span>Speak Smart, Think Smart</span><div><Link to="/terms">Terms</Link><Link to="/privacy">Privacy</Link><a href="mailto:official@lanxgrow.com">Email us ↗</a></div></div><img src="/images/brand/lanxgrow-footer-transparent.webp" alt="LanXgrow sculpted brand signature" loading="lazy"/><div className="sx-footer-bottom"><span>SMART AI · interactive learning showcase</span><span>Your practice. Your pace.</span></div></div></footer>
   {!heroVisible&&<div className="sx-dock"><button aria-label="Practise with Lan-X" onClick={()=>open('talk')}><span>⌁</span> Lan-X <small>Let’s practise</small></button></div>}
   {storageError&&<p className="sx-storage-notice" role="status">Your browser cannot save learning preferences.</p>}
-  {mode&&<Dialog mode={mode} onClose={()=>open(null)}>{gateOnEntry?<TrialInvite/>:<>
-   {(mode==='talk'||mode==='call')&&<Conversation remaining={signedIn?null:Math.max(0,TRIAL_LIMIT-used)} onConsume={consume} topic={topic} call={mode==='call'} difficulty={store.prefs.difficulty} activeSeconds={activeSeconds} onActivity={activity} onComplete={(words,seconds)=>save('call',words,seconds,mode==='call'?'scripted call rehearsal':'guided conversation')}/>}
+  {mode&&<Dialog mode={mode} onClose={()=>open(null)}>{gateOnEntry&&used>=TRIAL_LIMIT?<TrialInvite/>:<>
+   {(mode==='talk'||mode==='call')&&<Conversation resetAt={signedIn?null:trialResetAt()} remaining={signedIn?null:Math.max(0,TRIAL_LIMIT-used)} onConsume={consume} topic={topic} call={mode==='call'} difficulty={store.prefs.difficulty} activeSeconds={activeSeconds} onActivity={activity} onComplete={(words,seconds)=>save('call',words,seconds,mode==='call'?'scripted call rehearsal':'guided conversation')}/>}
    {mode==='practice'&&<WrittenPractice topic={topics[topic]||topic} seconds={activeSeconds} onActivity={activity} onComplete={(words,seconds)=>save('practice',words,seconds,'structured self-review')}/>}
    {mode==='course'&&<MiniCourse onActivity={activity} onComplete={()=>save('course',0,0,'three correct lesson checks')}/>}
    {mode==='entertainment'&&<StoryPractice seconds={activeSeconds} onActivity={activity} onComplete={(words,seconds)=>save('entertainment',words,seconds,'story comprehension and summary')}/>}

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import ts from 'typescript';
+const transpile=async path=>ts.transpileModule(await readFile(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const events=new Map();let standalone=false;
+globalThis.window={addEventListener:(n,f)=>events.set(n,f),matchMedia:()=>({matches:standalone,addEventListener(){}})};
+Object.defineProperty(globalThis,'navigator',{value:{maxTouchPoints:5},configurable:true});
+const code=await transpile('src/pwa/install.ts');const mod=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+assert.equal(mod.installState(),'manual');assert.equal(await mod.requestInstall(),'manual');let calls=0,prevented=false;
+events.get('beforeinstallprompt')({preventDefault(){prevented=true;},prompt:async()=>{calls++;},userChoice:Promise.resolve({outcome:'dismissed'})});
+assert(prevented);assert.equal(calls,0,'Never auto-open native dialog');assert.equal(mod.installState(),'available');assert.equal(await mod.requestInstall(),'dismissed');assert.equal(calls,1);assert.equal(await mod.requestInstall(),'manual','Each event used once');
+standalone=true;assert.equal(mod.installState(),'installed');
+let viewport='';globalThis.screen={availWidth:980,availHeight:1800};window.outerWidth=390;globalThis.document={querySelector:()=>({setAttribute:(k,v)=>viewport=v})};
+const view=await transpile('src/pwa/viewport.ts');await import('data:text/javascript;base64,'+Buffer.from(view).toString('base64'));assert.match(viewport,/width=390,/);assert(!viewport.includes('user-scalable=no'));
+console.log('PASS: no automatic native prompt; captured event; one click per event; manual fallback; standalone detection; phone desktop-mode viewport recovery without disabling zoom.');

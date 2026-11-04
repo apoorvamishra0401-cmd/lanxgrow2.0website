@@ -1,5 +1,8 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { FloatingWhatsApp } from '@/components/support/SupportLinks';
+import {useEffect} from 'react';
+import {startTrialWindow} from '@/smart/trial';
+import InstallApp from '@/pwa/InstallApp';
 import { PwaStatus } from '@/components/support/PwaStatus';
 import { Header } from '@/components/layout/Header';
 import { SiteLayout } from '@/components/layout/SiteLayout';
@@ -31,10 +34,12 @@ import NotFound from '@/pages/NotFound';
  */
 export default function App() {
   const { pathname } = useLocation();
+  useEffect(()=>{startTrialWindow();},[]);
   return (
     <>
     {!pathname.startsWith('/smart-ai') && pathname !== '/app-preview' && <FloatingWhatsApp />}
     <PwaStatus />
+    <InstallApp />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}

@@ -22,3 +22,22 @@
 @media(max-width:767px){.sx-page-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-block:12px;font-size:13px}.sx-page-tools a,.sx-page-tools button{border:1px solid #2d4656;min-width:0;min-height:46px}.lx-shared-header+.lx-welcome,.lx-shared-header+.lx-login{min-height:calc(100dvh - 72px)}.login-story-foot{display:block!important;position:relative!important;margin-top:20px;font-size:12px}.feature-line{display:block}.feature-option:active,.goal-selector button:active,.faq-filters button:active{background:#f2e4d6}.assessment-live:before{opacity:.6}.assessment-live:active{box-shadow:0 18px 45px -25px #a06a4066}.eco-node:active .eco-symbol-float{transform:translateY(-10px)}.login-card input,.login-card select,.login-card textarea{font-size:16px!important}.login-shell{min-width:0}.login-card{min-width:0}.sx-page-tools~main{min-width:0}.lx-welcome-back{display:none!important}}
 @media(max-height:600px){.lx-drawer-open{max-height:calc(100dvh - 64px)}}
 @media(prefers-reduced-motion:reduce){.goal-panel{animation:none}.sx-page-tools *{transition:none}}
+
+/* Portrait phones share the desktop scroll narrative; keep the preview in view. */
+@media(max-width:767px) and (min-height:601px){
+ .feature-journey .feature-track{height:380svh;padding-bottom:0}
+ .feature-journey .feature-sticky{position:sticky;top:76px;height:calc(100svh - 88px);min-height:0;max-height:none;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:12px;padding-bottom:10px}
+ .feature-journey .feature-menu>.feature-eyebrow{margin-bottom:9px;font-size:9px}
+ .feature-journey .feature-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .feature-journey .feature-option{min-height:64px;grid-template-columns:13px minmax(0,1fr);gap:4px;padding:9px 6px!important;border-radius:8px;align-content:center}
+ .feature-journey .feature-number{font-size:9px;margin-top:2px}
+ .feature-journey .feature-name{font-family:Inter,system-ui,sans-serif;font-size:12px;line-height:1.4}
+ .feature-journey .feature-line,.feature-journey .feature-mobile-controls{display:none}
+ .feature-journey .feature-preview{height:100%;min-height:0;max-height:none;border-radius:15px}
+ .feature-journey .feature-preview-top{padding:12px 15px 6px;font-size:8px}
+ .feature-journey .feature-caption{padding:12px 15px;margin-top:6px}
+ .feature-journey .feature-caption h3{font-size:22px}
+ .feature-journey .feature-caption p{font-size:12px;line-height:1.6;margin-top:5px}
+ .feature-journey .feature-image-note{font-size:9px}
+ .feature-journey .feature-scroll{display:flex;margin-top:8px;font-size:10px}
+}

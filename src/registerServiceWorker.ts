@@ -1,6 +1,5 @@
 /** HTTPS production only; never intercept Vite's development server. */
 export function registerServiceWorker() {
-  if (import.meta.env.VITE_SMART_SHOWCASE === 'true') return;
   if (!import.meta.env.PROD || !('serviceWorker' in navigator) || !window.isSecureContext) return;
   let reloading = false;
   let wasControlled = Boolean(navigator.serviceWorker.controller);
@@ -22,6 +21,6 @@ export function registerServiceWorker() {
       await registration.update();
     } catch { console.info('LanXgrow offline files could not finish installing. Online browsing is still available.'); }
   };
-  if (document.readyState === 'complete') void start();
-  else window.addEventListener('load', () => void start(), { once: true });
+  // Start before images/video finish; they must not delay offline readiness.
+  void start();
 }
