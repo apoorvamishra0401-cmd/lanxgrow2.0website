@@ -11,7 +11,7 @@ export const homeHero = {
   eyebrow: 'AI-first English communication practice',
   headline: 'Command the room.',
   supporting:
-    'Structured English practice for two kinds of learners — young voices finding their footing, and students and professionals preparing for the moments that matter. Practise with intelligent voice and video tasks; go further with LanXgrow live learning programmes.',
+    'English communication and interview preparation for students, freshers and working professionals. Explore guided speaking, writing and video practice. Demonstrations show the approach; live AI feedback is planned for a later phase.',
   primaryCta: { label: 'Explore the experience', to: '#experience' },
   secondaryCta: { label: 'Get started', to: '/get-started' },
 } as const;

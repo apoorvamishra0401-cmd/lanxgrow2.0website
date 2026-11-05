@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import './PwaStatus.css';
 export function PwaStatus() {
-  const [offline, setOffline] = useState(!navigator.onLine);
+  const [offline, setOffline] = useState(false);
   const [update, setUpdate] = useState(false);
   useEffect(() => {
+    setOffline(!navigator.onLine);
     const online = () => setOffline(false); const offline = () => setOffline(true); const ready = () => setUpdate(true);
     window.addEventListener('online', online); window.addEventListener('offline', offline); window.addEventListener('lanxgrow:update-ready', ready);
     if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistration().then(registration => { if (registration?.waiting) setUpdate(true); });
