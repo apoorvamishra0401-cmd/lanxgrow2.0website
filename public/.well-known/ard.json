@@ -1,0 +1,21 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:www.lanxgrow.com:public:website-guide",
+      "displayName": "LanXgrow public website guide",
+      "type": "application/json",
+      "url": "https://www.lanxgrow.com/agent-guide.json",
+      "description": "Read-only information about LanXgrow public pages and the current demonstration experience. This document is not an assessment API or an MCP server.",
+      "representativeQueries": [
+        "What can I try on the LanXgrow website today?",
+        "Where can freshers explore interview preparation in English?",
+        "How can I contact LanXgrow about programme fees and availability?"
+      ],
+      "tags": [
+        "english-communication",
+        "interview-preparation",
+        "public-documentation"
+      ]
+    }
+  ]
+}

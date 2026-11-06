@@ -23,6 +23,12 @@ export const faqIntro = {
 
 export const faqItems: FaqItem[] = [
   {
+    id: 'available-today',
+    question: 'What can I use on the public website today?',
+    answer: 'You can explore the interview preparation framework, try guided scripted conversation, and choose optional local voice or video rehearsal in SMART AI. These are demonstrations. Live AI feedback, automated assessment reports and employer-equivalent scoring are not enabled in this public experience. Sign-in is a separate account step; confirm programme availability with the team.',
+  },
+
+  {
     id: 'why-cannot-speak-fluent',
     question:
       'Why can I understand English but struggle to speak fluently?',
@@ -55,7 +61,7 @@ export const faqItems: FaqItem[] = [
     question:
       'Can AI help me improve my spoken English?',
     answer:
-      'AI can support language practice by giving learners opportunities to work on speaking and review aspects of their performance. Its usefulness depends on the quality of the assessment, the feedback provided and how consistently you practise. LAN-X AI supports voice-based and video-based assessments for personalised learning. AI feedback is guidance, not a guarantee of perfect accuracy or fluency.',
+      'AI can support language practice by giving learners opportunities to work on speaking and review aspects of their performance. Its usefulness depends on the quality of the assessment, the feedback provided and how consistently you practise. The current LAN-X public experience offers guided demonstrations and optional local rehearsal. Live AI assessment feedback is planned. AI feedback is guidance, not a guarantee of perfect accuracy or fluency.',
   },
   {
     id: 'ai-feedback-reliable',
@@ -97,7 +103,7 @@ export const faqItems: FaqItem[] = [
     question:
       'How does LanXgrow use my voice and video data?',
     answer:
-      'The current public assessment preview does not record your camera or microphone. Before any recording-based learning feature is introduced, we will explain what is collected, why it is needed and how it is handled. Read our Privacy Notice or email official@lanxgrow.com with questions.',
+      'The homepage animation does not use your camera or microphone. In SMART AI, local rehearsal can request camera or microphone permission when you choose it; recordings stay in your browser in this demonstration. Optional speech-to-text uses your browser’s speech service and may process audio outside your device. Review permission prompts and the Privacy Notice before recording. Email official@lanxgrow.com with questions.',
   },
   {
     id: 'cost-and-duration',

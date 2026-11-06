@@ -1,0 +1,26 @@
+# LanXgrow
+
+> English communication and interview preparation information for students, freshers and working professionals.
+
+LanXgrow's public website explains the learning approach and offers guided demonstrations. Scripted responses and optional browser-local rehearsals are demonstrations. Live AI feedback and automated assessment reports are planned. These demonstrations do not establish learner scores or hiring outcomes.
+
+## Public pages
+
+- [Home](https://www.lanxgrow.com/): Learning approach and public experience overview.
+- [About](https://www.lanxgrow.com/about): Purpose, philosophy and research context.
+- [Services](https://www.lanxgrow.com/services): English communication focus and programme enquiries.
+- [Interview preparation](https://www.lanxgrow.com/interview-prep): Illustrative practice framework for career goals.
+- [SMART AI demonstrations](https://www.lanxgrow.com/smart-ai): Guided scripted conversation and optional local rehearsal.
+- [Frequently asked questions](https://www.lanxgrow.com/faq): Availability, fees, privacy and getting started.
+- [Privacy](https://www.lanxgrow.com/privacy): Published privacy information.
+- [Terms](https://www.lanxgrow.com/terms): Published terms of use.
+
+## Machine-readable resources
+
+- [Public website guide](https://www.lanxgrow.com/agent-guide.json): Read-only page directory and capability status; not an assessment API.
+- [Agentic resource discovery manifest](https://www.lanxgrow.com/.well-known/ard.json): Catalog of the public guide.
+- [Sitemap](https://www.lanxgrow.com/sitemap.xml): Canonical public pages.
+
+## Programme enquiries
+
+Email official@lanxgrow.com to confirm current availability, curriculum, fees and schedules before enrolling. Account sign-in and private learner information are separate from this public guide. No account records, recordings or payment actions are exposed by these resources.

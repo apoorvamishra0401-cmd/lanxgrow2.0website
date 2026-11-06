@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { publicPages, siteOrigin } from '@/config/seo';
+import { structuredData } from '@/config/structuredData';
 
 export function usePageMeta(title: string, description?: string) {
   const { pathname } = useLocation();
@@ -20,6 +21,12 @@ export function usePageMeta(title: string, description?: string) {
     meta('og:title', fullTitle, true);
     meta('og:description', page?.description ?? description ?? '', true);
     meta('og:url', siteOrigin + path, true);
+    const schema = structuredData(path);
+    let schemaEl = document.head.querySelector<HTMLScriptElement>('#lanxgrow-structured-data');
+    if (schema) {
+      if (!schemaEl) { schemaEl = document.createElement('script'); schemaEl.id = 'lanxgrow-structured-data'; schemaEl.type = 'application/ld+json'; document.head.appendChild(schemaEl); }
+      schemaEl.textContent = JSON.stringify(schema);
+    } else schemaEl?.remove();
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (page) {
       if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }

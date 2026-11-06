@@ -4,6 +4,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
 import { publicPages } from './config/seo';
 export { publicPages };
+export { structuredData } from './config/structuredData';
 export function render(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const output = new PassThrough();

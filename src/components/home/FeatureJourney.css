@@ -31,3 +31,8 @@
 /* Landscape phones and short windows use touch selectors without a pinned scroll trap. */
 @media(max-height:600px){.feature-track{height:auto;padding-bottom:40px}.feature-sticky{position:relative;top:auto;height:auto;min-height:0;max-height:none;align-items:center}.feature-preview{height:540px}.feature-scroll{display:none}}
 @media(max-height:600px) and (max-width:767px){.feature-sticky{grid-template-rows:auto auto}.feature-preview{height:490px}}
+
+/* Small status labels remain readable on compact screens. */
+.feature-total,.feature-image-note,.feature-preview-top{color:#685846}
+.feature-image-note{font-size:11px;line-height:1.5}
+@media(max-width:767px){.feature-preview-top{font-size:10px}.feature-menu>.feature-eyebrow{font-size:10px}}
