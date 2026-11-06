@@ -61,7 +61,7 @@ export function WhyLanXgrow() {
             <div className="feature-preview-top"><span>THE LANXGROW EXPERIENCE</span><span>{String(shown + 1).padStart(2, '0')} <span className="feature-total">/ 06</span></span></div>
             <div className="feature-stage">
               <span className="feature-orbit" aria-hidden="true" />
-              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" decoding="async" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'LanXgrow app · product preview'}</span></div>)}
+              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" decoding="async" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'Illustrative app screen · availability varies'}</span></div>)}
             </div>
             <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
           </div>
