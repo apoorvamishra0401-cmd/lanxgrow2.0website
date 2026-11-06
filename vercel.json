@@ -6,7 +6,7 @@
       "destination": "/pages/interview-prep-content.html"
     },
     {
-      "source": "/(smart-ai|smart-ai/review|app-preview|get-started|signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account)",
+      "source": "/(smart-ai/review|app-preview|get-started|signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account)",
       "destination": "/app-shell.html"
     }
   ],

@@ -9,7 +9,7 @@ assert.equal(new Set(urls).size, urls.length);
 for (const url of urls) {
   const path = new URL(url).pathname;
   assert(!/signin|account|callback|preview/.test(path));
-  if (['/smart-ai','/interview-prep'].includes(path)) continue;
+  if (path === '/interview-prep') continue;
   const html = await read(path === '/' ? 'dist/index.html' : `dist${path}/index.html`);
   assert.match(html, /<h1[ >]/, path + ' needs a rendered main heading');
   assert(html.includes(`rel="canonical" href="${url}"`));
@@ -27,4 +27,4 @@ assert(!interview.includes('labels.counter.textContent=labels.sceneNo.textConten
 const worker = await read('dist/service-worker.js');
 assert(!worker.includes('__BUILD_VERSION__'));
 assert.match(worker, /response.status >= 500/);
-console.log('PASS: sitemap, 6 rendered public pages, metadata, 404, app routes, interview handoff, worker status preservation.');
+console.log('PASS: sitemap, 7 rendered public pages, metadata, 404, app routes, interview handoff, worker status preservation.');
