@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const read = file => readFile(file, 'utf8');
+const xml = await read('dist/sitemap.xml');
+assert.match(xml, /^<\?xml/);
+const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(x => x[1]);
+assert.equal(urls.length, 8);
+assert.equal(new Set(urls).size, urls.length);
+for (const url of urls) {
+  const path = new URL(url).pathname;
+  assert(!/signin|account|callback|preview/.test(path));
+  if (path === '/interview-prep') continue;
+  const html = await read(path === '/' ? 'dist/index.html' : `dist${path}/index.html`);
+  assert.match(html, /<h1[ >]/, path + ' needs a rendered main heading');
+  assert(html.includes(`rel="canonical" href="${url}"`));
+  assert.equal((html.match(/name="description"/g) || []).length, 1);
+  assert(!html.includes('<div id="root"></div>'));
+}
+assert.match(await read('dist/404.html'), /noindex,follow/);
+assert.match(await read('dist/robots.txt'), /Sitemap: https:\/\/www.lanxgrow.com\/sitemap.xml/);
+const routing = JSON.parse(await read('vercel.json'));
+assert(!routing.rewrites.some(r => r.source === '/(.*)'));
+assert(routing.rewrites.some(r => r.source.includes('auth-callback')));
+const interview = await read('dist/pages/interview-prep-content.html');
+assert.match(interview, /get-started\?goal=interview/);
+assert(!interview.includes('labels.counter.textContent=labels.sceneNo.textContent'));
+const worker = await read('dist/service-worker.js');
+assert(!worker.includes('__BUILD_VERSION__'));
+assert.match(worker, /response.status >= 500/);
+console.log('PASS: sitemap, 7 rendered public pages, metadata, 404, app routes, interview handoff, worker status preservation.');

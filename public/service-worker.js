@@ -60,7 +60,7 @@ self.addEventListener('fetch', event => {
       const timer = setTimeout(() => controller.abort(), 3000);
       try {
         const response = await fetch(request, { cache: 'no-store', signal: controller.signal });
-        if (!response.ok) throw new Error('Navigation unavailable');
+        if (!response.ok && response.status >= 500) throw new Error('Navigation unavailable');
         return response;
       } catch (error) {
         const shell = await (await caches.open(CACHE)).match('/index.html');

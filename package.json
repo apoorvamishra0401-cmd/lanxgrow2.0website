@@ -6,9 +6,10 @@
   "description": "LanXgrow public website",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/build-pwa.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/prerender.mjs && node scripts/build-pwa.mjs",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:seo": "node scripts/test-seo.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

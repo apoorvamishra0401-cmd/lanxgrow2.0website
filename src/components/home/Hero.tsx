@@ -30,7 +30,7 @@ export function Hero() {
               {homeHero.supporting}
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
+            <div className="hero-actions mt-9 flex flex-wrap items-center gap-3">
               <Button to={homeHero.primaryCta.to} size="lg" withArrow>
                 {homeHero.primaryCta.label}
               </Button>
@@ -38,6 +38,13 @@ export function Hero() {
                 Get started
               </Button>
             </div>
+            <nav className="mt-7 border-t border-line pt-5" aria-label="Choose your learning goal">
+              <p className="text-xs font-semibold uppercase tracking-widest text-ink-700">Choose your starting point</p>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <a href="/services#english-communication" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For students <span aria-hidden="true">↗</span></a>
+                <a href="/interview-prep" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For freshers &amp; professionals <span aria-hidden="true">↗</span></a>
+              </div>
+            </nav>
           </div>
 
           {/* Product scene: the assessment interface itself, plus mentor note and depth block. */}

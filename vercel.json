@@ -6,8 +6,8 @@
       "destination": "/pages/interview-prep-content.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/(smart-ai/review|app-preview|get-started|signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account)",
+      "destination": "/app-shell.html"
     }
   ],
   "redirects": [
@@ -56,6 +56,33 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account|app-preview|smart-ai/review)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/ard.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
         }
       ]
     }

@@ -10,7 +10,7 @@ export const brand = {
   /** Short, honest positioning line reused in metadata and the footer. */
   tagline: 'Speak Smart, Think Smart',
   description:
-    'LanXgrow is an AI-powered English learning platform designed to help learners build confidence, improve communication skills, and achieve fluency through personalized practice and intelligent guidance. With AI-supported voice and video assessments, interactive learning experiences, and personalized feedback, LanXgrow helps learners identify their strengths, improve their weaknesses, track their progress, and discover the next steps in their learning journey.\n\nOur mission is to make English learning more accessible, engaging, and personalized, empowering every learner to grow at their own pace without the fear of judgment.',
+    'LanXgrow helps students, freshers and working professionals practise English communication for study, interviews and work. Explore guided demonstrations, local practice and learning programmes. Live AI feedback is planned for a later phase.',
 } as const;
 
 export type NavItem = {
@@ -38,7 +38,7 @@ export const footerNav: NavItem[] = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Terms', to: '/terms' },
-  { label: 'Sign in', to: '/get-started' },
+  { label: 'Sign in', to: '/signin' },
 ];
 
 /**

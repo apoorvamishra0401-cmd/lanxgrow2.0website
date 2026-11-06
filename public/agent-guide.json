@@ -1,0 +1,59 @@
+{
+  "name": "LanXgrow public website guide",
+  "description": "Read-only information about LanXgrow public pages and the current demonstration experience. This document is not an assessment API or an MCP server.",
+  "url": "https://www.lanxgrow.com/",
+  "audiences": [
+    "Students",
+    "Freshers",
+    "Working professionals"
+  ],
+  "availablePublicExperiences": [
+    "Public English communication information",
+    "Interview preparation framework",
+    "Guided scripted conversation demonstration",
+    "Optional browser-local voice and video rehearsal"
+  ],
+  "plannedCapabilities": [
+    "Live AI assessment feedback",
+    "Personalised automated assessment reports"
+  ],
+  "accountEntry": "https://www.lanxgrow.com/get-started",
+  "interviewEntry": "https://www.lanxgrow.com/get-started?goal=interview",
+  "supportEmail": "official@lanxgrow.com",
+  "programmeDetails": "Confirm current availability, curriculum, fees, schedules and cancellation terms with the team before enrolling.",
+  "pages": [
+    {
+      "name": "Home",
+      "url": "https://www.lanxgrow.com/"
+    },
+    {
+      "name": "About",
+      "url": "https://www.lanxgrow.com/about"
+    },
+    {
+      "name": "Services",
+      "url": "https://www.lanxgrow.com/services"
+    },
+    {
+      "name": "Interview preparation",
+      "url": "https://www.lanxgrow.com/interview-prep"
+    },
+    {
+      "name": "SMART AI demonstrations",
+      "url": "https://www.lanxgrow.com/smart-ai"
+    },
+    {
+      "name": "FAQ",
+      "url": "https://www.lanxgrow.com/faq"
+    },
+    {
+      "name": "Privacy",
+      "url": "https://www.lanxgrow.com/privacy"
+    },
+    {
+      "name": "Terms",
+      "url": "https://www.lanxgrow.com/terms"
+    }
+  ],
+  "dataAccess": "Public information only. Account profiles, recordings, reports and payments are not exposed through this document."
+}

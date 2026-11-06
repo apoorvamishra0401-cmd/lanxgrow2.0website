@@ -1,3 +1,4 @@
+import { AvailableNow } from '@/components/home/AvailableNow';
 import './ExperiencePages.css';
 import { ServiceExplorer } from '@/components/home/ServiceExplorer';
 import { services, servicesIntro, servicesNotes } from '@/content/services';
@@ -31,6 +32,7 @@ export default function Services() {
       />
 
       <ServiceExplorer />
+      <AvailableNow />
 
       {/* Primary services — one editorial block each, no card repetition. */}
       {services.map((service, index) => {
