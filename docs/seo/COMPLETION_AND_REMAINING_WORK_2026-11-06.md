@@ -4,13 +4,13 @@ Date: 6 November 2026. Owner of this workstream: LANX-01 Website & PWA.
 
 ## What the percentage means
 
-**16 of 24 defined repair/release checkpoints are complete in the private candidate: 66.7% complete, 33.3% open.** This is a transparent count of checkpoints, not an effort estimate, Google score, conversion uplift, whole-app completion percentage or claim that all website problems have been discovered. Checkpoints have different sizes; one backend integration can take more work than several metadata repairs. A checkpoint marked complete covers the specific defect below, not universal perfection of that category.
+**17 of 24 defined repair/release checkpoints are implemented in the private candidate: 70.8% complete, 29.2% open/deferred.** This is a transparent count of checkpoints, not an effort estimate, Google score, conversion uplift, whole-app completion percentage or claim that all website problems have been discovered. Checkpoints have different sizes; one backend integration can take more work than several metadata repairs. A checkpoint marked complete covers the specific defect below, not universal perfection of that category.
 
-The production domain still serves commit `cf27edf71afa816588ae1b67e95468c8b8184175`, verified through Vercel on this date. **The candidate repairs have not been released to production.** Do not interpret 66.7% as repairs already visible on the public domain. Preview code is prepared and tested; live release and live verification remain open.
+The production domain still serves commit `cf27edf71afa816588ae1b67e95468c8b8184175`, verified through Vercel on this date. **The candidate repairs have not been released to production.** Do not interpret 70.8% as repairs already visible on the public domain. Preview code is prepared and tested; live release and live verification remain open.
 
 The prior official live-homepage lab baseline was Performance 100, Accessibility 97, Best Practices 100, SEO 100, and experimental Agentic Browsing 2/4. These are separate measurements, not this completion percentage. No candidate Google score or measured conversion change is claimed.
 
-## Completed checkpoints — 16
+## Completed checkpoints — 17
 
 | ID | Specific repair | Evidence / boundary |
 | --- | --- | --- |
@@ -31,7 +31,9 @@ The prior official live-homepage lab baseline was Performance 100, Accessibility
 | C15 | Early audience navigation and broken interview card | Student/career entry links added; standalone interview document navigation repaired. Hosted browser clicks passed. |
 | C16 | Inconsistent availability and offer copy | Clear available/planned distinctions, recording FAQ; this follow-up removes contradictory Free/access-package/benchmark claims and explicitly labels proposed timings. Build and existing regression checks pass. |
 
-## Still open — 8 checkpoints, all owned for follow-through
+| C17 | Recording/privacy disclosure and historical versions | Candidate policy version 2026-11-06.1 documents actual local recording, activity metadata and optional browser speech processing. Previous 2026-10-25.1 Terms/Privacy texts archived. No consent rows changed. Release review remains pending. |
+
+## Original eight follow-through checkpoints — updated disposition
 
 | ID / priority | What is not right or not proven | How I will solve it | Completion evidence / dependency |
 | --- | --- | --- | --- |
@@ -64,7 +66,7 @@ This draft must be reconciled with the implemented storage and retention paths, 
 
 ## Execution order
 
-1. Complete available source-level repairs and preserve them in the draft repair PR — done for C01–C16.
+1. Complete available source-level repairs and preserve them in the draft repair PR — done for C01–C17.
 2. Reconcile with current integration candidate; finish P04/P05 using isolated test configuration. P01 policy draft can proceed in parallel conceptually without publishing new terms.
 3. Resolve account/content inputs for P01/P02/P03/P06; activate only verified capabilities and measurement.
 4. Close P07/P08 with full candidate acceptance, review, owner-approved production release and live retest.
@@ -76,3 +78,15 @@ No need to ask the owner to write code. Remaining owner input is limited to miss
 Production build/TypeScript and existing SEO, discovery/structured-data, PWA and SMART AI regression checks are used for this source change. Hosted smoke checks verify the updated availability text. No database migration, pricing/entitlement change, tracking activation, production promotion or authenticated end-to-end success is claimed.
 
 References within this repository: `RELEASE_REVIEW_2026-11-05.md`, `AGENTIC_AND_CONTENT_REVIEW_2026-11-06.md`, `EXTERNAL_CRO_AUDIT_REVERIFICATION_2026-11-06.md`.
+
+## Latest follow-through — 6 November 2026 (India)
+
+- P01 implemented in source as C17; new policy text requires release review, but old records were not edited and historical texts remain accessible.
+- P02: Windsor metadata exposes a measurement_id field, but short and extended queries returned no measurement ID. No tracking code or guessed ID installed. Event validation remains blocked.
+- P03: Search Console property access now works. Search-performance analysis was completed privately. This read-only connector cannot submit sitemaps or perform URL Inspection; live indexing/canonical acceptance remains open. Customer search metrics are intentionally not published in this public repository.
+- Historical /home search entry identified; permanent /home → / redirect added to this candidate and client alias retained in the separate integrated candidate.
+- P06 owner decision: keep current verified facts and enquiry paths. Pricing/guarantees/credentials remain deferred rather than fabricated; this is not counted as a completed defect fix.
+- Public repairs were reconciled onto the current combined RC1 archive in a separate local candidate. 87 backend/admin/interview/learner/auth/lockfile paths remained byte-identical. Existing feature selection, private offline 503 behavior, PWA guards and trial-display removal were preserved. No private review source was pushed to this public branch.
+- The integrated interview page retains its React route, diagnostic handoff and shadow journey, with an initial rendered summary for crawlers. The public repair branch retains its existing standalone route. These are separate candidate variants, not a claim that production was integrated.
+- Integrated TypeScript/Vite/prerender/PWA build and applicable regression checks pass. Full browser/viewport/auth/provider acceptance remains open; static and synthetic tests do not close it.
+- P08 source reconciliation progressed; production release remains pending. No claim of 100% website or product completion.

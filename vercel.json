@@ -12,6 +12,11 @@
   ],
   "redirects": [
     {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/interview-prep.html",
       "destination": "/interview-prep",
       "permanent": true
