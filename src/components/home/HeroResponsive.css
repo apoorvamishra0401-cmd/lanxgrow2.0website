@@ -22,7 +22,7 @@
     line-height: 1.08;
   }
 
-  .hero-copy > div:last-child {
+  .hero-copy .hero-actions {
     flex-direction: column;
     align-items: flex-start;
   }

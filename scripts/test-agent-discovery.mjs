@@ -40,3 +40,10 @@ for (const bg of ['#fffdfa','#f7eee6','#f3eee5','#f4eee5','#fffaf0','#f1e8da']) 
   assert(ratio >= 4.5, `Caption contrast on ${bg}: ${ratio}`);
 }
 console.log('PASS: corrected small-caption colour meets 4.5:1 on its light surfaces.');
+
+assert.match(home, /aria-label="Choose your learning goal"/);
+assert.match(home, /href="\/services#english-communication"/);
+assert.match(home, /href="\/interview-prep"/);
+assert(!home.includes('1-Day Free Practice Option'));
+assert(!home.includes('7-Day Money-Back Guarantee'));
+console.log('PASS: audience paths target existing public routes without unverified trial/refund offers.');
