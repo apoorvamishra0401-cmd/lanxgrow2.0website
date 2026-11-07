@@ -22,7 +22,7 @@ class WritingService:
         self.verify_token = verify_token
         self.evaluate = evaluate
         with self._connect() as db:
-            db.execute('CREATE TABLE IF NOT EXISTS reports (id TEXT PRIMARY KEY, owner TEXT NOT NULL, submission TEXT NOT NULL, report TEXT NOT NULL)')
+            db.execute('CREATE TABLE IF NOT EXISTS reports (id TEXT PRIMARY KEY, owner TEXT NOT NULL, report TEXT NOT NULL)')
 
     def _connect(self):
         return sqlite3.connect(self.database)
@@ -30,7 +30,10 @@ class WritingService:
     def _owner(self, bearer: str) -> str:
         if not isinstance(bearer, str) or not bearer.startswith('Bearer '):
             raise Unauthorized('Missing bearer token')
-        subject = self.verify_token(bearer[7:])
+        try:
+            subject = self.verify_token(bearer[7:])
+        except Exception as exc:
+            raise Unauthorized('Token verification failed') from exc
         if not isinstance(subject, str) or not subject.strip():
             raise Unauthorized('Invalid subject')
         return subject
@@ -47,7 +50,7 @@ class WritingService:
             raise ValueError('Evaluator returned unsupported report')
         report_id = str(uuid.uuid4())
         with self._connect() as db:
-            db.execute('INSERT INTO reports VALUES (?, ?, ?, ?)', (report_id, owner, text.strip(), json.dumps(report)))
+            db.execute('INSERT INTO reports VALUES (?, ?, ?)', (report_id, owner, json.dumps(report)))
         return Result(201, {'id': report_id, 'status': report['status']})
 
     def get_report(self, bearer: str, report_id: str) -> Result:
