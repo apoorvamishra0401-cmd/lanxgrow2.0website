@@ -2,6 +2,7 @@
 import json
 import re
 from http import HTTPStatus
+from http import HTTPStatus
 from .writing_gateway import GatewayReply, MAX_BODY_BYTES
 
 _REQUEST = re.compile(r'^/dev/v1/writing/requests/([a-zA-Z0-9_-]{1,128})(?:/(recover))?$')
@@ -13,7 +14,9 @@ def make_app(gateway):
         authorization = environ.get('HTTP_AUTHORIZATION', '')
         origin = environ.get('HTTP_ORIGIN', '')
         try:
-            if method == 'POST' and path == '/dev/v1/writing/submissions':
+            if environ.get('QUERY_STRING') or environ.get('HTTP_TRANSFER_ENCODING'):
+                reply = GatewayReply(400, {'error': 'invalid_request'})
+            elif method == 'POST' and path == '/dev/v1/writing/submissions':
                 if environ.get('CONTENT_TYPE', '').split(';')[0].strip().lower() != 'application/json':
                     reply = GatewayReply(415, {'error': 'unsupported_media_type'})
                 else:
