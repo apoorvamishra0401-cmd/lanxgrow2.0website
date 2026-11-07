@@ -50,3 +50,16 @@ def test_rejects_invalid_routes_and_media_type():
     assert call(app, 'GET', '/dev/v1/writing/requests/../../secret', b'')[0] == 404
     assert call(app, 'DELETE', '/dev/v1/writing/requests/abc', b'')[0] == 404
     assert gw.calls == []
+
+
+def test_rejects_query_and_transfer_encoding_before_gateway():
+    gw = Gateway(); app = make_app(gw)
+    for key, value in [('QUERY_STRING', 'token=secret'), ('HTTP_TRANSFER_ENCODING', 'chunked')]:
+        env = {'REQUEST_METHOD': 'POST', 'PATH_INFO': '/dev/v1/writing/submissions',
+               'CONTENT_TYPE': 'application/json', 'CONTENT_LENGTH': '2',
+               'wsgi.input': io.BytesIO(b'{}'), 'HTTP_AUTHORIZATION': 'Bearer synthetic',
+               'HTTP_ORIGIN': 'https://example.test', key: value}
+        replies = []
+        result = b''.join(app(env, lambda status, headers: replies.append(status)))
+        assert replies[0].startswith('400 ') and json.loads(result)['error'] == 'invalid_request'
+    assert gw.calls == []
