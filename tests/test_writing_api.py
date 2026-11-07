@@ -46,6 +46,19 @@ class WritingAPITests(unittest.TestCase):
         with sqlite3.connect(self.db) as db:
             self.assertEqual(db.execute('SELECT COUNT(*) FROM reports').fetchone()[0], 0)
 
+    def test_raw_submission_never_persisted(self):
+        self.service.submit('Bearer alice-token', {'text': 'SECRET-SYNTHETIC-ESSAY'})
+        import sqlite3
+        with sqlite3.connect(self.db) as db:
+            row = db.execute('SELECT sql FROM sqlite_master WHERE name = ?', ('reports',)).fetchone()
+            self.assertNotIn('submission', row[0].lower())
+            self.assertNotIn('SECRET-SYNTHETIC-ESSAY', str(db.execute('SELECT * FROM reports').fetchall()))
+
+    def test_verifier_exception_fails_closed(self):
+        service = WritingService(self.db, lambda token: (_ for _ in ()).throw(RuntimeError('identity down')), self.evaluator)
+        with self.assertRaises(Unauthorized):
+            service.submit('Bearer alice-token', {'text': 'Private'})
+
     def test_invalid_evaluator_report_does_not_persist(self):
         service = WritingService(self.db, self.verifier, lambda _: {'status': 'unknown'})
         with self.assertRaises(ValueError):
