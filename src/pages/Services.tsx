@@ -24,7 +24,7 @@ export default function Services() {
   usePageMeta('Services', 'English Communication and guided learning support at LanXgrow.');
 
   return (
-    <>
+    <div className="services-page">
       <PageIntro
         eyebrow={servicesIntro.eyebrow}
         heading={servicesIntro.heading}
@@ -99,6 +99,6 @@ export default function Services() {
           </Reveal>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
