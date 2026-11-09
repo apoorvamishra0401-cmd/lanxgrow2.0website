@@ -22,7 +22,7 @@ export default function Faq() {
   const filtered = faqItems.filter(item => (topic === 'All questions' || groups[topic]?.includes(item.id)) && `${item.question} ${item.answer}`.toLowerCase().includes(query.trim().toLowerCase()));
 
   return (
-    <>
+    <div className="faq-page">
       <PageIntro
         eyebrow={faqIntro.eyebrow}
         heading={faqIntro.heading}
@@ -52,6 +52,6 @@ export default function Faq() {
           </Reveal>
         </div>
       </Section>
-    </>
+    </div>
   );
 }
