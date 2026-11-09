@@ -41,8 +41,8 @@ export function Hero() {
             <nav className="mt-7 border-t border-line pt-5" aria-label="Choose your learning goal">
               <p className="text-xs font-semibold uppercase tracking-widest text-ink-700">Choose your starting point</p>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <a href="/services#english-communication" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For students <span aria-hidden="true">↗</span></a>
-                <a href="/interview-prep" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For freshers &amp; professionals <span aria-hidden="true">↗</span></a>
+                <a href="/guest/student" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For students <span aria-hidden="true">↗</span></a>
+                <a href="/guest/fresher" className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-line bg-ivory-50 px-4 py-3 text-sm font-medium text-ink-900 hover:border-terracotta-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-terracotta-700">For freshers &amp; professionals <span aria-hidden="true">↗</span></a>
               </div>
             </nav>
           </div>
