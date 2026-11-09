@@ -53,7 +53,7 @@ export function WhyLanXgrow() {
           <div className="feature-menu">
             <p className="feature-eyebrow">One connected experience <span> / 06</span></p>
             <div className="feature-list" aria-label="Explore LanXgrow features">
-              {features.map((feature, index) => <button key={feature.name} type="button" className={`feature-option ${shown === index ? 'is-active' : ''}`} aria-current={shown === index ? 'step' : undefined} aria-controls="feature-preview" onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} onClick={() => select(index)}><span className="feature-number">{String(index + 1).padStart(2, '0')}</span><span><span className="feature-name">{feature.name}</span><span className="feature-line">{feature.line}</span></span><span className="feature-arrow" aria-hidden="true">↗</span></button>)}
+              {features.map((feature, index) => <button key={feature.name} type="button" className={`feature-option ${shown === index ? 'is-active' : ''}`} aria-current={shown === index ? 'step' : undefined} aria-controls="feature-preview" onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} onClick={(event) => { if ((event.target as HTMLElement).closest('.feature-arrow')) { window.dispatchEvent(new Event('lx-vb-start-intro')); return; } select(index); }}><span className="feature-number">{String(index + 1).padStart(2, '0')}</span><span><span className="feature-name">{feature.name}</span><span className="feature-line">{feature.line}</span></span><span className="feature-arrow" aria-hidden="true">↗</span></button>)}
             </div>
             <p className="feature-scroll"><span aria-hidden="true">↓</span> Scroll to explore <span className="feature-progress"><span style={{ transform: `scaleX(${progress})` }} /></span></p>
           </div>
@@ -63,7 +63,7 @@ export function WhyLanXgrow() {
               <span className="feature-orbit" aria-hidden="true" />
               {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" decoding="async" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'Illustrative app screen · availability varies'}</span></div>)}
             </div>
-            <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
+            <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p><button type="button" className="feature-start" onClick={() => window.dispatchEvent(new Event('lx-vb-start-intro'))}>Try the free 1-minute introduction <span aria-hidden="true">↗</span></button></div>
           </div>
           <div className="feature-mobile-controls"><button type="button" disabled={active === 0} onClick={() => select(active - 1)} aria-label="Previous feature">←</button><p>Tap a feature or swipe the preview.<br />{active + 1} of {features.length}</p><button type="button" disabled={active === features.length - 1} onClick={() => select(active + 1)} aria-label="Next feature">→</button></div>
         </div>
