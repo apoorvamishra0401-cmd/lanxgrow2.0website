@@ -1,7 +1,8 @@
 import { AvailableNow } from '@/components/home/AvailableNow';
 import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
-import { Hero } from '@/components/home/Hero';
+import { VersionBHero } from '@/components/home/VersionBHero';
+import { PersonalizedReport } from '@/components/home/PersonalizedReport';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { ResearchStories } from '@/components/home/ResearchStories';
 import { RealConversations } from '@/components/home/RealConversations';
@@ -12,13 +13,14 @@ import { brand } from '@/config/site';
 
 export default function Home() {
   usePageMeta(
-    'English Communication & AI Practice',
+    'AI English Practice & Personalized Reports',
     brand.description,
   );
 
   return (
     <>
-      <Hero />
+      <VersionBHero />
+      <PersonalizedReport />
       <MeetLanX />
       <AvailableNow />
       <LearningEcosystem />
