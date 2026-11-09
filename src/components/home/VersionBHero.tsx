@@ -23,6 +23,7 @@ export function VersionBHero() {
   }, [open]);
 
   function start() { setStep(0); setAnswer(''); setOpen(true); }
+  useEffect(() => { const onStart = () => start(); window.addEventListener('lx-vb-start-intro',onStart); return () => window.removeEventListener('lx-vb-start-intro',onStart); }, []);
   function next() {
     if (step === 0) { setStep(1); return; }
     if (!answer.trim()) return;
