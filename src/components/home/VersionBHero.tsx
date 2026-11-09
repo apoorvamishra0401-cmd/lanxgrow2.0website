@@ -13,7 +13,6 @@ export function VersionBHero() {
   const [name, setName] = useState('');
   const [goal, setGoal] = useState('');
   const [answer, setAnswer] = useState('');
-  const [responses, setResponses] = useState<string[]>([]);
   const dialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -23,11 +22,10 @@ export function VersionBHero() {
     if (!open && element.open) element.close();
   }, [open]);
 
-  function start() { setStep(0); setResponses([]); setAnswer(''); setOpen(true); }
+  function start() { setStep(0); setAnswer(''); setOpen(true); }
   function next() {
     if (step === 0) { setStep(1); return; }
     if (!answer.trim()) return;
-    setResponses(current => [...current, answer.trim()]);
     setAnswer('');
     setStep(current => current + 1);
   }
