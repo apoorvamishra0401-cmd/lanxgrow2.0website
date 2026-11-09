@@ -6,6 +6,10 @@
       "destination": "/pages/interview-prep-content.html"
     },
     {
+      "source": "/guest/:audience",
+      "destination": "/app-shell.html"
+    },
+    {
       "source": "/(smart-ai/review|app-preview|get-started|signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account)",
       "destination": "/app-shell.html"
     }
@@ -65,7 +69,7 @@
       ]
     },
     {
-      "source": "/(signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account|app-preview|smart-ai/review)",
+      "source": "/(signin|signup|consent|forgot-password|reset-password|auth-callback|placeholder|account|app-preview|smart-ai/review|guest/:audience)",
       "headers": [
         {
           "key": "X-Robots-Tag",
