@@ -3,6 +3,7 @@ import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
 import { VersionBHero } from '@/components/home/VersionBHero';
 import { PersonalizedReport } from '@/components/home/PersonalizedReport';
+import { VersionBLearningMethod } from '@/components/home/VersionBLearningMethod';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { ResearchStories } from '@/components/home/ResearchStories';
 import { RealConversations } from '@/components/home/RealConversations';
@@ -25,6 +26,7 @@ export default function Home() {
       <AvailableNow />
       <LearningEcosystem />
       <WhyLanXgrow />
+      <VersionBLearningMethod />
       <ResearchStories />
       <RealConversations />
       <Journey />
