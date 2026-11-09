@@ -7,8 +7,7 @@ import { VersionBLearningMethod } from '@/components/home/VersionBLearningMethod
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { ResearchStories } from '@/components/home/ResearchStories';
 import { RealConversations } from '@/components/home/RealConversations';
-import { Journey } from '@/components/home/Journey';
-import { ClosingCta } from '@/components/home/ClosingCta';
+import { VersionBJourney } from '@/components/home/VersionBJourney';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { brand } from '@/config/site';
 
@@ -29,8 +28,7 @@ export default function Home() {
       <VersionBLearningMethod />
       <ResearchStories />
       <RealConversations />
-      <Journey />
-      <ClosingCta />
+      <VersionBJourney />
     </>
   );
 }
