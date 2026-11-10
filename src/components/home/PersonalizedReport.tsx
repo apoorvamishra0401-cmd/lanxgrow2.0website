@@ -48,13 +48,18 @@ export function PersonalizedReport() {
   const [selected, setSelected] = useState(0);
   const showcase = useRef<HTMLElement>(null);
   const lastScroll = useRef<number | null>(null);
+  const manualSelectionUntil = useRef(0);
+  const chooseExample = (index: number) => {
+    manualSelectionUntil.current = Date.now() + 5000;
+    setSelected(index);
+  };
 
   useEffect(() => {
     let queued = false;
     const update = () => {
       queued = false;
       const el = showcase.current;
-      if (!el) return;
+      if (!el || Date.now() < manualSelectionUntil.current) return;
       const current = window.scrollY;
       if (lastScroll.current !== null && Math.abs(lastScroll.current - current) < 4) return;
       lastScroll.current = current;
@@ -82,8 +87,8 @@ export function PersonalizedReport() {
 
         <div className="lx-vb-report-selector" role="tablist" aria-label="Explore example English reports">
           {examples.map((person, i) => (
-            <button type="button" key={person.name} role="tab" aria-selected={selected===i} aria-controls="lx-vb-report-panel"
-              onClick={()=>setSelected(i)} className={selected===i?'is-current':''}>
+            <button type="button" key={person.name} role="tab" id={'lx-vb-report-tab-'+i} aria-selected={selected===i} aria-controls="lx-vb-report-panel" tabIndex={selected===i?0:-1}
+              onClick={()=>chooseExample(i)} className={selected===i?'is-current':''}>
               <span className="lx-vb-report-avatar" aria-hidden="true">{person.portrait}</span>
               <span><strong>{person.name}</strong><small>{person.context}</small></span>
               <span aria-hidden="true" className="lx-vb-report-arrow">↗</span>
@@ -91,7 +96,7 @@ export function PersonalizedReport() {
           ))}
         </div>
 
-        <div className="lx-vb-report-paper" id="lx-vb-report-panel" role="tabpanel" aria-label={example.name + ' illustrative report'} key={example.name}>
+        <div className="lx-vb-report-paper" id="lx-vb-report-panel" role="tabpanel" aria-labelledby={'lx-vb-report-tab-'+selected} key={example.name}>
           <div className="lx-vb-report-paper-top">
             <div><span>LANXGROW · PERSONALIZED ENGLISH FEEDBACK</span><h3>{example.name}'s English snapshot</h3><p>{example.opening}</p></div>
             <div className="lx-vb-level"><small>CEFR reference level</small><strong>{example.level}</strong><span>Illustrative</span></div>
