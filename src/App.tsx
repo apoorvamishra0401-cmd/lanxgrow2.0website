@@ -7,6 +7,7 @@ import Home from '@/pages/Home';
 import { lazy, Suspense } from 'react';
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const FounderReviewLab = lazy(() => import('@/pages/FounderReviewLab'));
+const GuestEntry = lazy(() => import('@/pages/GuestEntry'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
@@ -36,6 +37,7 @@ export default function App() {
     <PwaStatus />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
+      <Route path="/guest/:audience" element={<Suspense fallback={<p>Preparing onboarding…</p>}><GuestEntry /></Suspense>} />
       <Route path="/review-lab" element={<Suspense fallback={<p>Opening review…</p>}><FounderReviewLab /></Suspense>} />
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
