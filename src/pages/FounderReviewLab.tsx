@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
  */
 const REVIEW_EMAIL = 'apoorvamishra0401@gmail.com';
 const customerPaths = [
+  { label: 'Student: three-step onboarding + demo', path: '/guest/student' },
+  { label: 'Fresher: three-step onboarding + demo', path: '/guest/fresher' },
+  { label: 'Professional: three-step onboarding + demo', path: '/guest/professional' },
   { label: 'Home', path: '/' },
   { label: 'Get started', path: '/get-started' },
   { label: 'Google sign-in', path: '/signin' },
@@ -56,7 +59,7 @@ export default function FounderReviewLab() {
       </section>}
       {stage === 'tour' && <section>
         <h2>Customer journey · live route checks</h2>
-        <p>These links open the actual routes in this website build, not screenshots. Mark what works as you inspect it. A broken or missing route is a finding.</p>
+        <p>These links open actual pages in this website build, not screenshots. The guest routes include interactive local-only demo onboarding. Live AI, real reports and Google authentication are not yet accepted. Mark what works as you inspect it.</p>
         <div style={{ display: 'grid', gap: 12 }}>
           {customerPaths.map(p => <div key={p.path} style={{ background: '#172235', padding: 16, borderRadius: 10, display: 'flex', gap: 14, justifyContent: 'space-between', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link to={p.path} style={{ color: '#a6e5d1', textDecoration: 'underline', fontWeight: 600 }}>{p.label} · {p.path}</Link>
