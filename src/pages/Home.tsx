@@ -1,3 +1,4 @@
+import { AudienceEntry } from '@/components/home/AudienceEntry';
 import { AvailableNow } from '@/components/home/AvailableNow';
 import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <>
       <VersionBHero />
+      <AudienceEntry />
       <PersonalizedReport />
       <MeetLanX />
       <AvailableNow />
