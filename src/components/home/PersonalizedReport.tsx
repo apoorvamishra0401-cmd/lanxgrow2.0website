@@ -88,7 +88,14 @@ export function PersonalizedReport() {
         <div className="lx-vb-report-selector" role="tablist" aria-label="Explore example English reports">
           {examples.map((person, i) => (
             <button type="button" key={person.name} role="tab" id={'lx-vb-report-tab-'+i} aria-selected={selected===i} aria-controls="lx-vb-report-panel" tabIndex={selected===i?0:-1}
-              onClick={()=>chooseExample(i)} className={selected===i?'is-current':''}>
+              onClick={()=>chooseExample(i)}
+              onKeyDown={event=>{
+                if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+                event.preventDefault();
+                const nextIndex = event.key==='Home' ? 0 : event.key==='End' ? examples.length-1 : (i + (event.key==='ArrowRight'?1:-1) + examples.length) % examples.length;
+                chooseExample(nextIndex);
+                document.getElementById('lx-vb-report-tab-'+nextIndex)?.focus();
+              }} className={selected===i?'is-current':''}>
               <span className="lx-vb-report-avatar" aria-hidden="true">{person.portrait}</span>
               <span><strong>{person.name}</strong><small>{person.context}</small></span>
               <span aria-hidden="true" className="lx-vb-report-arrow">↗</span>
