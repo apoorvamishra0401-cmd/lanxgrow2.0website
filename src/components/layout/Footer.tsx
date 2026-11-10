@@ -1,6 +1,6 @@
 import { EmailLink } from '@/components/support/SupportLinks';
 import { Link } from 'react-router-dom';
-import { brand, cta, footerNav, hasPublishedContactChannels, contactChannels } from '@/config/site';
+import { brand, footerNav, hasPublishedContactChannels, contactChannels } from '@/config/site';
 import { Container } from '@/components/ui/Container';
 import { Logo } from '@/components/ui/Logo';
 
@@ -69,13 +69,6 @@ export function Footer() {
                   Our enquiry channels are not open yet.
                 </p>
               )}
-
-              <p className="pt-1">
-                <Link to={cta.talkToUs.to} className="inline-flex items-center gap-2 py-1.5 text-terracotta-300 transition-colors hover:text-terracotta-200">
-                  {cta.talkToUs.label}
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </p>
             </div>
           </div>
         </div>
