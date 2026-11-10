@@ -61,6 +61,9 @@ export function VersionBHero() {
   useEffect(() => {
     if (!open || !started || step < 1 || step > questions.length) return;
     if (secondsLeft <= 0) {
+      recognizer.current?.stop();
+      setDictating(false);
+      setAnswers(current => [...current, answer.trim()]);
       setStep(questions.length + 1);
       setStarted(false);
       return;
