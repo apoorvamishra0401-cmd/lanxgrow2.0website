@@ -106,10 +106,10 @@ export function PersonalizedReport() {
         <div className="lx-vb-report-paper" id="lx-vb-report-panel" role="tabpanel" aria-labelledby={'lx-vb-report-tab-'+selected} key={example.name}>
           <div className="lx-vb-report-paper-top">
             <div><span>LANXGROW · PERSONALIZED ENGLISH FEEDBACK</span><h3>{example.name}'s English snapshot</h3><p>{example.opening}</p></div>
-            <div className="lx-vb-level"><small>CEFR reference level</small><strong>{example.level}</strong><span>Illustrative</span></div>
+            <div className="lx-vb-level"><small>CEFR reference level</small><strong>{example.level}</strong><span>Example profile</span></div>
           </div>
 
-          <div className="lx-vb-report-bars" aria-label="Illustrative skill breakdown">
+          <div className="lx-vb-report-bars" aria-label="Example skill breakdown">
             {example.skills.map(skill=> <div className="lx-vb-report-bar" key={skill.label}>
               <div><span>{skill.label}</span><strong>{skill.score}<small>/100</small></strong></div>
               <div className="lx-vb-progress" aria-hidden="true"><span style={{width:skill.score+'%'}} /></div>
@@ -123,9 +123,9 @@ export function PersonalizedReport() {
           <div className="lx-vb-report-correction"><span>ONE EXAMPLE OF A CLEARER SENTENCE</span><p className="lx-vb-was">“{example.sample}”</p><p className="lx-vb-better">“{example.better}”</p></div>
           <div className="lx-vb-report-plan"><div><span>YOUR NEXT PRACTICE PLAN</span><h4>Small steps, chosen for your next goal.</h4></div><ol>{example.plan.map(item=><li key={item}>{item}</li>)}</ol></div>
         </div>
-        <p className="lx-vb-report-disclaimer">These are fictional examples. Scores and CEFR levels are illustrative—not a certified English assessment or results from a live AI service.</p>
-        <div className="lx-vb-report-bottom"><p>Six CEFR levels · <strong>{levels.join(' · ')}</strong><br/><small>The CEFR describes language proficiency across listening, reading, speaking and writing.</small></p><a href="https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-descriptors" target="_blank" rel="noreferrer">About the CEFR framework ↗</a></div>
-        <div className="lx-vb-report-cta"><Link to="/get-started">Explore your English journey <span aria-hidden="true">↗</span></Link></div>
+        <p className="lx-vb-report-disclaimer">Explore how a personalized English report can explain strengths, focus areas and next steps. The profiles and scores shown are examples, and CEFR reference levels are not a Cambridge examination or certificate.</p>
+        <div className="lx-vb-report-bottom"><p>Six CEFR levels · <strong>{levels.join(' · ')}</strong><br/><small>CEFR (Common European Framework of Reference for Languages) describes English proficiency from A1 (beginner) to C2 (highly proficient).</small></p><a href="https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-descriptors" target="_blank" rel="noreferrer">About the CEFR framework ↗</a></div>
+        <div className="lx-vb-report-cta"><Link to="/?start=intro">Try free 1-minute interview <span aria-hidden="true">↗</span></Link></div>
       </div>
     </section>
   );
