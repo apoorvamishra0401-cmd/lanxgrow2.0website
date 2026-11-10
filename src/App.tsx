@@ -51,7 +51,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
-        <Route path="/contact/*" element={<Navigate to="/get-started" replace />} />
+        <Route path="/contact/*" element={<Navigate to="/?start=intro" replace />} />
         <Route path="/contact-us/*" element={<Navigate to="/get-started" replace />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
