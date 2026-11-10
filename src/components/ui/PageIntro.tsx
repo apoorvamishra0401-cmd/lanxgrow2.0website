@@ -31,7 +31,7 @@ export function PageIntro({
             <h1 className="mt-6 max-w-2xl font-display text-display-sm text-ink-900 sm:text-display-md">
               {heading}
             </h1>
-            {showStart && <div className="mt-7"><Button to="/get-started" withArrow>Get started</Button></div>}
+            {showStart && <div className="mt-7"><Button to="/?start=intro" withArrow>Try free 1-minute interview</Button></div>}
           </Reveal>
 
           {(supporting || aside) && (
