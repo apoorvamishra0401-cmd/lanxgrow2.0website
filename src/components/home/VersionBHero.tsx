@@ -68,7 +68,7 @@ export function VersionBHero() {
             <h1 id="lx-vb-hero-title"><span>Command</span><em>the room.</em></h1>
             <p className="lx-vb-hero-lead">Your English deserves more than a score. Explore a short conversation, discover the kind of personalized feedback LanXgrow is creating, and see how a focused practice plan can help you move forward.</p>
             <div className="lx-vb-hero-actions">
-              <button type="button" onClick={start} className="lx-vb-primary">Try the free 1-minute introduction <span aria-hidden="true">↗</span></button>
+              <button type="button" onClick={start} className="lx-vb-primary">Try the free 1-minute interview <span aria-hidden="true">↗</span></button>
               <a className="lx-vb-secondary" href="#personalized-report">See a personalized report <span aria-hidden="true">↓</span></a>
             </div>
             <div className="lx-vb-hero-notes"><span>One minute to begin</span><span>Personalized insights explained</span><span>Your next step, made clearer</span></div>
@@ -118,7 +118,7 @@ export function VersionBHero() {
           <h2 id="lx-vb-intro-title">Well done, {displayName}.</h2>
           <p>You've completed your first minute. Continue to discover how personalized English feedback can highlight grammar, pronunciation, fluency, vocabulary, speaking pace and your next practice priorities.</p>
           <p className="lx-vb-intro-hint">Continue with Google to access your English feedback when your introduction has been securely connected to your account.</p>
-          <Link to="/get-started" onClick={()=>setOpen(false)} className="lx-vb-primary">Continue with Google to get the report <span>↗</span></Link>
+          <Link to="/signin?goal=interview" onClick={()=>setOpen(false)} className="lx-vb-primary">Continue with Google to get the report <span>↗</span></Link>
           <a href="#personalized-report" className="lx-vb-intro-link" onClick={()=>setOpen(false)}>See what an English report includes →</a>
         </div>}
       </dialog>
