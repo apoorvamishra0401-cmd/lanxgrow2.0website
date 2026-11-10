@@ -2,6 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './VersionBHero.css';
 
+type VoiceSession = {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+  stop(): void;
+};
+type VoiceWindow = Window & {
+  SpeechRecognition?: new () => VoiceSession;
+  webkitSpeechRecognition?: new () => VoiceSession;
+};
+
 const skillCards = [
   { name: 'Listening', detail: 'Understand conversations, key ideas and everyday English.' },
   { name: 'Reading', detail: 'Recognise meaning and build comprehension with real contexts.' },
@@ -24,6 +39,10 @@ export function VersionBHero() {
   const [audience, setAudience] = useState<'student' | 'fresher' | 'professional'>('student');
   const [secondsLeft, setSecondsLeft] = useState(60);
   const [started, setStarted] = useState(false);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [dictating, setDictating] = useState(false);
+  const [voiceMessage, setVoiceMessage] = useState('');
+  const recognizer = useRef<VoiceSession | null>(null);
   const [skillActive, setSkillActive] = useState(0);
   const { search } = useLocation();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -36,8 +55,8 @@ export function VersionBHero() {
   }, [open]);
 
   function start() {
-    setStep(0); setAnswer(''); setSecondsLeft(60);
-    setStarted(false); setOpen(true);
+    setStep(0); setAnswer(''); setAnswers([]); setSecondsLeft(60);
+    setStarted(false); setVoiceMessage(''); setOpen(true);
   }
   useEffect(() => {
     if (!open || !started || step < 1 || step > questions.length) return;
@@ -53,10 +72,32 @@ export function VersionBHero() {
   useEffect(() => { if (new URLSearchParams(search).get('start') === 'intro') start(); }, [search]);
   function next() {
     if (step === 0) { setStarted(true); setStep(1); return; }
+    recognizer.current?.stop();
+    setDictating(false);
+    setAnswers(current => [...current, answer.trim()]);
     setAnswer('');
     setStep(current => current + 1);
   }
 
+  function toggleVoice() {
+    if (dictating) { recognizer.current?.stop(); setDictating(false); return; }
+    const voiceWindow = window as VoiceWindow;
+    const Recognition = voiceWindow.SpeechRecognition ?? voiceWindow.webkitSpeechRecognition;
+    if (!Recognition) { setVoiceMessage('Voice dictation is not supported in this browser. You can type your answer.'); return; }
+    const session = new Recognition();
+    session.lang = 'en-IN'; session.interimResults = false; session.continuous = false;
+    session.onresult = event => {
+      const transcript = event.results[0]?.[0]?.transcript ?? '';
+      if (transcript.trim()) setAnswer(current => [current.trim(), transcript.trim()].filter(Boolean).join(' '));
+    };
+    session.onerror = () => { setDictating(false); setVoiceMessage('Microphone input was unavailable. You can type your answer.'); };
+    session.onend = () => setDictating(false);
+    recognizer.current = session;
+    setVoiceMessage('');
+    try { session.start(); setDictating(true); }
+    catch { setDictating(false); setVoiceMessage('Microphone permission is needed to dictate an answer.'); }
+  }
+  useEffect(() => () => { recognizer.current?.stop(); }, []);
   const displayName = name.trim() || 'there';
   return (
     <>
@@ -89,7 +130,7 @@ export function VersionBHero() {
       </section>
 
       <dialog ref={dialog} className="lx-vb-intro-dialog" onClose={()=>setOpen(false)} aria-labelledby="lx-vb-intro-title">
-        <div className="lx-vb-intro-head"><span>LANXGROW · YOUR FIRST CONVERSATION</span><button type="button" aria-label="Close introduction" onClick={()=>setOpen(false)}>×</button></div>
+        <div className="lx-vb-intro-head"><span>LANXGROW · YOUR FIRST CONVERSATION</span><button type="button" aria-label="Close introduction" onClick={()=>{recognizer.current?.stop();setOpen(false);}}>×</button></div>
         {step===0 ? <div className="lx-vb-intro-content">
           <h2 id="lx-vb-intro-title">One conversation.<br/><em>A meaningful beginning.</em></h2>
           <p>Tell us a little about your goal. Answer up to four short questions in one minute. One sentence is enough. Your answers stay on this page until you choose to continue.</p>
@@ -111,13 +152,17 @@ export function VersionBHero() {
           <p>{questions[step-1]}</p>
           <label htmlFor="lx-vb-answer">Your answer</label>
           <textarea id="lx-vb-answer" rows={4} maxLength={1200} value={answer} onChange={event=>setAnswer(event.target.value)} placeholder="Write how you would answer in a conversation…" />
+          <button type="button" className="lx-vb-intro-voice" onClick={toggleVoice} aria-pressed={dictating}>{dictating ? 'Stop microphone' : 'Speak your answer'} <span aria-hidden="true">🎙</span></button>
+          <p className="lx-vb-intro-hint">Your browser may use its speech service to transcribe microphone input. Speak only what you want transcribed, or type instead.</p>
+          {voiceMessage && <p role="status" className="lx-vb-intro-hint">{voiceMessage}</p>}
           <p className="lx-vb-intro-hint">One sentence is enough. You may move on without answering. The introduction finishes when the minute ends.</p>
           <button className="lx-vb-primary" onClick={next}>{step===questions.length?'Finish introduction':'Next question'} <span>↗</span></button>
         </div> : <div className="lx-vb-intro-content">
           <p className="lx-vb-intro-step">INTRODUCTION COMPLETE</p>
           <h2 id="lx-vb-intro-title">Well done, {displayName}.</h2>
           <p>You've completed your first minute. Continue to discover how personalized English feedback can highlight grammar, pronunciation, fluency, vocabulary, speaking pace and your next practice priorities.</p>
-          <p className="lx-vb-intro-hint">Continue with Google to access your English feedback when your introduction has been securely connected to your account.</p>
+          <p className="lx-vb-intro-hint">You responded to {answers.filter(Boolean).length} question(s). Your answers have not been evaluated or saved to an account yet.</p>
+          <p className="lx-vb-intro-hint">Continue with Google to enter your learning account and explore available feedback.</p>
           <Link to="/signin?goal=interview" onClick={()=>setOpen(false)} className="lx-vb-primary">Continue with Google to get the report <span>↗</span></Link>
           <a href="#personalized-report" className="lx-vb-intro-link" onClick={()=>setOpen(false)}>See what an English report includes →</a>
         </div>}
