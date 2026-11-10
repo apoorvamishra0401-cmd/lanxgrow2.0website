@@ -37,6 +37,7 @@ export const footerNav: NavItem[] = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Privacy', to: '/privacy' },
   { label: 'Terms', to: '/terms' },
+  { label: 'Sign In', to: '/signin' },
 ];
 
 /**
