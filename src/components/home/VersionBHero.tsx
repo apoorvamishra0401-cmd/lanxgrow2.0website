@@ -72,7 +72,13 @@ export function VersionBHero() {
     return () => window.clearTimeout(timer);
   }, [open, started, step, secondsLeft]);
   useEffect(() => { const onStart = () => start(); window.addEventListener('lx-vb-start-intro',onStart); return () => window.removeEventListener('lx-vb-start-intro',onStart); }, []);
-  useEffect(() => { if (new URLSearchParams(search).get('start') === 'intro') start(); }, [search]);
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    if (params.get('start') !== 'intro') return;
+    const chosen = params.get('audience');
+    if (chosen === 'student' || chosen === 'fresher' || chosen === 'professional') setAudience(chosen);
+    start();
+  }, [search]);
   function next() {
     if (step === 0) { setStarted(true); setStep(1); return; }
     recognizer.current?.stop();
@@ -132,7 +138,7 @@ export function VersionBHero() {
         </div>
       </section>
 
-      <dialog ref={dialog} className="lx-vb-intro-dialog" onClose={()=>setOpen(false)} aria-labelledby="lx-vb-intro-title">
+      <dialog ref={dialog} className="lx-vb-intro-dialog" onClose={()=>{recognizer.current?.stop();setDictating(false);setOpen(false);}} aria-labelledby="lx-vb-intro-title">
         <div className="lx-vb-intro-head"><span>LANXGROW · YOUR FIRST CONVERSATION</span><button type="button" aria-label="Close introduction" onClick={()=>{recognizer.current?.stop();setOpen(false);}}>×</button></div>
         {step===0 ? <div className="lx-vb-intro-content">
           <h2 id="lx-vb-intro-title">One conversation.<br/><em>A meaningful beginning.</em></h2>
