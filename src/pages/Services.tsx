@@ -49,8 +49,8 @@ export default function Services() {
               <p className="lx-prose mt-7">{service.summary}</p>
 
               <div className="mt-9">
-                <Button to="/get-started" withArrow>
-                  Get started
+                <Button to="/?start=intro" withArrow>
+                  Try free 1-minute interview
                 </Button>
               </div>
             </Reveal>
