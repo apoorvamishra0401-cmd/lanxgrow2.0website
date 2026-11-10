@@ -1,6 +1,6 @@
 
-.lx-vb-report-scroll{--vb:#b85c38;--vb-ink:#2b241e;position:relative;background:#f5ede3;color:var(--vb-ink);height:300vh;min-height:2050px;isolation:isolate}
-.lx-vb-report-sticky{position:sticky;top:0;min-height:100svh;max-height:100svh;overflow:auto;overscroll-behavior:contain;padding:clamp(20px,4vw,52px) max(20px,calc((100vw - 1250px)/2));scrollbar-width:thin}
+.lx-vb-report-scroll{--vb:#b85c38;--vb-ink:#2b241e;position:relative;background:#f5ede3;color:var(--vb-ink);height:auto;min-height:0;isolation:isolate}
+.lx-vb-report-sticky{position:relative;top:auto;min-height:0;max-height:none;overflow:visible;overscroll-behavior:auto;padding:clamp(20px,4vw,52px) max(20px,calc((100vw - 1250px)/2));scrollbar-width:thin}
 .lx-vb-report-heading{display:grid;grid-template-columns:1.4fr .8fr;align-items:end;gap:40px;margin-bottom:25px}
 .lx-vb-kicker{font:700 11px/1.6 Inter,system-ui,sans-serif;letter-spacing:.15em;color:var(--vb);margin:0 0 12px}
 .lx-vb-report-heading h2{font:400 clamp(29px,3.5vw,52px)/1.12 Fraunces,Georgia,serif;letter-spacing:-.05em;color:var(--vb-ink);margin:0}.lx-vb-report-heading h2 em{font-style:normal;color:var(--vb)}
