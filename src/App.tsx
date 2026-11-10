@@ -4,6 +4,7 @@ import { PwaStatus } from '@/components/support/PwaStatus';
 import { Header } from '@/components/layout/Header';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
+import InterviewPrep from '@/pages/InterviewPrep';
 import { lazy, Suspense } from 'react';
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
@@ -49,6 +50,7 @@ export default function App() {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/interview-prep" element={<InterviewPrep />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact/*" element={<Navigate to="/?start=intro" replace />} />
