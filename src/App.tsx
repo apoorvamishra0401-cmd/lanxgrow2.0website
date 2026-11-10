@@ -42,7 +42,7 @@ export default function App() {
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
       <Route path="/get-started" element={<GetStarted />} />
       <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/signup" element={<Navigate to="/signin" replace />} />
       <Route path="/consent" element={<Consent />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
