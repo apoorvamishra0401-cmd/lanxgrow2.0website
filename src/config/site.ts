@@ -10,7 +10,7 @@ export const brand = {
   /** Short, honest positioning line reused in metadata and the footer. */
   tagline: 'Speak Smart, Think Smart',
   description:
-    'LanXgrow helps students, freshers and working professionals practise English communication for study, interviews and work. Explore guided demonstrations, local practice and learning programmes. Live AI feedback is planned for a later phase.',
+    'LanXgrow helps students, freshers and working professionals practise English communication for study, interviews and work. Explore guided communication practice, interview preparation and a learning approach shaped around your goals.',
 } as const;
 
 export type NavItem = {
@@ -26,7 +26,6 @@ export const primaryNav: NavItem[] = [
   { label: 'About', to: '/about' },
   { label: 'Interview Prep', to: '/interview-prep' },
   { label: 'Services', to: '/services' },
-  { label: 'FAQ', to: '/faq' },
 ];
 
 /** Secondary (utility) navigation shown in the footer. */
