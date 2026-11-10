@@ -9,8 +9,10 @@ const skillCards = [
   { name: 'Speaking', detail: 'Build fluency, pronunciation and confidence in conversation.' }
 ];
 const questions = [
-  'Tell us about something you enjoy learning or doing.',
-  'Describe one situation where you would like to feel more confident speaking English.'
+  'What is one thing you enjoy learning, and why?',
+  'Tell us about a recent day that made you happy.',
+  'When do you most want to speak English confidently?',
+  'What is one goal you would like to achieve this year?'
 ];
 
 export function VersionBHero() {
@@ -19,6 +21,10 @@ export function VersionBHero() {
   const [name, setName] = useState('');
   const [goal, setGoal] = useState('');
   const [answer, setAnswer] = useState('');
+  const [audience, setAudience] = useState<'student' | 'fresher' | 'professional'>('student');
+  const [secondsLeft, setSecondsLeft] = useState(60);
+  const [responses, setResponses] = useState<string[]>([]);
+  const [started, setStarted] = useState(false);
   const [skillActive, setSkillActive] = useState(0);
   const { search } = useLocation();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -30,12 +36,25 @@ export function VersionBHero() {
     if (!open && element.open) element.close();
   }, [open]);
 
-  function start() { setStep(0); setAnswer(''); setOpen(true); }
+  function start() {
+    setStep(0); setAnswer(''); setResponses([]); setSecondsLeft(60);
+    setStarted(false); setOpen(true);
+  }
+  useEffect(() => {
+    if (!open || !started || step < 1 || step > questions.length) return;
+    if (secondsLeft <= 0) {
+      setStep(questions.length + 1);
+      setStarted(false);
+      return;
+    }
+    const timer = window.setTimeout(() => setSecondsLeft(value => value - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [open, started, step, secondsLeft]);
   useEffect(() => { const onStart = () => start(); window.addEventListener('lx-vb-start-intro',onStart); return () => window.removeEventListener('lx-vb-start-intro',onStart); }, []);
   useEffect(() => { if (new URLSearchParams(search).get('start') === 'intro') start(); }, [search]);
   function next() {
-    if (step === 0) { setStep(1); return; }
-    if (!answer.trim()) return;
+    if (step === 0) { setStarted(true); setStep(1); return; }
+    setResponses(current => [...current, answer.trim()]);
     setAnswer('');
     setStep(current => current + 1);
   }
@@ -75,28 +94,33 @@ export function VersionBHero() {
         <div className="lx-vb-intro-head"><span>LANXGROW · YOUR FIRST CONVERSATION</span><button type="button" aria-label="Close introduction" onClick={()=>setOpen(false)}>×</button></div>
         {step===0 ? <div className="lx-vb-intro-content">
           <h2 id="lx-vb-intro-title">One conversation.<br/><em>A meaningful beginning.</em></h2>
-          <p>Tell us a little about your goal. Begin with two short questions that help you express your thoughts. Your answers stay on this page until you choose to continue.</p>
+          <p>Tell us a little about your goal. Answer up to four short questions in one minute. One sentence is enough. Your answers stay on this page until you choose to continue.</p>
           <label htmlFor="lx-vb-intro-name">Your first name <small>(optional)</small></label>
           <input id="lx-vb-intro-name" autoComplete="given-name" maxLength={60} value={name} onChange={event=>setName(event.target.value)} placeholder="What should Lan-X call you?"/>
           <label htmlFor="lx-vb-intro-goal">What would you like to improve? <small>(optional)</small></label>
           <select id="lx-vb-intro-goal" value={goal} onChange={event=>setGoal(event.target.value)}>
             <option value="">Choose a learning goal</option><option>Everyday English confidence</option><option>Job interview preparation</option><option>Workplace communication</option><option>College and presentations</option>
           </select>
+          <label htmlFor="lx-vb-intro-audience">I am a</label>
+          <select id="lx-vb-intro-audience" value={audience} onChange={event=>setAudience(event.target.value as typeof audience)}>
+            <option value="student">Student</option><option value="fresher">Fresher</option><option value="professional">Working professional</option>
+          </select>
           <button className="lx-vb-primary" onClick={next}>Begin my introduction <span>↗</span></button>
         </div> : step<=questions.length ? <div className="lx-vb-intro-content">
-          <p className="lx-vb-intro-step">QUESTION {step} OF {questions.length}</p>
+          <p className="lx-vb-intro-step">QUESTION {step} OF {questions.length} · {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')} REMAINING</p>
+          <progress value={60-secondsLeft} max={60} aria-label="Introduction time elapsed" style={{width:'100%',accentColor:'#b85c38'}} />
           <h2 id="lx-vb-intro-title">{step===1?'Hello, '+displayName+'.':'Thank you, '+displayName+'.'}</h2>
           <p>{questions[step-1]}</p>
           <label htmlFor="lx-vb-answer">Your answer</label>
           <textarea id="lx-vb-answer" rows={4} maxLength={1200} value={answer} onChange={event=>setAnswer(event.target.value)} placeholder="Write how you would answer in a conversation…" />
-          <p className="lx-vb-intro-hint">Take your time to express the idea clearly. Your answers stay on this page.</p>
-          <button className="lx-vb-primary" disabled={!answer.trim()} onClick={next}>{step===questions.length?'Finish introduction':'Next question'} <span>↗</span></button>
+          <p className="lx-vb-intro-hint">One sentence is enough. You may move on without answering. The introduction finishes when the minute ends.</p>
+          <button className="lx-vb-primary" onClick={next}>{step===questions.length?'Finish introduction':'Next question'} <span>↗</span></button>
         </div> : <div className="lx-vb-intro-content">
           <p className="lx-vb-intro-step">INTRODUCTION COMPLETE</p>
           <h2 id="lx-vb-intro-title">Well done, {displayName}.</h2>
-          <p>You've taken the first step. Continue to discover how personalized English feedback can highlight grammar, pronunciation, fluency, vocabulary, speaking pace and your next practice priorities.</p>
-          <p className="lx-vb-intro-hint">Your introduction is complete. Report generation and saved feedback become available through the connected learning experience.</p>
-          <Link to="/get-started" onClick={()=>setOpen(false)} className="lx-vb-primary">Continue to my personalized report <span>↗</span></Link>
+          <p>You've completed your first minute. Continue to discover how personalized English feedback can highlight grammar, pronunciation, fluency, vocabulary, speaking pace and your next practice priorities.</p>
+          <p className="lx-vb-intro-hint">Continue with Google to access your English feedback when your introduction has been securely connected to your account.</p>
+          <Link to="/get-started" onClick={()=>setOpen(false)} className="lx-vb-primary">Continue with Google to get the report <span>↗</span></Link>
           <a href="#personalized-report" className="lx-vb-intro-link" onClick={()=>setOpen(false)}>See what an English report includes →</a>
         </div>}
       </dialog>
