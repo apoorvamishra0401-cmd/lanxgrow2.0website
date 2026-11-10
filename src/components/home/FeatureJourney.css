@@ -36,3 +36,11 @@
 .feature-total,.feature-image-note,.feature-preview-top{color:#685846}
 .feature-image-note{font-size:11px;line-height:1.5}
 @media(max-width:767px){.feature-preview-top{font-size:10px}.feature-menu>.feature-eyebrow{font-size:10px}}
+
+
+/* Explicit entry action connects all six feature previews to the shared introduction. */
+.feature-option:hover .feature-arrow,.feature-option:focus-visible .feature-arrow{opacity:1}
+.feature-caption .feature-start{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-height:44px;margin-top:13px;border:1px solid #bd8968;border-radius:99px;background:#fff9f1;color:#87462e;font-size:12px;font-weight:600;padding:9px 17px;max-width:100%;transition:background .2s}
+.feature-caption .feature-start:hover{background:#f3dec9}
+.feature-caption .feature-start span{font-size:18px}
+@media(max-width:767px){.feature-caption .feature-start{font-size:11px;margin-top:6px;min-height:40px;padding:7px 12px}.feature-caption .feature-start span{font-size:16px}}

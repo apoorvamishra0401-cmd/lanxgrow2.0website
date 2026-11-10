@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import './mobile-first.css';
+import './styles/version-b-page-polish.css';
 import { registerServiceWorker } from './registerServiceWorker';
 
 const container = document.getElementById('root');

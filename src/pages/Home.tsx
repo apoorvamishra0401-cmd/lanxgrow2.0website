@@ -1,32 +1,34 @@
 import { AvailableNow } from '@/components/home/AvailableNow';
 import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
-import { Hero } from '@/components/home/Hero';
+import { VersionBHero } from '@/components/home/VersionBHero';
+import { PersonalizedReport } from '@/components/home/PersonalizedReport';
+import { VersionBLearningMethod } from '@/components/home/VersionBLearningMethod';
 import { WhyLanXgrow } from '@/components/home/WhyLanXgrow';
 import { ResearchStories } from '@/components/home/ResearchStories';
 import { RealConversations } from '@/components/home/RealConversations';
-import { Journey } from '@/components/home/Journey';
-import { ClosingCta } from '@/components/home/ClosingCta';
+import { VersionBJourney } from '@/components/home/VersionBJourney';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { brand } from '@/config/site';
 
 export default function Home() {
   usePageMeta(
-    'English Communication & AI Practice',
+    'AI English Practice & Personalized Reports',
     brand.description,
   );
 
   return (
     <>
-      <Hero />
+      <VersionBHero />
+      <PersonalizedReport />
       <MeetLanX />
       <AvailableNow />
       <LearningEcosystem />
       <WhyLanXgrow />
+      <VersionBLearningMethod />
       <ResearchStories />
       <RealConversations />
-      <Journey />
-      <ClosingCta />
+      <VersionBJourney />
     </>
   );
 }

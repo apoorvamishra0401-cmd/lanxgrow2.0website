@@ -1,0 +1,31 @@
+/* Version B editorial finish, scoped to body content. Shared header and footer are untouched. */
+.lx-page-intro{position:relative;isolation:isolate;overflow:hidden;background:#faf7f2!important;border-bottom:1px solid #e2d7ca;box-shadow:inset 0 -1px 0 #fff8f1}
+.lx-page-intro:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(50% 95% at 90% 10%,#f2d9c87d,transparent 72%),radial-gradient(44% 75% at 0% 100%,#f1e1d587,transparent 75%)}
+.lx-page-intro h1{color:#2b241e;letter-spacing:-.055em;line-height:1.1;font-weight:400;max-width:780px}
+.lx-page-intro .lx-container>div{align-items:center}
+.lx-page-intro p{line-height:1.85}
+.lx-page-intro h1:after{content:"";display:block;width:65px;height:3px;background:#b85c38;border-radius:9px;margin-top:28px}
+.lx-page-intro .lx-container .grid>div:last-child>p{font-size:clamp(16px,1.4vw,19px);max-width:520px;color:#6b5e54}
+.lx-page-intro [class*="uppercase"]{letter-spacing:.16em;color:#a45736}
+:is(.about-page,.services-page,.faq-page) .lx-prose{color:#665e57}
+:is(.about-page,.services-page,.faq-page) section:not(.lx-page-intro) h2{letter-spacing:-.045em;line-height:1.15}
+.about-page .about-belief{border-top:1px solid #e1d1c0;border-radius:14px;padding:23px 20px;box-shadow:0 12px 35px -36px #86614e}
+.about-page .about-belief:hover{background:#f4e9dd}
+.about-page .about-research{background:linear-gradient(140deg,#fffaf3,#efdfd0);border:1px solid #e5d6c6;border-radius:22px}
+.services-page section[id] .rounded-\[20px\]{background:linear-gradient(135deg,#fffdfa,#f7ecdf);border-color:#e1d0bb;box-shadow:0 22px 65px -53px #6e462d7d}
+.services-page section[id] h2{color:#2b241e}
+.services-page section[id] [class*="text-terracotta"]{color:#b85c38}
+.faq-page .faq-side{background:linear-gradient(135deg,#eee0cf,#e4c9b0);border:1px solid #e0c8ae;border-radius:22px}
+.faq-page .faq-tools{background:#fffaf5;border:1px solid #e5d5c4;border-radius:20px;padding:24px}
+.faq-page .faq-search{background:#fffdfa}
+.faq-page .faq-filters button{transition:background .25s,color .25s,transform .25s}
+.faq-page .faq-filters button:hover{transform:translateY(-2px);border-color:#b85c38}
+.faq-page .faq-empty{background:#fffdfa}
+.feature-journey .feature-option:focus-visible,.conversation-selector button:focus-visible,.faq-page .faq-filters button:focus-visible{outline:2px solid #b85c38;outline-offset:3px}
+.feature-journey .feature-option.is-active{box-shadow:inset 0 0 0 1px #d7bca5}
+.feature-journey .feature-preview{background:radial-gradient(circle at 50% 35%,#fbf8f0,#eadbc8 95%)}
+.feature-journey .feature-option:hover{background:#f4e7db}
+.conversation-section .conversation-selector [aria-pressed=true]{box-shadow:0 8px 28px -20px #8c4e30ba}
+@media(min-width:1024px){.lx-page-intro{padding-block:10px}}
+@media(max-width:767px){.lx-page-intro h1:after{margin-top:18px;width:46px}.lx-page-intro .lx-container .grid>div:last-child>p{font-size:16px}.about-page .about-belief{padding:20px 15px}.faq-page .faq-tools{padding:15px} .services-page section[id] .rounded-\[20px\]{box-shadow:none}}
+@media(prefers-reduced-motion:reduce){.faq-page .faq-filters button{transition:none}.faq-page .faq-filters button:hover{transform:none}}

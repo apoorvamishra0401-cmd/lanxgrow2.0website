@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import './FeatureJourney.css';
 
 const features = [
-  { name: 'Call', line: 'Speak with AI or a Human', width: 768, height: 1376, body: 'Make room for real conversation. Find the confidence to speak, one exchange at a time.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing the Call option', excerpt: true },
-  { name: 'Practice', line: 'Build Skills Through Practice', width: 768, height: 1376, body: 'Listen, read, write and speak. Small, purposeful exercises turn learning into an everyday habit.', src: '/images/product/daily-practice.jpg', alt: 'Daily Practice screen with listening, reading and writing exercises' },
+  { name: 'Call', line: 'A future way to connect', width: 768, height: 1376, body: 'A future communication experience. Call is coming soon and is not part of the initial launch.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing the Call option', excerpt: true },
+  { name: 'Practice', line: 'Listening · Reading · Writing · Speaking', width: 768, height: 1376, body: 'Listen, read, write and speak. Small, purposeful exercises turn learning into an everyday habit.', src: '/images/product/daily-practice.jpg', alt: 'Daily Practice screen with listening, reading and writing exercises' },
   { name: 'Video Assessment', line: 'See How You Communicate', width: 768, height: 1376, body: 'Put your thoughts into words. Record a response and take a closer look at how you communicate.', src: '/images/product/video-assessment.jpg', alt: 'Video Assessment screen showing the recording interface' },
-  { name: 'English Pro Course', line: 'Follow a Clear Learning Path', width: 712, height: 1266, body: 'Give your learning a direction, with course modules that help you take the next step.', src: '/Englis pro course.jpg', alt: 'English Pro Course screen with a lesson video and course modules' },
-  { name: 'Learn & Entertainment', line: 'Learn Through What You Love', width: 768, height: 1376, body: 'Discover English through stories, music, films and series that connect with your interests.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing Learn and Entertainment', excerpt: true },
+  { name: 'English Pro Course', line: 'Structured learning · Coming soon', width: 712, height: 1266, body: 'Give your learning a direction, with course modules that help you take the next step.', src: '/Englis pro course.jpg', alt: 'English Pro Course screen with a lesson video and course modules' },
+  { name: 'Learn & Entertainment', line: 'Stories and learning · Coming soon', width: 768, height: 1376, body: 'Discover English through stories, music, films and series that connect with your interests.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing Learn and Entertainment', excerpt: true },
   { name: 'Dashboard', line: 'Keep Your Learning on Track', width: 1536, height: 2752, body: 'Bring your progress, reports and learning overview together, so you know where to go next.', src: '/Dashboard.jpg', alt: 'LanXgrow Dashboard with progress, reports and learning overview' },
 ];
 
@@ -46,14 +46,14 @@ export function WhyLanXgrow() {
     <section id="why-lanxgrow" className="feature-journey" aria-labelledby="feature-heading">
       <div className="lx-container feature-intro">
         <div><p className="feature-eyebrow">Six things, held together</p><h2 id="feature-heading">Six Things,<br />Held Together.</h2></div>
-        <p className="feature-intro-copy">LanXgrow brings every part of your English learning journey into one thoughtfully connected experience. From meaningful conversations and everyday practice to video assessments and a structured course, each part helps you move forward. Discover English through what you love, and bring your progress together in one place. Everything works in harmony to help you practise with purpose and take your next step towards confident communication.</p>
+        <p className="feature-intro-copy">LanXgrow brings every part of your English learning journey into one thoughtfully connected experience. Explore the four core skills and a visual introduction to assessments and progress. Some areas shown here are planned for a later release. Discover English through what you love, and bring your progress together in one place. Everything works in harmony to help you practise with purpose and take your next step towards confident communication.</p>
       </div>
       <div ref={track} className="feature-track">
         <div className="feature-sticky lx-container">
           <div className="feature-menu">
             <p className="feature-eyebrow">One connected experience <span> / 06</span></p>
             <div className="feature-list" aria-label="Explore LanXgrow features">
-              {features.map((feature, index) => <button key={feature.name} type="button" className={`feature-option ${shown === index ? 'is-active' : ''}`} aria-current={shown === index ? 'step' : undefined} aria-controls="feature-preview" onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} onClick={() => select(index)}><span className="feature-number">{String(index + 1).padStart(2, '0')}</span><span><span className="feature-name">{feature.name}</span><span className="feature-line">{feature.line}</span></span><span className="feature-arrow" aria-hidden="true">↗</span></button>)}
+              {features.map((feature, index) => <button key={feature.name} type="button" className={`feature-option ${shown === index ? 'is-active' : ''}`} aria-current={shown === index ? 'step' : undefined} aria-controls="feature-preview" onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(index)} onBlur={() => setHovered(null)} onClick={(event) => { if ((event.target as HTMLElement).closest('.feature-arrow')) { window.dispatchEvent(new Event('lx-vb-start-intro')); return; } select(index); }}><span className="feature-number">{String(index + 1).padStart(2, '0')}</span><span><span className="feature-name">{feature.name}</span><span className="feature-line">{feature.line}</span></span><span className="feature-arrow" aria-hidden="true">↗</span></button>)}
             </div>
             <p className="feature-scroll"><span aria-hidden="true">↓</span> Scroll to explore <span className="feature-progress"><span style={{ transform: `scaleX(${progress})` }} /></span></p>
           </div>
@@ -63,7 +63,7 @@ export function WhyLanXgrow() {
               <span className="feature-orbit" aria-hidden="true" />
               {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" decoding="async" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'Illustrative app screen · availability varies'}</span></div>)}
             </div>
-            <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
+            <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p><button type="button" className="feature-start" onClick={() => window.dispatchEvent(new Event('lx-vb-start-intro'))}>Try the free 1-minute introduction <span aria-hidden="true">↗</span></button></div>
           </div>
           <div className="feature-mobile-controls"><button type="button" disabled={active === 0} onClick={() => select(active - 1)} aria-label="Previous feature">←</button><p>Tap a feature or swipe the preview.<br />{active + 1} of {features.length}</p><button type="button" disabled={active === features.length - 1} onClick={() => select(active + 1)} aria-label="Next feature">→</button></div>
         </div>

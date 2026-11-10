@@ -1,0 +1,39 @@
+
+.lx-vb-report-scroll{--vb:#b85c38;--vb-ink:#2b241e;position:relative;background:#f5ede3;color:var(--vb-ink);height:300vh;min-height:2050px;isolation:isolate}
+.lx-vb-report-sticky{position:sticky;top:0;min-height:100svh;max-height:100svh;overflow:auto;overscroll-behavior:contain;padding:clamp(20px,4vw,52px) max(20px,calc((100vw - 1250px)/2));scrollbar-width:thin}
+.lx-vb-report-heading{display:grid;grid-template-columns:1.4fr .8fr;align-items:end;gap:40px;margin-bottom:25px}
+.lx-vb-kicker{font:700 11px/1.6 Inter,system-ui,sans-serif;letter-spacing:.15em;color:var(--vb);margin:0 0 12px}
+.lx-vb-report-heading h2{font:400 clamp(29px,3.5vw,52px)/1.12 Fraunces,Georgia,serif;letter-spacing:-.05em;color:var(--vb-ink);margin:0}.lx-vb-report-heading h2 em{font-style:normal;color:var(--vb)}
+.lx-vb-report-heading>p{max-width:380px;color:#6c6158;font-size:14px;line-height:1.8}
+.lx-vb-report-selector{display:flex;align-items:stretch;gap:10px;margin-bottom:14px}
+.lx-vb-report-selector button{flex:1;min-width:0;display:flex;align-items:center;gap:13px;border:1px solid #dccbbb;background:#fffdfa;border-radius:15px;text-align:left;padding:12px 15px;min-height:65px;color:#312820;transition:border-color .25s,box-shadow .25s,transform .25s}
+.lx-vb-report-selector button.is-current{border-color:#bd744f;background:#fff8f0;box-shadow:0 8px 24px #7c4f301a}
+.lx-vb-report-selector button:hover{transform:translateY(-2px);border-color:#c98a67}
+.lx-vb-report-avatar{width:38px;height:38px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:#e9d6c1;color:#824328;font:500 23px Fraunces,Georgia,serif}
+.lx-vb-report-selector strong{display:block;font-size:14px;font-weight:600}.lx-vb-report-selector small{display:block;font-size:11px;line-height:1.4;color:#817267;margin-top:3px}
+.lx-vb-report-arrow{margin-left:auto;color:#b85c38}
+.lx-vb-report-paper{border:1px solid #dfd3c7;background:#fffdfa;border-radius:22px;overflow:hidden;box-shadow:0 28px 65px -45px #70523e95;animation:lx-vb-swap .36s ease both}
+@keyframes lx-vb-swap{from{opacity:.55;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+.lx-vb-report-paper-top{padding:22px 27px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #e8dfd4;background:linear-gradient(100deg,#fffdfa,#faf1e7)}
+.lx-vb-report-paper-top span,.lx-vb-report-correction>span,.lx-vb-report-plan span{font-size:10px;letter-spacing:.11em;font-weight:700;color:#a66043}
+.lx-vb-report-paper-top h3{font:400 clamp(24px,2vw,34px)/1.2 Fraunces,Georgia,serif;color:#2b241e;margin:7px 0}
+.lx-vb-report-paper-top p{font-size:13px;color:#71685e;max-width:500px;line-height:1.6}
+.lx-vb-level{text-align:center;flex:0 0 95px;border-left:1px solid #e5d9cb;padding-left:15px}.lx-vb-level small,.lx-vb-level span{display:block;font-size:9px;line-height:1.4;color:#8d7767}
+.lx-vb-level strong{display:block;font:400 42px Fraunces,Georgia,serif;color:#a85432;line-height:1.15}
+.lx-vb-report-bars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px 25px;padding:23px 27px}
+.lx-vb-report-bar>div:first-child{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#66594f}.lx-vb-report-bar strong{font-size:12px;color:#2b241e}.lx-vb-report-bar small{font-size:9px;font-weight:400}
+.lx-vb-progress{margin-top:8px;width:100%;height:5px;overflow:hidden;border-radius:99px;background:#eadfd3}.lx-vb-progress>span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#af6e50,#d99b6b)}
+.lx-vb-report-detail{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:19px 27px 21px;border-top:1px solid #eee5db}
+.lx-vb-report-detail h4{font:500 20px Fraunces,Georgia,serif;color:#312720;margin:0 0 9px}
+.lx-vb-report-detail ul{margin:0;padding-left:19px;font-size:12px;color:#665a50;line-height:1.8}.lx-vb-report-detail li::marker{color:#b85c38}
+.lx-vb-report-correction{margin:0 27px;padding:15px 17px;background:#f6eee4;border:1px solid #eadbc9;border-radius:12px}
+.lx-vb-report-correction p{margin:5px 0;font-size:12px;line-height:1.5}.lx-vb-was{color:#8c685a;text-decoration:line-through;text-decoration-color:#d39d88}.lx-vb-better{color:#265d4e;font-weight:600}
+.lx-vb-report-plan{margin-top:19px;padding:20px 27px;background:#302720;color:#f9ecdc;display:grid;grid-template-columns:.8fr 1.3fr;gap:25px;align-items:center}
+.lx-vb-report-plan span{color:#e2a883}.lx-vb-report-plan h4{font:400 21px Fraunces,Georgia,serif;margin:6px 0 0;color:#fff8ed}.lx-vb-report-plan ol{padding-left:18px;margin:0;color:#f2d9c7;font-size:12px;line-height:1.8}
+.lx-vb-report-disclaimer{font-size:11px;color:#827365;margin:12px 2px;line-height:1.6}
+.lx-vb-report-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid #e2d2c1;padding-top:12px;font-size:11px;line-height:1.6;color:#695f54}
+.lx-vb-report-bottom strong{color:#9c5738}.lx-vb-report-bottom small{font-size:10px}.lx-vb-report-bottom a{color:#8a492e;text-decoration:underline;text-underline-offset:3px}
+.lx-vb-report-cta{margin-top:12px}.lx-vb-report-cta a{display:inline-flex;align-items:center;justify-content:center;gap:28px;min-height:44px;border-radius:99px;background:#302720;color:#fffdfa;padding:11px 23px;font-size:13px;font-weight:600}.lx-vb-report-cta a:hover{background:#85442d}
+@media(max-width:850px){.lx-vb-report-scroll{height:auto;min-height:unset}.lx-vb-report-sticky{position:relative;top:auto;max-height:none;min-height:unset;overflow:visible;padding:55px 20px}.lx-vb-report-heading{grid-template-columns:1fr;gap:10px}.lx-vb-report-selector{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.lx-vb-report-selector button{flex:0 0 min(235px,70vw);scroll-snap-align:start}.lx-vb-report-bars{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.lx-vb-report-paper-top{padding:18px;align-items:start}.lx-vb-level{flex-basis:65px;padding-left:10px}.lx-vb-level strong{font-size:32px}.lx-vb-report-bars{padding:18px;gap:15px}.lx-vb-report-detail{grid-template-columns:1fr;padding:18px;gap:15px}.lx-vb-report-correction{margin:0 18px}.lx-vb-report-plan{grid-template-columns:1fr;padding:20px 18px;gap:10px}.lx-vb-report-bottom{align-items:start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.lx-vb-report-paper{animation:none}.lx-vb-report-selector button{transition:none;transform:none!important}}
