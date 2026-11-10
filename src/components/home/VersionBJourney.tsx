@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './VersionBJourney.css';
 
 type Path = 'student' | 'career';
@@ -24,7 +23,7 @@ export function VersionBJourney(){
     <div className="lx-vb-journey-head"><div><p>YOUR JOURNEY / 05</p><h2 id="lx-vb-journey-title">A better first step.<br/><em>A clearer way forward.</em></h2></div><span>Explore the route designed for your goals. Choose a path to see what comes after your first conversation.</span></div>
     <div className="lx-vb-journey-switch" role="group" aria-label="Select your starting point"><button type="button" aria-pressed={path==='student'} onClick={()=>setPath('student')}>For students <span aria-hidden="true">↗</span></button><button type="button" aria-pressed={path==='career'} onClick={()=>setPath('career')}>For freshers &amp; professionals <span aria-hidden="true">↗</span></button></div>
     <div className="lx-vb-journey-grid" aria-live="polite">{cards[path].map((card,i)=><article key={card.title}><span>0{i+1}</span><h3>{card.title}</h3><p>{card.description}</p></article>)}</div>
-    <div className="lx-vb-journey-actions"><button type="button" onClick={begin}>Explore the free one-minute introduction <span aria-hidden="true">↗</span></button><Link to="/get-started">See how LanXgrow works <span aria-hidden="true">→</span></Link></div>
-    <p className="lx-vb-journey-note">The learning and assessment journey shown here describes intended app functionality. Real AI evaluation, account-linked reports and eligibility rules require verified app integration before a live release.</p>
+    <div className="lx-vb-journey-actions"><button type="button" onClick={begin}>Explore the free one-minute introduction <span aria-hidden="true">↗</span></button></div>
+    <p className="lx-vb-journey-note">Your learning path is designed to connect the introduction, detailed feedback, four-skill assessment and personalised next-step guidance. Availability and eligibility are shown when you continue.</p>
   </div></section>;
 }
