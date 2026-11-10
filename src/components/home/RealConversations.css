@@ -5,7 +5,7 @@
 
 /* Version B: desktop scroll narrative; phones retain readable tap and swipe controls. */
 @media(min-width:768px) and (min-height:820px){
- .lx-vb-conversation-scroll{height:300vh;min-height:2200px;position:relative;padding:0}
+ .lx-vb-conversation-scroll{height:215vh;min-height:1350px;position:relative;padding:0}
  .lx-vb-conversation-scroll>.lx-container{position:sticky;top:78px;height:calc(100svh - 78px);overflow:hidden;display:flex;flex-direction:column;justify-content:center}
  .lx-vb-conversation-scroll .conversation-top{flex:0 0 auto;gap:25px}
  .lx-vb-conversation-scroll .conversation-top h2{font-size:clamp(32px,3.3vw,48px)}
