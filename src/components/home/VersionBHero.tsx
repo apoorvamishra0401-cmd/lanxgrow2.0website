@@ -23,7 +23,6 @@ export function VersionBHero() {
   const [answer, setAnswer] = useState('');
   const [audience, setAudience] = useState<'student' | 'fresher' | 'professional'>('student');
   const [secondsLeft, setSecondsLeft] = useState(60);
-  const [responses, setResponses] = useState<string[]>([]);
   const [started, setStarted] = useState(false);
   const [skillActive, setSkillActive] = useState(0);
   const { search } = useLocation();
@@ -37,7 +36,7 @@ export function VersionBHero() {
   }, [open]);
 
   function start() {
-    setStep(0); setAnswer(''); setResponses([]); setSecondsLeft(60);
+    setStep(0); setAnswer(''); setSecondsLeft(60);
     setStarted(false); setOpen(true);
   }
   useEffect(() => {
@@ -54,7 +53,6 @@ export function VersionBHero() {
   useEffect(() => { if (new URLSearchParams(search).get('start') === 'intro') start(); }, [search]);
   function next() {
     if (step === 0) { setStarted(true); setStep(1); return; }
-    setResponses(current => [...current, answer.trim()]);
     setAnswer('');
     setStep(current => current + 1);
   }
