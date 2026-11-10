@@ -53,3 +53,5 @@
 
 @media(max-width:740px){.lx-vb-skill-grid>button{min-height:142px;padding:14px}.lx-vb-skill-grid strong{font-size:clamp(19px,5vw,26px)}.lx-vb-hero h1{line-height:1.13}.lx-vb-hero h1 em{padding-top:.08em}.lx-vb-hero-notes span{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.lx-vb-skill-grid>button,.lx-vb-skill-detail{transition:none;transform:none!important}}
+
+.lx-vb-intro-voice{display:inline-flex;align-items:center;justify-content:center;gap:12px;align-self:flex-start;min-height:44px;padding:9px 17px;border-radius:999px;border:1px solid #c9a58a;background:#fff8ef;color:#75432f;font-size:13px;font-weight:700;cursor:pointer}.lx-vb-intro-voice[aria-pressed=true]{background:#53362a;color:#fff7ed;border-color:#53362a}.lx-vb-intro-voice:focus-visible{outline:3px solid #b85c38;outline-offset:3px}
