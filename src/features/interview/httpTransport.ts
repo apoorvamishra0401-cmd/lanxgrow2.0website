@@ -60,7 +60,7 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
     submit: async (attemptId: string, key: string, video?: Blob) => {
       let recordingPath: string | undefined;
       if (video) {
-        if (!config.storage || video.type !== 'video/webm') {
+        if (!config.storage || !video.type.startsWith('video/webm')) {
           throw new Error('This review upload currently requires WebM and configured development storage.');
         }
         if (video.size > 50 * 1024 * 1024) throw new Error('Recording exceeds development storage limit (50 MB).');
