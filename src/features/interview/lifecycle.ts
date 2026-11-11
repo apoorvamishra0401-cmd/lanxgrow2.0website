@@ -30,6 +30,7 @@ export interface CareerTransport {
   saveAnswer(attemptId: string, questionId: string, value: string): Promise<Attempt>;
   submit(attemptId: string, idempotencyKey: string, video?: Blob): Promise<Receipt>;
   readReceipt(receiptId: string): Promise<Receipt>;
+  completeObjectiveReview?(receiptId: string): Promise<Receipt>;
   readReport?(reportId: string): Promise<VerifiedCareerReport>;
 }
 export const DURATION_MS: Record<JourneyKind, number> = {
