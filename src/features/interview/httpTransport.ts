@@ -83,5 +83,6 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
         { recordingPath }, key);
     },
     readReceipt: (receiptId: string) => call<Receipt>('GET', `receipts/${path(receiptId)}`),
+    readReport: (reportId: string) => call<VerifiedCareerReport>('GET', `reports/${path(reportId)}`),
   };
 }
