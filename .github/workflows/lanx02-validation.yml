@@ -21,7 +21,7 @@ jobs:
       - name: Install pinned dependencies
         run: npm ci --ignore-scripts
       - name: Lifecycle unit tests
-        run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs
+        run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs scripts/test-interview-http.mjs
       - name: TypeScript typecheck
         run: npm run typecheck
       - name: Production bundle build (no deployment)
