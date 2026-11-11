@@ -45,7 +45,7 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
     return await response.json() as T;
   }
   const path = (value: string): string => {
-    if (!/^[a-zA-Z0-9_-]{8,128}$/.test(value)) throw new Error('Invalid resource identifier');
+    if (!/^[a-zA-Z0-9_-]{1,128}$/.test(value)) throw new Error('Invalid resource identifier');
     return encodeURIComponent(value);
   };
   return {
