@@ -94,7 +94,7 @@ function Exercise({ audience, feature, onComplete }: { audience: LearnerAudience
     <button type="button" className="lx-role-action" disabled={!answer.trim()} onClick={()=>{onComplete(feature);setConfirmed(true);}}>Mark practice complete on this device</button>
     {confirmed && <p role="status">Practice marked complete. No AI evaluation or proficiency score was generated.</p>}
     {feature === 'interview-video' || feature === 'interview-assessment'
-      ? <p style={{marginTop:18}}>For an existing interactive preview, <Link to={'/guest/'+audience}>open the guest introduction simulation</Link>. It is separate from the planned {feature === 'interview-video' ? '10-minute video interview' : '20-minute assessment'}.</p>
+      ? <p style={{marginTop:18}}>For your authenticated career assessment, <Link to="/career/interview">open Interview Preparation</Link>. This requires a verified Google session, assigned career access and current consent; otherwise the service will deny access. It is separate from the {feature === 'interview-video' ? '10-minute video interview' : '20-minute assessment'}.</p>
       : null}
   </section>;
 }
