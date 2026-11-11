@@ -21,6 +21,7 @@ const reply = (status, body) => async (_url, config) => {
   assert.equal(config.method, 'GET');
   assert.equal(config.headers.Authorization, 'Bearer test-nonvalid-jwt');
   assert.equal(config.cache, 'no-store');
+  assert.equal(Object.prototype.hasOwnProperty.call(config.headers, 'Cache-Control'), false, 'Do not trigger preflight headers disallowed by the development Career API');
   assert.equal(config.credentials, 'omit');
   return { status, ok:status>=200 && status<300, json:async()=>body };
 };
