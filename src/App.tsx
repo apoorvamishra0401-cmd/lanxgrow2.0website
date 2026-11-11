@@ -8,6 +8,9 @@ import { lazy, Suspense } from 'react';
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const FounderReviewLab = lazy(() => import('@/pages/FounderReviewLab'));
 const GuestEntry = lazy(() => import('@/pages/GuestEntry'));
+const AudienceDashboard = lazy(() => import('@/pages/AudienceDashboard'));
+const InterviewPreparation = lazy(() => import('@/features/interview/ConnectedCareerInterview'));
+const VerifiedAudienceEnrollment = lazy(() => import('@/pages/VerifiedAudienceEnrollment'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
@@ -37,6 +40,9 @@ export default function App() {
     <PwaStatus />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
+      <Route path="/dashboard/:audience/:feature?" element={<Suspense fallback={<p role="status">Opening learner dashboard…</p>}><AudienceDashboard /></Suspense>} />
+      <Route path="/activate" element={<Suspense fallback={<p role="status">Checking Google session…</p>}><VerifiedAudienceEnrollment /></Suspense>} />
+      <Route path="/career/interview" element={<Suspense fallback={<p role="status">Opening career interview…</p>}><InterviewPreparation /></Suspense>} />
       <Route path="/guest/:audience" element={<Suspense fallback={<p>Preparing onboarding…</p>}><GuestEntry /></Suspense>} />
       <Route path="/review-lab" element={<Suspense fallback={<p>Opening review…</p>}><FounderReviewLab /></Suspense>} />
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
