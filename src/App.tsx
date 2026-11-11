@@ -9,7 +9,7 @@ const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const FounderReviewLab = lazy(() => import('@/pages/FounderReviewLab'));
 const GuestEntry = lazy(() => import('@/pages/GuestEntry'));
 const AudienceDashboard = lazy(() => import('@/pages/AudienceDashboard'));
-const InterviewPreparation = lazy(() => import('@/features/interview/InterviewPreparation'));
+const InterviewPreparation = lazy(() => import('@/features/interview/ConnectedCareerInterview'));
 const SmartDeviceReview = lazy(() => import('@/smart/DeviceReview'));
 import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
