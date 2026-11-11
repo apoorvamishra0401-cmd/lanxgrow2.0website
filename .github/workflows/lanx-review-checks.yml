@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - dev/lanx00-app-integration-20261111
+      - dev/lanx01-e2e-dashboard-20261111
       - dev/lanx-founder-review-20261110
       - dev/lanx01-role-dashboard-20261111
       - dev/lanx02-interview-assessment-20261111
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches:
       - dev/lanx-founder-review-20261110
+      - dev/lanx00-app-integration-20261111
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,7 +29,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node --test scripts/test-audience-routes.mjs
+      - run: node --test scripts/test-audience-routes.mjs scripts/test-verified-audience.mjs
       - run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs scripts/test-interview-http.mjs
       - run: node --test scripts/test-evaluation.mjs src/admin/tests/server-access.test.mjs
       - run: node --experimental-strip-types --test scripts/test-objective-review.mjs

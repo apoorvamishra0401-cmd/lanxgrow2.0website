@@ -71,7 +71,7 @@ try {
   for(const width of widths){
     await command('Emulation.setDeviceMetricsOverride',{width,height:850,deviceScaleFactor:1,mobile:width<=430});
     for(const item of matrix){
-      const state=await ready('/dashboard/'+item.audience);
+      const state=await ready('/preview/dashboard/'+item.audience);
       assert.ok(state.heading.includes(item.want[0]),JSON.stringify(state));
       for(const label of item.want)assert.ok(state.body.includes(label),item.audience+' missing '+label);
       for(const label of item.deny)assert.ok(!state.body.includes(label),item.audience+' leaked '+label);
@@ -84,23 +84,26 @@ try {
     }
   }
   await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
-  const denied=await ready('/dashboard/student/interview-preparation');
+  const denied=await ready('/preview/dashboard/student/interview-preparation');
   assert.match(denied.body,/unavailable for this audience/);
-  const deniedVideo=await ready('/dashboard/fresher/video-practice');
+  const deniedVideo=await ready('/preview/dashboard/fresher/video-practice');
   assert.match(deniedVideo.body,/unavailable for this audience/);
-  await ready('/dashboard/student');
-  const clicked=await evaluate('(()=>{const link=document.querySelector(\'a[href="/dashboard/student/video-practice"]\');if(!link)return false;link.click();return true;})()');
+  await ready('/preview/dashboard/student');
+  const clicked=await evaluate('(()=>{const link=document.querySelector(\'a[href="/preview/dashboard/student/video-practice"]\');if(!link)return false;link.click();return true;})()');
   assert.equal(clicked,true,'student Video Practice link was not clickable');
-  const studentVideo=await ready('/dashboard/student/video-practice');
+  const studentVideo=await ready('/preview/dashboard/student/video-practice');
   assert.match(studentVideo.body,/Start camera preview/);
-  const prep=await ready('/dashboard/professional/interview-video');
+  const prep=await ready('/preview/dashboard/professional/interview-video');
   assert.match(prep.body,/authenticated career interview service/);
   const loginRequired=await ready('/career/interview');
   assert.match(loginRequired.body,/Sign in to continue/);
   const activate=await ready('/activate');
   assert.match(activate.body,/Choose your learning journey/);
+  const blocked = await ready('/dashboard/student');
+  assert.match(blocked.body,/Sign in to open your dashboard|Dashboard unavailable/);
+  assert.ok(!blocked.body.includes('Private camera practice'));
   assert.equal(exceptions.length,0,'Runtime errors: '+exceptions.join('; '));
-  console.log('PASS: '+checked+' responsive audience matrices, two forbidden deep links, in-app navigation, interview workspace; browser screenshots saved.');
+  console.log('PASS: '+checked+' guest preview responsive audience matrices, two forbidden deep links, in-app navigation, interview workspace; browser screenshots saved.');
 } finally {
   ws?.close();
   browser.kill('SIGTERM');
