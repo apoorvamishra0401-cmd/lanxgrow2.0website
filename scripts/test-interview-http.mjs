@@ -14,13 +14,17 @@ test('HTTP adapter requires configured HTTPS or local development and bearer ses
 
 test('HTTP adapter sends authenticated metadata, stable idempotency and binary media without fake scores', async () => {
   const requests=[];
+  const uploads=[];
   const api=createHttpCareerTransport({
     baseUrl:'https://dev.example.test/v1/',
     getAccessToken:async()=> 'synthetic-bearer-token',
+    storage:{url:'https://dev.example.test',publishableKey:'public-test-key'},
+    uploadSignedVideo:async(ticket,video)=>uploads.push({ticket,video}),
     fetchImpl:async(url,init)=>{
       requests.push({url,init});
       const response = url.endsWith('/access') ? {userId:'owner_0001',audience:'fresher',allowed:true}
         : url.endsWith('/attempts') ? {id:'attempt_0001'}
+        : url.endsWith('/media-ticket') ? {bucket:'lanx-career-video-dev',path:'owner_0001/attempt_0001/recording.webm',token:'test-signed-upload'}
         : url.endsWith('/submission') ? {id:'receipt_0001',status:'queued'}
         : url.includes('/answers/') ? {id:'attempt_0001'}
         : {id:'receipt_0001',status:'queued'};
@@ -36,11 +40,14 @@ test('HTTP adapter sends authenticated metadata, stable idempotency and binary m
   assert(requests.every(({init})=>init.credentials==='omit'));
   assert(requests.every(({url})=>url.startsWith('https://dev.example.test/v1/career/')));
   assert.equal(requests[1].init.headers['Idempotency-Key'],'idempotency-start-1');
-  assert.equal(requests[3].init.headers['Idempotency-Key'],'stable-submit-1');
-  assert.equal(requests[3].init.body.get('attemptId'),'attempt_0001');
-  assert.equal(requests[3].init.body.get('recording').size,11);
-  assert.equal(requests[3].init.headers['Content-Type'],undefined);
-  assert.equal(requests[4].init.method,'GET');
+  assert.equal(uploads.length,1);
+  assert.equal(uploads[0].video.size,11);
+  assert.equal(uploads[0].ticket.token,'test-signed-upload');
+  assert.equal(requests[3].url.endsWith('/media-ticket'),true);
+  assert.equal(requests[4].init.headers['Idempotency-Key'],'stable-submit-1');
+  assert.equal(JSON.parse(requests[4].init.body).recordingPath,'owner_0001/attempt_0001/recording.webm');
+  assert.equal(requests[4].init.headers['Content-Type'],'application/json');
+  assert.equal(requests[5].init.method,'GET');
 });
 
 test('HTTP adapter preserves server denial and rejects malformed resource paths', async () => {
