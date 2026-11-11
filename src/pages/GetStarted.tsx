@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useAuthSession } from '@/hooks/useAuthSession';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 import './GetStarted.css';
 
 export default function GetStarted() {
+  const { session, loading } = useAuthSession();
   useScrollToTop();
   usePageMeta('Get started', 'Build your confidence, express your thoughts, and communicate better every day with LanXgrow.');
   return (
@@ -18,8 +20,19 @@ export default function GetStarted() {
         <p>Build your confidence, express your<br className="lx-welcome-break" /> thoughts, and communicate better<br className="lx-welcome-break" /> every day.</p>
       </div>
       <div className="lx-welcome-actions">
-        <Link to="/signin" className="lx-welcome-cta">Let’s Get Started <span aria-hidden="true">→</span></Link>
-        <p>Your learning journey will be personalized to your goals.</p>
+        {loading ? <p role="status">Checking your account…</p> : session ? (
+          <>
+            <p>Choose your journey to continue your one-minute introduction.</p>
+            <Link to="/guest/student" className="lx-welcome-cta">Student <span aria-hidden="true">→</span></Link>
+            <Link to="/guest/fresher" className="lx-welcome-cta">Fresher <span aria-hidden="true">→</span></Link>
+            <Link to="/guest/professional" className="lx-welcome-cta">Working Professional <span aria-hidden="true">→</span></Link>
+          </>
+        ) : (
+          <>
+            <Link to="/signin" className="lx-welcome-cta">Continue with Google <span aria-hidden="true">→</span></Link>
+            <p>Sign in securely with Google before continuing.</p>
+          </>
+        )}
       </div>
     </main>
   );
