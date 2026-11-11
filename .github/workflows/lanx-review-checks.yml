@@ -30,6 +30,7 @@ jobs:
       - run: node --test scripts/test-audience-routes.mjs
       - run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs scripts/test-interview-http.mjs
       - run: node --test scripts/test-evaluation.mjs src/admin/tests/server-access.test.mjs
+      - run: node --experimental-strip-types --test scripts/test-objective-review.mjs
       - run: npm run typecheck
       - run: npm run build
       - name: Start isolated site and run actual Chromium dashboard/browser smoke
