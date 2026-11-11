@@ -8,6 +8,8 @@ export type CareerHttpConfig = {
   fetchImpl?: typeof fetch;
   /** Only the public browser credentials, never a service-role key. */
   storage?: { url: string; publishableKey: string };
+  /** Isolated test seam; production defaults to Supabase private signed upload. */
+  uploadSignedVideo?: (ticket: { bucket: string; path: string; token: string }, video: Blob) => Promise<void>;
 };
 
 /**
@@ -66,11 +68,15 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
         if (video.size > 50 * 1024 * 1024) throw new Error('Recording exceeds development storage limit (50 MB).');
         const ticket = await call<{ bucket: string; path: string; token: string }>('POST',
           `attempts/${path(attemptId)}/media-ticket`);
-        const { createClient } = await import('@supabase/supabase-js');
-        const publicStorage = createClient(config.storage.url, config.storage.publishableKey);
-        const { error } = await publicStorage.storage.from(ticket.bucket).uploadToSignedUrl(
-          ticket.path, ticket.token, video, { contentType: 'video/webm' });
-        if (error) throw new Error('Private recording upload failed: ' + error.message);
+        if (config.uploadSignedVideo) {
+          await config.uploadSignedVideo(ticket, video);
+        } else {
+          const { createClient } = await import('@supabase/supabase-js');
+          const publicStorage = createClient(config.storage.url, config.storage.publishableKey);
+          const { error } = await publicStorage.storage.from(ticket.bucket).uploadToSignedUrl(
+            ticket.path, ticket.token, video, { contentType: 'video/webm' });
+          if (error) throw new Error('Private recording upload failed: ' + error.message);
+        }
         recordingPath = ticket.path;
       }
       return call<Receipt>('POST', `attempts/${path(attemptId)}/submission`,
