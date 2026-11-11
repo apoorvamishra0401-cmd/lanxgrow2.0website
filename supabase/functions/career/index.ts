@@ -187,7 +187,7 @@ Deno.serve(async req => {
         if(attempt.kind==='video-interview') {
           if(body?.recordingPath!==expected) return fail(400,'Recording path does not match attempt',origin);
           const {data:objects,error:objectError}=await admin.storage.from(bucket).list(who.userId+'/'+attempt.id,{limit:10,search:'recording.webm'});
-          if(objectError||!objects?.some(o=>o.name==='recording.webm'&&o.metadata?.size>0)) return fail(400,'Uploaded recording not found',origin);
+          if(objectError||!objects?.some(o=>o.name==='recording.webm'&&Number(o.metadata?.size ?? 0)>0)) return fail(400,'Uploaded recording not found',origin);
         }
         if(attempt.status!=='active'||Date.now()>Date.parse(attempt.deadline_at)+300000)
           return fail(409,'Attempt is no longer eligible for submission',origin);
