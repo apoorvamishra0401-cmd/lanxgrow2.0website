@@ -45,6 +45,13 @@ jobs:
             sleep 1
           done
           node scripts/test-audience-browser.mjs
+      - name: Synthetic signed-in browser navigation (NOT real Google authentication)
+        env:
+          VITE_SUPABASE_URL: https://kzjvvwuyigiclryoqpkv.supabase.co
+          VITE_SUPABASE_ANON_KEY: synthetic-public-test-key-not-valid-for-real-API
+        run: |
+          npm run build
+          node scripts/test-dashboard-browser-sim.mjs
       - name: Upload isolated browser evidence
         if: always()
         uses: actions/upload-artifact@v4
