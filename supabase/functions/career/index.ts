@@ -214,6 +214,22 @@ Deno.serve(async req => {
       if(!data) return fail(404,'Receipt not found',origin);
       return respond(200,{id:data.id,status:data.status,reportId:data.report_id||undefined},origin);
     }
+    if(req.method==='GET'&&parts[0]==='reports'&&validId(parts[1])&&parts.length===2) {
+      // Report IDs are only discoverable via an owner-scoped durable receipt.
+      const {data: ownedReceipt,error:receiptError}=await admin.from('lanx_career_receipts')
+        .select('id,status,report_id').eq('user_id',who.userId).eq('report_id',parts[1])
+        .eq('status','complete').maybeSingle();
+      if(receiptError) throw receiptError;
+      if(!ownedReceipt) return fail(404,'Verified report not found',origin);
+      const {data: report,error:reportError}=await admin.from('interview_reports')
+        .select('id,user_id,status,feedback,updated_at').eq('id',parts[1]).eq('user_id',who.userId)
+        .eq('status','complete').maybeSingle();
+      if(reportError) throw reportError;
+      if(!report || report.feedback == null) return fail(404,'Verified report not ready',origin);
+      return respond(200,{
+        id:report.id,status:report.status,feedback:report.feedback,updatedAt:report.updated_at
+      },origin);
+    }
     return fail(404,'Unknown career endpoint',origin);
   } catch(e) {
     console.error('Career handler failed',e instanceof Error?e.message:'unknown');
