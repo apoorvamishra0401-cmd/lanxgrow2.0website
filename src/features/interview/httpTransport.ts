@@ -1,4 +1,4 @@
-import type { Attempt, CareerTransport, JourneyKind, Receipt, VerifiedCareerAccess } from './lifecycle';
+import type { Attempt, CareerTransport, JourneyKind, Receipt, VerifiedCareerAccess, VerifiedCareerReport } from './lifecycle';
 
 export type CareerHttpConfig = {
   /** Trusted, explicitly configured backend; never silently default to the live site. */
