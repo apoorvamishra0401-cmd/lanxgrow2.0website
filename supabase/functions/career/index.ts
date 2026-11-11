@@ -47,20 +47,24 @@ function fail(status: number, message: string, origin: string | null) {
   return respond(status, {error: message}, origin);
 }
 function validId(value: unknown): value is string { return typeof value === 'string' && uuid.test(value); }
-async function identity(req: Request): Promise<Identity | null> {
+async function verifiedGoogleAndConsent(req: Request): Promise<string | null> {
   const token = req.headers.get('authorization')?.match(/^Bearer ([A-Za-z0-9._~+/-]+=*)$/)?.[1];
   if (!token || !url || !anon || !secret) return null;
   const {data: {user}, error} = await authClient.auth.getUser(token);
   if (error || !user || user.is_anonymous || user.app_metadata?.provider !== 'google' ||
       !user.identities?.some(i => i.provider === 'google')) return null;
-  const {data: access, error: roleError} = await admin.from('lanx_learner_access')
-    .select('role,audience').eq('user_id',user.id).maybeSingle();
-  if (roleError || access?.role !== 'learner' ||
-      (access.audience !== 'fresher' && access.audience !== 'professional')) return null;
   const {data: consent, error: consentError} = await admin.from('legal_consents').select('policy_version')
     .eq('user_id',user.id).eq('policy_version',consentVersion).maybeSingle();
-  if (consentError || !consent) return null;
-  return {userId:user.id,audience:access.audience};
+  return consentError || !consent ? null : user.id;
+}
+async function identity(req: Request): Promise<Identity | null> {
+  const userId = await verifiedGoogleAndConsent(req);
+  if (!userId) return null;
+  const {data: access, error} = await admin.from('lanx_learner_access')
+    .select('role,audience').eq('user_id',userId).maybeSingle();
+  if (error || access?.role !== 'learner' ||
+      (access.audience !== 'fresher' && access.audience !== 'professional')) return null;
+  return {userId,audience:access.audience};
 }
 async function loadAttempt(id: string, owner: string) {
   const {data,error} = await admin.from('lanx_career_attempts').select('*').eq('id',id).eq('user_id',owner).maybeSingle();
@@ -92,6 +96,33 @@ Deno.serve(async req => {
   if (!url || !anon || !secret) return fail(503,'Development backend is not configured',origin);
   const path = new URL(req.url).pathname.split('/career/')[1] || '';
   const parts = path.split('/').filter(Boolean);
+  if (parts.length === 1 && (parts[0] === 'audience' || parts[0] === 'enroll')) {
+    const userId = await verifiedGoogleAndConsent(req).catch(() => null);
+    if (!userId) return fail(403,'Verified Google login and current consent required',origin);
+    const {data: current, error: currentError} = await admin.from('lanx_learner_access')
+      .select('role,audience').eq('user_id',userId).maybeSingle();
+    if (currentError) return fail(503,'Audience lookup unavailable',origin);
+    if (req.method === 'GET' && parts[0] === 'audience')
+      return respond(200,{assigned:!!current,role:current?.role||null,audience:current?.audience||null},origin);
+    if (req.method === 'POST' && parts[0] === 'enroll') {
+      const body = await req.json().catch(()=>null);
+      if (!['student','fresher','professional'].includes(body?.audience))
+        return fail(400,'Only a learner audience may be selected',origin);
+      if (current) return current.role === 'learner' && current.audience === body.audience
+        ? respond(200,{assigned:true,role:'learner',audience:current.audience},origin)
+        : fail(409,'Audience is already assigned; it cannot be changed here',origin);
+      // Development-only, self-declared learner category, permanently stored server-side.
+      // This does NOT validate employment or payment entitlement; no admin role assignment.
+      const {data: assigned, error: insertError} = await admin.from('lanx_learner_access')
+        .insert({user_id:userId,role:'learner',audience:body.audience,assignment_source:'trusted_onboarding'})
+        .select('role,audience').single();
+      if (insertError) return insertError.code === '23505'
+        ? fail(409,'Audience was already assigned by another request',origin)
+        : fail(503,'Cannot store learner audience',origin);
+      return respond(201,{assigned:true,role:assigned.role,audience:assigned.audience},origin);
+    }
+    return fail(405,'Unsupported learner enrollment method',origin);
+  }
   const who = await identity(req).catch(()=>null);
   if (!who) return fail(403,'Verified Google login, career audience and current consent required',origin);
   try {
