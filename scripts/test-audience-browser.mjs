@@ -7,8 +7,10 @@ import assert from 'node:assert/strict';
 const candidates = [process.env.CHROME_BIN, 'google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser'].filter(Boolean);
 const chromePath = candidates.find(name => spawnSync('which', [name], { encoding:'utf8' }).status === 0 || name.startsWith('/'));
 if (!chromePath) throw new Error('Browser test BLOCKED: no Chromium/Chrome executable in runner.');
-const port = 19231;
-const browser = spawn(chromePath, ['--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-background-networking','--remote-debugging-port='+port,'--user-data-dir=/tmp/lanx01-chrome-'+process.pid,'about:blank'], { stdio:'ignore' });
+const port = 20000 + (process.pid % 20000);
+const browser = spawn(chromePath, ['--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-background-networking','--no-first-run','--no-default-browser-check','--disable-extensions','--remote-debugging-port='+port,'--user-data-dir=/tmp/lanx01-chrome-'+process.pid,'about:blank'], { stdio:['ignore','ignore','pipe'] });
+let chromeDiagnostics = '';
+browser.stderr.on('data',chunk => { chromeDiagnostics = (chromeDiagnostics + chunk.toString()).slice(-5000); });
 let ws;
 let id = 0;
 const pending = new Map();
@@ -37,15 +39,15 @@ async function ready(path) {
 }
 try {
   let endpoint;
-  for(let n=0;n<50;n++){
-    if(browser.exitCode!==null) throw new Error('Chrome exited before remote debugging was available');
+  for(let n=0;n<150;n++){
+    if(browser.exitCode!==null || browser.signalCode!==null) throw new Error('Chrome exited before remote debugging: '+chromeDiagnostics);
     try {
       const r=await fetch('http://127.0.0.1:'+port+'/json');
       if(r.ok){const pages=await r.json();endpoint=pages.find(p=>p.type==='page')?.webSocketDebuggerUrl;if(endpoint)break;}
     } catch {}
     await sleep(180);
   }
-  if(!endpoint) throw new Error('Chrome debugging endpoint did not become ready');
+  if(!endpoint) throw new Error('Chrome debugging endpoint did not become ready at port '+port+'; browser='+chromePath+'; diagnostics='+chromeDiagnostics);
   ws=new WebSocket(endpoint);
   await new Promise((resolve,reject)=>{ws.addEventListener('open',resolve,{once:true});ws.addEventListener('error',reject,{once:true});});
   ws.addEventListener('message',event=>{
