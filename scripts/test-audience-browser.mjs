@@ -94,7 +94,11 @@ try {
   const studentVideo=await ready('/dashboard/student/video-practice');
   assert.match(studentVideo.body,/Start camera preview/);
   const prep=await ready('/dashboard/professional/interview-video');
-  assert.match(prep.body,/not a timed, submitted, recorded or AI-scored interview/);
+  assert.match(prep.body,/authenticated career interview service/);
+  const loginRequired=await ready('/career/interview');
+  assert.match(loginRequired.body,/Sign in to continue/);
+  const activate=await ready('/activate');
+  assert.match(activate.body,/Choose your learning journey/);
   assert.equal(exceptions.length,0,'Runtime errors: '+exceptions.join('; '));
   console.log('PASS: '+checked+' responsive audience matrices, two forbidden deep links, in-app navigation, interview workspace; browser screenshots saved.');
 } finally {
