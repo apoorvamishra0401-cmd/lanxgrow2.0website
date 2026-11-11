@@ -50,5 +50,5 @@ test('HTTP adapter preserves server denial and rejects malformed resource paths'
     fetchImpl:async()=>new Response('denied',{status:403})
   });
   await assert.rejects(api.recover('attempt_0001'), /denied/);
-  await assert.rejects(api.readReceipt('../escape'), /Invalid resource/);
+  assert.throws(() => api.readReceipt('../escape'), /Invalid resource/);
 });
