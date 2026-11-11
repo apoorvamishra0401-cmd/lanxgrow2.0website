@@ -28,7 +28,7 @@ export function resolveDashboardRoute(audience: unknown, feature?: unknown):
   | { allowed: false } {
   if (!isLearnerAudience(audience)) return { allowed: false };
   if (feature === undefined || feature === null) return { allowed: true, audience, feature: null };
-  if (typeof feature !== 'string' || !Object.hasOwn(FEATURE_DETAILS, feature)) return { allowed: false };
+  if (typeof feature !== 'string' || !Object.prototype.hasOwnProperty.call(FEATURE_DETAILS, feature)) return { allowed: false };
   const permittedFeature = feature as LearnerFeature;
   return canDisplayFeature(audience, permittedFeature)
     ? { allowed: true, audience, feature: permittedFeature } : { allowed: false };
