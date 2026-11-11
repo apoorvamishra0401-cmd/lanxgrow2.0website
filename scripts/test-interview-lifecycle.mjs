@@ -50,3 +50,16 @@ test('stable submission idempotency key and owner-separated resume metadata', ()
 test('a queued durable receipt remains submitted after deadline', () => {
   assert.equal(completionState({...attempt(), receipt:{id:'receipt_0001',status:'queued'}}, started + 800000), 'submitted');
 });
+
+test('original question banks are distinct and reject duplicates', async () => {
+  const { VIDEO_INTERVIEW_PROMPTS, SKILLS_ASSESSMENT_PROMPTS, validatePromptBank } =
+    await import('../src/features/interview/questionBank.ts');
+  assert.equal(VIDEO_INTERVIEW_PROMPTS.length, 5);
+  assert.equal(SKILLS_ASSESSMENT_PROMPTS.length, 8);
+  assert(VIDEO_INTERVIEW_PROMPTS.every(question => question.format === 'video'));
+  assert(SKILLS_ASSESSMENT_PROMPTS.some(question => question.format === 'choice'));
+  assert(SKILLS_ASSESSMENT_PROMPTS.some(question => question.format === 'text'));
+  assert.doesNotThrow(() => validatePromptBank(VIDEO_INTERVIEW_PROMPTS));
+  assert.doesNotThrow(() => validatePromptBank(SKILLS_ASSESSMENT_PROMPTS));
+  assert.throws(() => validatePromptBank([SKILLS_ASSESSMENT_PROMPTS[0], SKILLS_ASSESSMENT_PROMPTS[0]]));
+});
