@@ -4,6 +4,7 @@
 .lx-role-brand{font-size:1.35rem;font-weight:800;text-decoration:none;color:#171719}
 .lx-role-top nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .lx-role-top a:not(.lx-role-brand),.lx-role-back{padding:12px 14px;border-radius:12px;color:#3a332d;text-decoration:underline;text-underline-offset:3px}
+.lx-role-top nav a,.lx-role-back{display:inline-flex;align-items:center;min-height:44px}
 .lx-role-banner{border:1px solid #dfd8cf;border-radius:22px;padding:clamp(20px,4vw,42px);background:linear-gradient(130deg,#102338,#173b51);color:#fff}
 .lx-role-banner h1{font:700 clamp(1.8rem,4vw,3.2rem)/1.15 system-ui,sans-serif;color:#fff;margin:10px 0}
 .lx-role-banner p{color:#e2eef6;max-width:740px}
