@@ -9,7 +9,13 @@ const admin = createClient(url, secret, { auth: { persistSession: false, autoRef
 const authClient = createClient(url, anon, { auth: { persistSession: false, autoRefreshToken: false } });
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const keyPattern = /^[\w:-]{8,200}$/;
-const allowedOrigins = (Deno.env.get('LANX_ALLOWED_REVIEW_ORIGINS') || '').split(',').map(s => s.trim()).filter(Boolean);
+const allowedOrigins = (Deno.env.get('LANX_ALLOWED_REVIEW_ORIGINS') ||
+  'https://lanxgrow-founder-review-isolate-apoorvamishra0401-cmds-projects.vercel.app,https://lanxgrow-founder-rev-git-819f9f-apoorvamishra0401-cmds-projects.vercel.app,http://localhost:4173,http://localhost:5173')
+  .split(',').map(s => s.trim()).filter(Boolean);
+const previewPattern = /^https:\/\/lanxgrow-founder-review-isolated-[a-z0-9-]+\.vercel\.app$/;
+function approvedOrigin(origin: string | null): boolean {
+  return origin === null || allowedOrigins.includes(origin) || previewPattern.test(origin);
+}
 const videoQuestions = [
   { id:'vi-introduction',format:'video',prompt:'Introduce yourself and the kind of role you want.' },
   { id:'vi-communication',format:'video',prompt:'Describe a time you explained a difficult idea.' },
@@ -30,7 +36,7 @@ const assessmentQuestions = [
 type Identity = { userId: string; audience: 'fresher'|'professional' };
 const headers = (origin: string | null) => ({
   'Content-Type': 'application/json', 'Cache-Control': 'no-store',
-  'Vary': 'Origin', 'Access-Control-Allow-Origin': origin && allowedOrigins.includes(origin) ? origin : 'null',
+  'Vary': 'Origin', 'Access-Control-Allow-Origin': origin && approvedOrigin(origin) ? origin : 'null',
   'Access-Control-Allow-Headers': 'authorization, apikey, content-type, idempotency-key',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS'
 });
@@ -82,7 +88,7 @@ function isActive(a:Record<string,any>) { return a.status === 'active' && Date.n
 Deno.serve(async req => {
   const origin = req.headers.get('origin');
   if (req.method === 'OPTIONS') return new Response(null,{status:204,headers:headers(origin)});
-  if (origin && !allowedOrigins.includes(origin)) return fail(403,'Origin not allowed',origin);
+  if (!approvedOrigin(origin)) return fail(403,'Origin not allowed',origin);
   if (!url || !anon || !secret) return fail(503,'Development backend is not configured',origin);
   const path = new URL(req.url).pathname.split('/career/')[1] || '';
   const parts = path.split('/').filter(Boolean);
