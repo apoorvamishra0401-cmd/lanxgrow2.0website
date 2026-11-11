@@ -127,14 +127,29 @@ try{
     assert(!state.text.includes('Dashboard access denied'),'Known assignment must resolve '+role);
     assert(state.scroll<=state.width+1,'No horizontal scrolling');
     assert(!state.text.includes(role==='student'?'Interview Preparation':'Video Practice'),'Role feature leakage');
-    const screenshot=(await send('Page.captureScreenshot',{format:'png',fromSurface:true})).data;
-    writeFileSync('browser-evidence/synthetic-auth-'+role+'.png',Buffer.from(screenshot,'base64'));
+    for(const width of [320,768,1280]){
+      await send('Emulation.setDeviceMetricsOverride',{width,height:850,deviceScaleFactor:1,mobile:width===320});
+      const resized=await go('/dashboard/'+role,view=>view.path==='/dashboard/'+role&&view.text.includes('Learning & practice'));
+      assert(resized.scroll<=resized.width+1,'Horizontal overflow on signed-in '+role+' at '+width+'px');
+      const targets=await evalJS('Array.from(document.querySelectorAll("main .lx-role-link")).filter(el=>el.getBoundingClientRect().height<43).map(el=>el.textContent.trim())');
+      assert.deepEqual(targets,[],'Undersized dashboard action target '+role+' at '+width+'px');
+      const shot=(await send('Page.captureScreenshot',{format:'png',fromSurface:true})).data;
+      writeFileSync('browser-evidence/synthetic-auth-'+role+'-'+width+'.png',Buffer.from(shot,'base64'));
+    }
     const forbidden=role==='student'?'interview-video':'video-practice';
     const direct=await go('/dashboard/'+role+'/'+forbidden,s=>s.text.includes('Feature unavailable for your audience'));
     assert(!direct.text.includes('Private camera practice'));
     const wrongRole=role==='student'?'fresher':'student';
     await go('/dashboard/'+wrongRole,s=>s.text.includes('Dashboard access denied'));
     await go('/dashboard/'+role,s=>s.text.includes('dashboard')&&s.text.includes('Learning & practice'));
+    const keyboardTarget = '/dashboard/'+role+'/'+(role==='student'?'video-practice':'interview-video');
+    const focused = await evalJS('(()=>{const link=document.querySelector(\'a[href="'+keyboardTarget+'"]\');if(!link)return false;link.focus();return document.activeElement===link;})()');
+    assert.equal(focused,true,'Keyboard navigation target not focusable '+keyboardTarget);
+    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+    await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13});
+    const opened=await waitFor(state=>state.path===keyboardTarget&&state.text.includes(role==='student'?'Private camera practice':'Practice workspace'),keyboardTarget+' keyboard activation');
+    assert(opened.text.includes(role==='student'?'Start camera preview':'practice exercise'),'Keyboard activation did not open permitted feature');
+    await go('/dashboard/'+role,state=>state.path==='/dashboard/'+role&&state.text.includes('Learning & practice'));
     await send('Page.reload',{ignoreCache:true});
     await waitFor(s=>s.path==='/dashboard/'+role&&s.text.includes('Learning & practice'),role+' refresh');
     count++;
@@ -148,7 +163,7 @@ try{
   resultType='session-expired';
   await go('/dashboard/student',s=>s.text.includes('Session expired'));
   assert(requests.some(r=>r.url.endsWith('/functions/v1/career/audience')),'Server audience endpoint must be queried');
-  console.log('PASS: '+count+' mocked signed-in browser role journeys with refresh, forbidden deep links, role mismatch, consent and expired session (SYNTHETIC sessions; NOT real Google login).');
+  console.log('PASS: '+count+' mocked signed-in browser role journeys (3 viewports each, keyboard Enter activation) with refresh, forbidden deep links, role mismatch, consent and expired session (SYNTHETIC sessions; NOT real Google login).');
 }finally{
   try{socket?.close();}catch{}
   processChrome.kill('SIGTERM');
