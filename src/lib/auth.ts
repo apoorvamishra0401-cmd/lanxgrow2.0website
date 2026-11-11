@@ -409,3 +409,11 @@ export async function verifyPhoneRegistration(phone: string, token: string): Pro
     return { ok: true, data: undefined };
   } catch (error) { return toAuthError(error); }
 }
+
+/** Gets the current Supabase session token; all authorization happens on the server. */
+export async function getAccessTokenForCareer(): Promise<string | null> {
+  const client = await getClient();
+  if (!client) return null;
+  const { data, error } = await client.auth.getSession();
+  return error ? null : data.session?.access_token ?? null;
+}
