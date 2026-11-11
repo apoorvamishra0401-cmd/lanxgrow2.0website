@@ -168,7 +168,7 @@ Deno.serve(async req => {
         return respond(200,await serialize(attempt),origin);
       }
       if(req.method==='POST'&&parts[2]==='media-ticket'&&parts.length===3) {
-        if(attempt.kind!=='video-interview'||!isActive(attempt)) return fail(409,'Video attempt is not active',origin);
+        if(attempt.kind!=='video-interview'||attempt.status!=='active'||Date.now()>Date.parse(attempt.deadline_at)+300000) return fail(409,'Video upload window is closed',origin);
         const objectPath=who.userId+'/'+attempt.id+'/recording.webm';
         const {data,error}=await admin.storage.from(bucket).createSignedUploadUrl(objectPath);
         if(error||!data) throw error||new Error('Cannot create upload ticket');
