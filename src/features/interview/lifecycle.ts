@@ -15,6 +15,12 @@ export type Attempt = {
   status: 'active' | 'submitted' | 'expired';
   receipt?: Receipt;
 };
+export type VerifiedCareerReport = {
+  id: string;
+  status: 'complete';
+  feedback: unknown;
+  updatedAt: string;
+};
 export type VerifiedCareerAccess = { userId: string; audience: CareerAudience; allowed: boolean };
 /** Methods must call authenticated trusted endpoints; no local-only implementation is accepted. */
 export interface CareerTransport {
@@ -24,6 +30,7 @@ export interface CareerTransport {
   saveAnswer(attemptId: string, questionId: string, value: string): Promise<Attempt>;
   submit(attemptId: string, idempotencyKey: string, video?: Blob): Promise<Receipt>;
   readReceipt(receiptId: string): Promise<Receipt>;
+  readReport?(reportId: string): Promise<VerifiedCareerReport>;
 }
 export const DURATION_MS: Record<JourneyKind, number> = {
   'video-interview': 10 * 60_000,
