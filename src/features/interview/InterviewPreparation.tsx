@@ -158,6 +158,13 @@ export default function InterviewPreparation({ transport }: { transport?: Career
 
   async function next() {
     if (!attempt || !transport || !access || busy) return;
+    // Camera questions are recorded as a continuous MediaRecorder stream.
+    // An empty text answer must not be submitted as fabricated video evidence.
+    if (attempt.questions[index].format === 'video') {
+      setIndex(Math.min(index + 1, attempt.questions.length - 1));
+      setAnswer('');
+      return;
+    }
     setBusy(true); setError('');
     try {
       const updated = await transport.saveAnswer(attempt.id, attempt.questions[index].id, answer);
@@ -250,7 +257,7 @@ export default function InterviewPreparation({ transport }: { transport?: Career
                 : question?.format === 'text' ? <textarea className="w-full rounded-xl border p-4" rows={5} aria-label="Assessment answer" value={answer} onChange={e => setAnswer(e.target.value)} />
                 : <p>Respond aloud to the camera. Recording is not a completed AI evaluation.</p>}
               <div className="flex flex-wrap gap-3">
-                {index < attempt.questions.length-1 && <button className="min-h-12 rounded-xl border px-5" disabled={busy || secondsLeft === 0} onClick={() => void next()}>Save and next</button>}
+                {index < attempt.questions.length-1 && <button className="min-h-12 rounded-xl border px-5" disabled={busy || secondsLeft === 0} onClick={() => void next()}>{kind === 'video-interview' ? 'Next video question' : 'Save and next'}</button>}
                 <button className="min-h-12 rounded-xl bg-ink-900 px-5 text-white disabled:opacity-40" disabled={busy || (kind === 'video-interview' && !cameraReady)} onClick={() => void finish()}>Finish and submit</button>
               </div></> : <section role="status" className="space-y-3"><h3>Durable receipt: {receipt.id}</h3><p>Processing status: {receipt.status}</p>
               {receipt.status === 'complete' && receipt.reportId ? <p>Server report reference: {receipt.reportId}. LANX-03's verified report reader must be connected to display feedback.</p> : <p>No AI evaluation score is displayed by this component.</p>}
