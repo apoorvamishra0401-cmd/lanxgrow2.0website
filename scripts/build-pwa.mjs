@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 const root = path.resolve('dist');
 async function walk(directory) {
-  const items = await readdir(directory, { withFileTypes: true });
+  const items = (await readdir(directory, { withFileTypes: true })).filter(item => !item.name.startsWith('.'));
   const nested = await Promise.all(items.map(item => item.isDirectory() ? walk(path.join(directory, item.name)) : path.join(directory, item.name)));
   return nested.flat();
 }

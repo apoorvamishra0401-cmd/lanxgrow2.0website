@@ -35,7 +35,7 @@ export default function Privacy() {
               ))}
             </Reveal>
           ))}
-          <p className="text-sm text-ink-500 mt-10">Previous version: <a className="underline underline-offset-4 inline-flex min-h-11 items-center" href="/policies/2026-10-24.1/privacy.txt">24 October 2026</a></p>
+          <p className="text-sm text-ink-500 mt-10">Previous versions: <a className="underline underline-offset-4 inline-flex min-h-11 items-center" href="/policies/2026-10-25.1/privacy.txt">25 October 2026</a> · <a className="underline underline-offset-4 inline-flex min-h-11 items-center" href="/policies/2026-10-24.1/privacy.txt">24 October 2026</a></p>
         </div>
       </Section>
     </>

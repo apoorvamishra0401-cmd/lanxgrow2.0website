@@ -4,7 +4,7 @@ export const servicesIntro = {
   eyebrow: 'Services',
   heading: 'Focused services, delivered with guidance.',
   supporting:
-    'LanXgrow keeps its offering deliberately narrow. English Communication is the core of what we do, supported by guided learning support and Smart AI-assisted assessment.',
+    'LanXgrow keeps its offering deliberately narrow. English Communication is the core of what we do, with guided demonstrations available to explore and AI-assisted assessment planned.',
 } as const;
 
 export const services = [
@@ -13,7 +13,7 @@ export const services = [
     eyebrow: 'Primary service',
     title: 'English Communication',
     summary:
-      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence. Build clearer expression through purposeful practice, useful feedback and AI-assisted support.',
+      'The heart of LanXgrow. A guided programme for learners who want to speak, listen and express themselves in English with real confidence. Build clearer expression through purposeful practice, clear examples and guided exercises. Live AI feedback is planned.',
     includesHeading: 'What this focuses on',
     includes: [
       'Speaking in real situations — introductions, interviews and everyday conversation',

@@ -1,3 +1,4 @@
+import { AvailableNow } from '@/components/home/AvailableNow';
 import { MeetLanX } from '@/components/home/MeetLanX';
 import { LearningEcosystem } from '@/components/ecosystem/LearningEcosystem';
 import { Hero } from '@/components/home/Hero';
@@ -19,6 +20,7 @@ export default function Home() {
     <>
       <Hero />
       <MeetLanX />
+      <AvailableNow />
       <LearningEcosystem />
       <WhyLanXgrow />
       <ResearchStories />

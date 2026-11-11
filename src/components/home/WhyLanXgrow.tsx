@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import './FeatureJourney.css';
 
 const features = [
-  { name: 'Call', line: 'Speak with AI or a Human', body: 'Make room for real conversation. Find the confidence to speak, one exchange at a time.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing the Call option', excerpt: true },
-  { name: 'Practice', line: 'Build Skills Through Practice', body: 'Listen, read, write and speak. Small, purposeful exercises turn learning into an everyday habit.', src: '/images/product/daily-practice.jpg', alt: 'Daily Practice screen with listening, reading and writing exercises' },
-  { name: 'Video Assessment', line: 'See How You Communicate', body: 'Put your thoughts into words. Record a response and take a closer look at how you communicate.', src: '/images/product/video-assessment.jpg', alt: 'Video Assessment screen showing the recording interface' },
-  { name: 'English Pro Course', line: 'Follow a Clear Learning Path', body: 'Give your learning a direction, with course modules that help you take the next step.', src: '/Englis pro course.jpg', alt: 'English Pro Course screen with a lesson video and course modules' },
-  { name: 'Learn & Entertainment', line: 'Learn Through What You Love', body: 'Discover English through stories, music, films and series that connect with your interests.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing Learn and Entertainment', excerpt: true },
-  { name: 'Dashboard', line: 'Keep Your Learning on Track', body: 'Bring your progress, reports and learning overview together, so you know where to go next.', src: '/Dashboard.jpg', alt: 'LanXgrow Dashboard with progress, reports and learning overview' },
+  { name: 'Call', line: 'Speak with AI or a Human', width: 768, height: 1376, body: 'Make room for real conversation. Find the confidence to speak, one exchange at a time.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing the Call option', excerpt: true },
+  { name: 'Practice', line: 'Build Skills Through Practice', width: 768, height: 1376, body: 'Listen, read, write and speak. Small, purposeful exercises turn learning into an everyday habit.', src: '/images/product/daily-practice.jpg', alt: 'Daily Practice screen with listening, reading and writing exercises' },
+  { name: 'Video Assessment', line: 'See How You Communicate', width: 768, height: 1376, body: 'Put your thoughts into words. Record a response and take a closer look at how you communicate.', src: '/images/product/video-assessment.jpg', alt: 'Video Assessment screen showing the recording interface' },
+  { name: 'English Pro Course', line: 'Follow a Clear Learning Path', width: 712, height: 1266, body: 'Give your learning a direction, with course modules that help you take the next step.', src: '/Englis pro course.jpg', alt: 'English Pro Course screen with a lesson video and course modules' },
+  { name: 'Learn & Entertainment', line: 'Learn Through What You Love', width: 768, height: 1376, body: 'Discover English through stories, music, films and series that connect with your interests.', src: '/images/product/learner-dashboard.jpg', alt: 'LanXgrow learning home showing Learn and Entertainment', excerpt: true },
+  { name: 'Dashboard', line: 'Keep Your Learning on Track', width: 1536, height: 2752, body: 'Bring your progress, reports and learning overview together, so you know where to go next.', src: '/Dashboard.jpg', alt: 'LanXgrow Dashboard with progress, reports and learning overview' },
 ];
 
 export function WhyLanXgrow() {
@@ -61,7 +61,7 @@ export function WhyLanXgrow() {
             <div className="feature-preview-top"><span>THE LANXGROW EXPERIENCE</span><span>{String(shown + 1).padStart(2, '0')} <span className="feature-total">/ 06</span></span></div>
             <div className="feature-stage">
               <span className="feature-orbit" aria-hidden="true" />
-              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} loading="eager" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'LanXgrow app · product preview'}</span></div>)}
+              {features.map((feature, index) => <div key={feature.name} className={`feature-slide ${shown === index ? 'is-active' : ''}`} aria-hidden={shown !== index}><img src={feature.src} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" decoding="async" /><span className="feature-image-note">{feature.excerpt ? 'App home preview · dedicated screen coming next' : 'Illustrative app screen · availability varies'}</span></div>)}
             </div>
             <div className="feature-caption"><h3>{features[shown].name}</h3><p>{features[shown].body}</p></div>
           </div>

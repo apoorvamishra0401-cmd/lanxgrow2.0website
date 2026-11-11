@@ -16,7 +16,7 @@ export default function Faq() {
   const groups: Record<string, string[]> = {
     'Speaking & confidence': ['why-cannot-speak-fluent','improve-speaking-skills','practice-without-partner','improve-pronunciation'],
     'AI & progress': ['can-ai-help','ai-feedback-reliable','measure-progress'],
-    'Getting started': ['improve-for-interviews','programme-audience','programme-contents','cost-and-duration'],
+    'Getting started': ['available-today','improve-for-interviews','programme-audience','programme-contents','cost-and-duration'],
     'Privacy': ['voice-data-use'],
   };
   const filtered = faqItems.filter(item => (topic === 'All questions' || groups[topic]?.includes(item.id)) && `${item.question} ${item.answer}`.toLowerCase().includes(query.trim().toLowerCase()));

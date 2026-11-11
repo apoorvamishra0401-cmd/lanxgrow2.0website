@@ -23,25 +23,31 @@ export const faqIntro = {
 
 export const faqItems: FaqItem[] = [
   {
+    id: 'available-today',
+    question: 'What can I use on the public website today?',
+    answer: 'You can explore the interview preparation framework, try guided scripted conversation, and choose optional local voice or video rehearsal in SMART AI. These are demonstrations. Live AI feedback, automated assessment reports and employer-equivalent scoring are not enabled in this public experience. Sign-in is a separate account step; confirm programme availability with the team.',
+  },
+
+  {
     id: 'why-cannot-speak-fluent',
     question:
       'Why can I understand English but struggle to speak fluently?',
     answer:
-      'Understanding English and speaking it comfortably are different skills. You may recognise words and follow conversations but still struggle to respond quickly, organise your thoughts or speak without translating in your head. Regular speaking practice and useful feedback can help you work on these challenges. LanXgrow focuses on practical English Communication through structured practice, personalised learning and AI-assisted assessment.',
+      'Understanding English and speaking it comfortably are different skills. You may recognise words and follow conversations but still struggle to respond quickly, organise your thoughts or speak without translating in your head. Regular speaking practice and useful feedback can help you work on these challenges. LanXgrow focuses on practical English Communication. The public website offers guided demonstrations; personalised AI assessment is planned.',
   },
   {
     id: 'improve-speaking-skills',
     question:
       'How can I improve my English speaking skills and confidence?',
     answer:
-      'Start by speaking about familiar topics, practising everyday conversations and gradually moving towards more challenging situations. Focus on expressing your ideas clearly instead of waiting for every sentence to be perfect. LanXgrow\'s English Communication programme focuses on practical speaking, listening, pronunciation and clarity of expression, supported by personalised learning and AI-assisted assessment.',
+      'Start by speaking about familiar topics, practising everyday conversations and gradually moving towards more challenging situations. Focus on expressing your ideas clearly instead of waiting for every sentence to be perfect. LanXgrow\'s English Communication approach focuses on practical speaking, listening, pronunciation and clarity of expression. Public demonstrations show the approach; live personalised AI feedback is planned.',
   },
   {
     id: 'practice-without-partner',
     question:
       'How can I practise speaking English without a conversation partner?',
     answer:
-      'You can practise by explaining a topic aloud, describing your day or rehearsing common situations such as introductions and workplace conversations. AI-based practice can offer another way to exercise your speaking skills, although feedback may have limitations. LanXgrow uses AI-assisted voice and video assessments as part of its learning approach. Contact the team to confirm the available practice formats.',
+      'You can practise by explaining a topic aloud, describing your day or rehearsing common situations such as introductions and workplace conversations. AI-based practice can offer another way to exercise your speaking skills, although feedback may have limitations. LanXgrow currently offers guided demonstrations and optional local rehearsal on the public website. Live AI-assisted voice and video assessment is planned. Contact the team to confirm programme availability.',
   },
   {
     id: 'improve-for-interviews',
@@ -55,14 +61,14 @@ export const faqItems: FaqItem[] = [
     question:
       'Can AI help me improve my spoken English?',
     answer:
-      'AI can support language practice by giving learners opportunities to work on speaking and review aspects of their performance. Its usefulness depends on the quality of the assessment, the feedback provided and how consistently you practise. LAN-X AI supports voice-based and video-based assessments for personalised learning. AI feedback is guidance, not a guarantee of perfect accuracy or fluency.',
+      'AI can support language practice by giving learners opportunities to work on speaking and review aspects of their performance. Its usefulness depends on the quality of the assessment, the feedback provided and how consistently you practise. The current LAN-X public experience offers guided demonstrations and optional local rehearsal. Live AI assessment feedback is planned. AI feedback is guidance, not a guarantee of perfect accuracy or fluency.',
   },
   {
     id: 'ai-feedback-reliable',
     question:
       'How reliable is AI feedback on English speaking and pronunciation?',
     answer:
-      'AI feedback can help highlight areas to review, but it may not capture every aspect of natural communication, context or pronunciation. It is best used as a learning aid rather than a definitive judgement of your ability. LanXgrow incorporates AI-assisted assessments into its learning approach. Ask the team about the assessment features available in the programme before enrolling.',
+      'AI feedback can help highlight areas to review, but it may not capture every aspect of natural communication, context or pronunciation. It is best used as a learning aid rather than a definitive judgement of your ability. Live AI assessment feedback is planned and cannot be tested on this public website. Ask the team about current programme availability before enrolling.',
   },
   {
     id: 'improve-pronunciation',
@@ -83,7 +89,7 @@ export const faqItems: FaqItem[] = [
     question:
       'What does LanXgrow\'s English Communication programme cover?',
     answer:
-      'The programme focuses on practical communication, including speaking, listening, pronunciation and clarity of expression. Personalised learning and AI-assisted voice and video assessments support the learning approach. For the exact curriculum, session structure and activities relevant to your goals, contact LanXgrow directly.',
+      'The programme focuses on practical communication, including speaking, listening, pronunciation and clarity of expression. Personalised AI feedback and automated assessment are planned. For confirmed curriculum, session structure and available activities relevant to your goals, contact LanXgrow directly.',
   },
   {
     id: 'measure-progress',
@@ -97,7 +103,7 @@ export const faqItems: FaqItem[] = [
     question:
       'How does LanXgrow use my voice and video data?',
     answer:
-      'The current public assessment preview does not record your camera or microphone. Before any recording-based learning feature is introduced, we will explain what is collected, why it is needed and how it is handled. Read our Privacy Notice or email official@lanxgrow.com with questions.',
+      'The homepage animation does not use your camera or microphone. In SMART AI, local rehearsal can request camera or microphone permission when you choose it; recordings stay in your browser in this demonstration. Optional speech-to-text uses your browser’s speech service and may process audio outside your device. Review permission prompts and the Privacy Notice before recording. Email official@lanxgrow.com with questions.',
   },
   {
     id: 'cost-and-duration',

@@ -25,7 +25,7 @@ function Scene({ compact, active, select, pause, resume, uid }: { compact: boole
   const center = compact ? [300,410] : [600,365];
   const prefix = `${uid}-${compact ? 'small' : 'wide'}`;
   const keyboard = (event: KeyboardEvent<SVGGElement>, i: number) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(i); } };
-  return <svg className={`eco-scene ${compact ? 'eco-small' : 'eco-wide'}`} viewBox={compact ? '0 0 600 800' : '0 0 1200 690'} aria-label="Interactive LanXgrow learning ecosystem">
+  return <svg className={`eco-scene ${compact ? 'eco-small' : 'eco-wide'}`} viewBox={compact ? '0 0 600 800' : '0 0 1200 690'} role="group" aria-label="Interactive LanXgrow learning ecosystem">
     <defs>
       <linearGradient id={`${prefix}-cream`} x2=".7" y2="1"><stop stopColor="#fff9ec"/><stop offset=".5" stopColor="#ead8bd"/><stop offset="1" stopColor="#c7a47f"/></linearGradient>
       <linearGradient id={`${prefix}-clay`} x2="1" y2="1"><stop stopColor="#dc9e70"/><stop offset=".45" stopColor="#b76b42"/><stop offset="1" stopColor="#87482d"/></linearGradient>
