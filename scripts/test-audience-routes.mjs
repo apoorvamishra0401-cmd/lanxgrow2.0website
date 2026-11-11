@@ -67,7 +67,8 @@ test('invalid audiences/features and prototype-property attacks cannot resolve',
   for (const audience of ['admin','unknown','',null,undefined,'STUDENT']) {
     assert.deepEqual(navigation.resolveDashboardRoute(audience), { allowed:false });
   }
-  for (const feature of ['constructor','__proto__','toString','',null,'bad-feature']) {
+  assert.deepEqual(navigation.resolveDashboardRoute('student', null), { allowed:true, audience:'student', feature:null });
+  for (const feature of ['constructor','__proto__','toString','','bad-feature']) {
     assert.deepEqual(navigation.resolveDashboardRoute('student', feature), { allowed:false });
   }
 });
