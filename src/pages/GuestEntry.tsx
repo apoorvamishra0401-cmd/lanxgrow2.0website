@@ -127,6 +127,7 @@ export default function GuestEntry() {
           <div className="mt-6 flex flex-wrap gap-3">
             <button type="button" className="min-h-12 rounded-xl border border-line px-5 font-semibold" onClick={()=>{setDemoAnswer('');setPhase('question');}}>Try another response</button>
             <button type="button" className="min-h-12 rounded-xl border border-line px-5 font-semibold" onClick={()=>{setPhase('onboarding');setStep(0);}}>Review onboarding</button>
+            <Link className="min-h-12 rounded-xl border border-line px-5 py-3 font-semibold underline" to={`/dashboard/${audience}`}>Open your dashboard</Link>
           </div>
         </>}
       </section>
@@ -187,6 +188,7 @@ export default function GuestEntry() {
           </div>
         </form>
       </section>
+      <div className="mt-5 flex justify-center"><Link className="min-h-12 rounded-xl border border-line bg-ivory px-6 py-3 font-semibold underline" to={`/dashboard/${audience}`}>Open {audience === 'student' ? 'Student' : audience === 'fresher' ? 'Fresher' : 'Working Professional'} dashboard →</Link></div>
       <p className="mt-5 text-center text-xs text-ink-700">Do not enter real personal information in this incomplete review build.</p>
     </div>
   </main>;
