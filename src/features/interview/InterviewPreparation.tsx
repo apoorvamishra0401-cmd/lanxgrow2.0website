@@ -216,7 +216,6 @@ export default function InterviewPreparation({ transport }: { transport?: Career
   }
 
   const question = attempt?.questions[index];
-  const enabled = configured && !loading && !!session && !!access && !!transport;
   return <main className="min-h-screen bg-ivory-50 px-4 py-10 text-ink-900 sm:px-6">
     <div className="mx-auto max-w-3xl space-y-6">
       <header><p className="text-sm font-semibold text-terracotta-700">LanXgrow · Career preparation</p>
