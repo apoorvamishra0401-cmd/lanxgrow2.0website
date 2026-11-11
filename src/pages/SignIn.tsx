@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getLoginMethods, isAuthConfigured, signInWithGoogle } from '@/lib/auth';
+import { isAuthConfigured, signInWithGoogle } from '@/lib/auth';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { Logo } from '@/components/ui/Logo';
 import './SignIn.css';
@@ -10,17 +10,10 @@ import './SignIn.css';
  */
 export default function SignIn() {
   usePageMeta('Sign in', 'Continue securely with Google on LanXgrow.');
-  const [googleAvailable, setGoogleAvailable] = useState(false);
-  const [checking, setChecking] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  useEffect(() => {
-    let mounted = true;
-    getLoginMethods().then(methods => { if (mounted) { setGoogleAvailable(methods?.google === true); setChecking(false); } });
-    return () => { mounted = false; };
-  }, []);
   async function google() {
-    if (!googleAvailable || busy) return;
+    if (!isAuthConfigured() || busy) return;
     setBusy(true); setError('');
     try {
       const result = await signInWithGoogle();
@@ -40,14 +33,11 @@ export default function SignIn() {
         <Link to="/" className="login-back">← Back</Link>
         <h2 id="login-heading">Welcome to LanXgrow.</h2>
         <p className="login-subtitle">Sign in with your Google account.</p>
-        <button className="login-google" type="button" disabled={checking || busy || !googleAvailable} onClick={google}>
+        <button className="login-google" type="button" disabled={busy || !isAuthConfigured()} onClick={google}>
           Continue with Google
         </button>
-        {checking && <p role="status">Checking Google sign-in availability…</p>}
-        {!checking && !googleAvailable && <p role="status">Google sign-in is not enabled for this environment yet. No other sign-in method is available.</p>}
-        {!isAuthConfigured() && <p role="status">This review deployment is missing its authentication configuration.</p>}
+        {!isAuthConfigured() && <p role="status">Google login is unavailable because the website connection is missing. Please contact support.</p>}
         {error && <p role="alert">{error}</p>}
-        <p className="login-subtitle">For the protected one-minute review, use <Link to="/review-lab">Founder review</Link>.</p>
       </section>
     </div>
   </main>;
