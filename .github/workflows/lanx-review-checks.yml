@@ -38,3 +38,13 @@ jobs:
           deno-version: v2.x
       - name: Typecheck development Edge Function
         run: deno check supabase/functions/career/index.ts
+
+      - name: Verify development Edge rejects unauthenticated HTTP
+        run: |
+          set -eu
+          endpoint='https://kzjvvwuyigiclryoqpkv.supabase.co/functions/v1/career/access'
+          anonymous=$(curl --silent --show-error --max-time 20 -o /tmp/lanx_anonymous -w '%{http_code}' "$endpoint")
+          forged=$(curl --silent --show-error --max-time 20 -o /tmp/lanx_forged -w '%{http_code}' -H 'Authorization: Bearer invalid-synthetic-token' "$endpoint")
+          case "$anonymous" in 401|403) ;; *) echo "FAIL anonymous HTTP status: $anonymous"; exit 1;; esac
+          case "$forged" in 401|403) ;; *) echo "FAIL forged JWT status: $forged"; exit 1;; esac
+          echo 'PASS: anonymous and forged-JWT requests denied by development Edge endpoint'
