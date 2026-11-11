@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { assertAttempt, formatRemaining, remainingMs, resumeKey, submissionKey,
   type Attempt, type CareerTransport, type JourneyKind, type Receipt,
-  type VerifiedCareerAccess } from './lifecycle';
+  type VerifiedCareerAccess, type VerifiedCareerReport } from './lifecycle';
 
 /** Owner-scoped LANX-02 component; LANX-00 registers a route and trusted adapter.
  * Never infer entitlement from the UI, or render invented evaluation scores.
@@ -14,6 +14,7 @@ export default function InterviewPreparation({ transport }: { transport?: Career
   const [kind, setKind] = useState<JourneyKind>('video-interview');
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [receipt, setReceipt] = useState<Receipt | null>(null);
+  const [verifiedReport, setVerifiedReport] = useState<VerifiedCareerReport | null>(null);
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [consent, setConsent] = useState(false);
@@ -52,6 +53,7 @@ export default function InterviewPreparation({ transport }: { transport?: Career
       assertAttempt(identity, saved, journey);
       setAttempt(saved);
       setReceipt(saved.receipt ?? null);
+      setVerifiedReport(null);
       setIndex(0);
       setAnswer(saved.answers[saved.questions[0].id] ?? '');
       setSecondsLeft(remainingMs(saved.deadlineAt));
@@ -96,6 +98,7 @@ export default function InterviewPreparation({ transport }: { transport?: Career
     setError('');
     setConsent(false);
     setReceipt(null);
+    setVerifiedReport(null);
     setIndex(0);
     setAnswer('');
     autoSubmitRef.current = false;
@@ -234,6 +237,18 @@ export default function InterviewPreparation({ transport }: { transport?: Career
     finally { setBusy(false); }
   }
 
+  async function loadVerifiedReport() {
+    if (!receipt?.reportId || receipt.status !== 'complete' || !transport?.readReport || busy) return;
+    setBusy(true); setError('');
+    try {
+      const report = await transport.readReport(receipt.reportId);
+      if (report.id !== receipt.reportId || report.status !== 'complete') throw new Error('Report identity mismatch');
+      setVerifiedReport(report);
+    } catch {
+      setError('Verified report is not available for this account. No score has been inferred.');
+    } finally { setBusy(false); }
+  }
+
   const question = attempt?.questions[index];
   return <main className="min-h-screen bg-ivory-50 px-4 py-10 text-ink-900 sm:px-6">
     <div className="mx-auto max-w-3xl space-y-6">
@@ -266,7 +281,8 @@ export default function InterviewPreparation({ transport }: { transport?: Career
                 {index < attempt.questions.length-1 && <button className="min-h-12 rounded-xl border px-5" disabled={busy || secondsLeft === 0} onClick={() => void next()}>{kind === 'video-interview' ? 'Next video question' : 'Save and next'}</button>}
                 <button className="min-h-12 rounded-xl bg-ink-900 px-5 text-white disabled:opacity-40" disabled={busy || (kind === 'video-interview' && !cameraReady)} onClick={() => void finish()}>Finish and submit</button>
               </div></> : <section role="status" className="space-y-3"><h3>Durable receipt: {receipt.id}</h3><p>Processing status: {receipt.status}</p>
-              {receipt.status === 'complete' && receipt.reportId ? <p>Server report reference: {receipt.reportId}. LANX-03's verified report reader must be connected to display feedback.</p> : <p>No AI evaluation score is displayed by this component.</p>}
+              {receipt.status === 'complete' && receipt.reportId ? <p>Server report reference: {receipt.reportId}. <button type="button" className="underline" disabled={busy || !transport.readReport} onClick={() => void loadVerifiedReport()}>Read verified report</button></p> : <p>No AI evaluation score is displayed by this component.</p>}
+              {verifiedReport && <section className="rounded-xl border p-4"><h4 className="font-semibold">Verified evaluator feedback</h4><pre className="mt-2 whitespace-pre-wrap break-words text-sm">{JSON.stringify(verifiedReport.feedback, null, 2)}</pre><p className="text-xs">Source: saved report. No simulated score is shown.</p></section>}
               <button type="button" className="min-h-12 rounded-xl border px-5" onClick={() => void refreshReceipt()} disabled={busy}>Read latest receipt</button></section>}
           </section>}
           {attempt && receipt && <button type="button" className="min-h-12 rounded-xl border px-5" disabled={busy} onClick={() => {
