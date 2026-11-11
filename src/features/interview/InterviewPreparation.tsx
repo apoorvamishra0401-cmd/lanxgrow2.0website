@@ -135,11 +135,17 @@ export default function InterviewPreparation({ transport }: { transport?: Career
     if (kind === 'video-interview' && !cameraReady) { setError('Enable camera and microphone first.'); return; }
     setBusy(true); setError('');
     try {
-      const started = await transport.start(kind, `lanx02-start:${access.userId}:${kind}`);
+      // Store the pending idempotency token until start is acknowledged.
+      // A new completed attempt must receive a fresh token, not reuse an old start.
+      const pendingKey = `${resumeKey(access.userId, kind)}:pending-start`;
+      const startToken = sessionStorage.getItem(pendingKey) ?? crypto.randomUUID();
+      sessionStorage.setItem(pendingKey, startToken);
+      const started = await transport.start(kind, startToken);
       assertAttempt(access, started, kind);
       if (started.status !== 'active') throw new Error('This attempt cannot be started.');
       if (kind === 'video-interview') record();
       localStorage.setItem(resumeKey(access.userId, kind), started.id);
+      sessionStorage.removeItem(pendingKey);
       setAttempt(started);
       setIndex(0);
       setAnswer(started.answers[started.questions[0].id] ?? '');
@@ -225,8 +231,8 @@ export default function InterviewPreparation({ transport }: { transport?: Career
         : !transport ? <p role="status">Authenticated interview services are not connected in this build. No recording, score or report is claimed.</p>
         : !access ? <p role="status">Checking server-verified career access…</p> : <>
           <nav className="flex flex-wrap gap-3" aria-label="Preparation format">
-            <button type="button" className="min-h-12 rounded-xl border p-3" disabled={!!attempt || busy} aria-pressed={kind === 'video-interview'} onClick={() => void choose('video-interview')}>Video interview · 10 min</button>
-            <button type="button" className="min-h-12 rounded-xl border p-3" disabled={!!attempt || busy} aria-pressed={kind === 'skills-assessment'} onClick={() => void choose('skills-assessment')}>Skills assessment · 20 min</button>
+            <button type="button" className="min-h-12 rounded-xl border p-3" disabled={(!!attempt && !receipt) || busy} aria-pressed={kind === 'video-interview'} onClick={() => void choose('video-interview')}>Video interview · 10 min</button>
+            <button type="button" className="min-h-12 rounded-xl border p-3" disabled={(!!attempt && !receipt) || busy} aria-pressed={kind === 'skills-assessment'} onClick={() => void choose('skills-assessment')}>Skills assessment · 20 min</button>
           </nav>
           {kind === 'video-interview' && !receipt && <video ref={videoRef} muted playsInline autoPlay aria-label="Live camera preview" className="w-full max-w-md rounded-xl bg-black" />}
           {!attempt ? <section className="space-y-4 rounded-2xl border bg-white p-6">
@@ -250,6 +256,12 @@ export default function InterviewPreparation({ transport }: { transport?: Career
               {receipt.status === 'complete' && receipt.reportId ? <p>Server report reference: {receipt.reportId}. LANX-03's verified report reader must be connected to display feedback.</p> : <p>No AI evaluation score is displayed by this component.</p>}
               <button type="button" className="min-h-12 rounded-xl border px-5" onClick={() => void refreshReceipt()} disabled={busy}>Read latest receipt</button></section>}
           </section>}
+          {attempt && receipt && <button type="button" className="min-h-12 rounded-xl border px-5" disabled={busy} onClick={() => {
+            if (!access) return;
+            localStorage.removeItem(resumeKey(access.userId, kind));
+            setAttempt(null); setReceipt(null); setAnswer(''); setIndex(0);
+            setConsent(false); setInterrupted(false); autoSubmitRef.current = false;
+          }}>Start a new attempt</button>}
         </>}
       {error && <p role="alert" className="rounded-xl border border-red-300 bg-red-50 p-4 text-red-900">{error}</p>}
       <p className="text-sm">Separate from the one-minute guest introduction and student Video Practice. Backend authorization, receipt persistence and evaluator accuracy require independent hosted verification.</p>
