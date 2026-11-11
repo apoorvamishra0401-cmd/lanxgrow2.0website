@@ -85,7 +85,7 @@ function Exercise({ audience, feature, onComplete }: { audience: LearnerAudience
   if (feature === 'progress-reports') return null;
   return <section className="lx-role-workspace" aria-labelledby="exercise-title">
     <h2 id="exercise-title">Practice workspace</h2>
-    {feature.startsWith('interview-') && <p className="lx-role-notice">This is a local preparation exercise, not a timed, submitted, recorded or AI-scored interview. The LANX-02 interview lifecycle and backend assessment must be integrated separately.</p>}
+    {feature.startsWith('interview-') && <p className="lx-role-notice">This page contains a local practice exercise. The separate authenticated career interview service uses trusted role checks, timed attempts and private recording upload; evaluation reports are not yet connected.</p>}
     <p>{prompt}</p>
     {feature === 'listening-practice' && <button type="button" className="lx-role-action" disabled={!available} onClick={speak}>Play practice sentence</button>}
     {!available && feature === 'listening-practice' && <p>Browser speech playback is not available. You can still complete the typed exercise.</p>}
