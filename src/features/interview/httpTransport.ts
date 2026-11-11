@@ -6,6 +6,8 @@ export type CareerHttpConfig = {
   /** LANX-00 provides the existing authenticated session access token. */
   getAccessToken: () => Promise<string | null>;
   fetchImpl?: typeof fetch;
+  /** Only the public browser credentials, never a service-role key. */
+  storage?: { url: string; publishableKey: string };
 };
 
 /**
@@ -27,6 +29,7 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
     const multipart = typeof FormData !== 'undefined' && body instanceof FormData;
     const headers: Record<string, string> = {
       Authorization: `Bearer ${token}`,
+      ...(config.storage?.publishableKey ? { apikey: config.storage.publishableKey } : {}),
       Accept: 'application/json',
     };
     if (body !== undefined && !multipart) headers['Content-Type'] = 'application/json';
@@ -54,14 +57,24 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
     recover: (attemptId: string) => call<Attempt>('GET', `attempts/${path(attemptId)}`),
     saveAnswer: (attemptId: string, questionId: string, value: string) =>
       call<Attempt>('PUT', `attempts/${path(attemptId)}/answers/${path(questionId)}`, {value}),
-    submit: (attemptId: string, key: string, video?: Blob) => {
-      const body = new FormData();
-      body.set('attemptId', attemptId);
+    submit: async (attemptId: string, key: string, video?: Blob) => {
+      let recordingPath: string | undefined;
       if (video) {
-        const extension = video.type.includes('mp4') ? 'mp4' : 'webm';
-        body.set('recording', video, `interview.${extension}`);
+        if (!config.storage || video.type !== 'video/webm') {
+          throw new Error('This review upload currently requires WebM and configured development storage.');
+        }
+        if (video.size > 50 * 1024 * 1024) throw new Error('Recording exceeds development storage limit (50 MB).');
+        const ticket = await call<{ bucket: string; path: string; token: string }>('POST',
+          `attempts/${path(attemptId)}/media-ticket`);
+        const { createClient } = await import('@supabase/supabase-js');
+        const publicStorage = createClient(config.storage.url, config.storage.publishableKey);
+        const { error } = await publicStorage.storage.from(ticket.bucket).uploadToSignedUrl(
+          ticket.path, ticket.token, video, { contentType: 'video/webm' });
+        if (error) throw new Error('Private recording upload failed: ' + error.message);
+        recordingPath = ticket.path;
       }
-      return call<Receipt>('POST', `attempts/${path(attemptId)}/submission`, body, key);
+      return call<Receipt>('POST', `attempts/${path(attemptId)}/submission`,
+        { recordingPath }, key);
     },
     readReceipt: (receiptId: string) => call<Receipt>('GET', `receipts/${path(receiptId)}`),
   };
