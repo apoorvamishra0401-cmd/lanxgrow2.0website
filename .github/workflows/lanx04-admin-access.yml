@@ -1,0 +1,24 @@
+name: LANX-04 isolated access checks
+on:
+  push:
+    branches:
+      - dev/lanx04-admin-access-20261111
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  owner-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node --test src/admin/tests/server-access.test.mjs
+      - run: npm run typecheck
+      - run: npm run build
