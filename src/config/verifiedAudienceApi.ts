@@ -53,7 +53,6 @@ export async function requestVerifiedAudience(
       headers: {
         Authorization: 'Bearer ' + token,
         apikey: config.anonKey,
-        'Cache-Control': 'no-store',
       },
       cache: 'no-store',
       credentials: 'omit',
