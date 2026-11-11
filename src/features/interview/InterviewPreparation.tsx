@@ -89,9 +89,10 @@ export default function InterviewPreparation({ transport }: { transport?: Career
   }, [attempt, receipt]);
 
   async function choose(next: JourneyKind) {
-    if (!access || busy || attempt) return;
+    if (!access || busy || (attempt && !receipt)) return;
     closeCamera();
     setKind(next);
+    setAttempt(null);
     setError('');
     setConsent(false);
     setReceipt(null);
