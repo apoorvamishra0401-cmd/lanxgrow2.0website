@@ -31,7 +31,7 @@ async function evaluate(expression) {
 async function ready(path) {
   await command('Page.navigate',{url:'http://127.0.0.1:4173'+path});
   for(let n=0;n<90;n++){
-    const state=await evaluate('({url:location.pathname,heading:document.querySelector("main h1")?.textContent||"",body:document.body.innerText||"",scrollWidth:document.documentElement.scrollWidth,width:window.innerWidth})');
+    const state=await evaluate('({url:location.pathname,heading:document.querySelector("main h1")?.textContent||"",body:document.body?.innerText||"",scrollWidth:document.documentElement?.scrollWidth||0,width:window.innerWidth})');
     if(state.url===path && state.heading) return state;
     await sleep(120);
   }
