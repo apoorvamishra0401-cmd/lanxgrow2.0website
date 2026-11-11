@@ -26,3 +26,19 @@ jobs:
       - run: node --test scripts/test-audience-routes.mjs
       - run: npm run typecheck
       - run: npm run build
+      - name: Start isolated local preview and browser matrix
+        if: github.ref_name == 'dev/lanx01-role-dashboard-20261111'
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/dashboard/student > /dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/test-audience-browser.mjs
+      - name: Upload browser screenshots
+        if: always() && github.ref_name == 'dev/lanx01-role-dashboard-20261111'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lanx01-audience-browser-evidence
+          path: browser-evidence/
+          if-no-files-found: ignore
