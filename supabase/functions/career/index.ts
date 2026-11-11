@@ -1,4 +1,5 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.57.0';
+import { objectiveChoiceReview } from './objective.ts';
 
 const url = Deno.env.get('SUPABASE_URL') || '';
 const anon = Deno.env.get('SUPABASE_ANON_KEY') || '';
@@ -88,6 +89,34 @@ async function serialize(a: Record<string,any>) {
   };
 }
 function isActive(a:Record<string,any>) { return a.status === 'active' && Date.now() < Date.parse(a.deadline_at); }
+
+/** Creates an objective-only durable report. No AI evaluation is claimed.
+ * The report ID is the submission receipt ID, making retries idempotent.
+ * A failure leaves the receipt queued for a later trusted retry.
+ */
+async function finalizeChoiceReview(attempt:Record<string,any>,receiptId:string) {
+  if(attempt.kind!=='skills-assessment') return null;
+  const {data:answers,error:answerError}=await admin.from('lanx_career_answers')
+    .select('question_id,answer').eq('attempt_id',attempt.id);
+  if(answerError) throw answerError;
+  const feedback=objectiveChoiceReview(attempt.questions,answers||[]);
+  const answerMap=new Map((answers||[]).map(a=>[a.question_id,a.answer]));
+  const transcript=attempt.questions.filter((q:any)=>q.format==='choice')
+    .map((q:any)=>q.id+': '+(answerMap.get(q.id)||'[unanswered]')).join('\n');
+  const {error:reportError}=await admin.from('interview_reports').upsert({
+    id:receiptId,user_id:attempt.user_id,status:'complete',
+    candidate:{attemptId:attempt.id,audience:attempt.audience,
+      kind:attempt.kind,scope:'objective_choice_only',aiEvaluated:false},
+    transcript: transcript||'[no assigned objective choice responses]',
+    feedback,updated_at:new Date().toISOString()
+  },{onConflict:'id'});
+  if(reportError) throw reportError;
+  const {error:receiptError}=await admin.from('lanx_career_receipts')
+    .update({status:'complete',report_id:receiptId,updated_at:new Date().toISOString()})
+    .eq('id',receiptId).eq('attempt_id',attempt.id).eq('user_id',attempt.user_id);
+  if(receiptError) throw receiptError;
+  return receiptId;
+}
 
 Deno.serve(async req => {
   const origin = req.headers.get('origin');
@@ -205,7 +234,36 @@ Deno.serve(async req => {
           status:'submitted',submitted_at:new Date().toISOString(),recording_path:attempt.kind==='video-interview'?expected:null
         }).eq('id',attempt.id).eq('user_id',who.userId);
         if(statusError) throw statusError;
+        if(attempt.kind==='skills-assessment') {
+          try {
+            const reportId=await finalizeChoiceReview(attempt,data.id);
+            return respond(201,{id:data.id,status:'complete',reportId},origin);
+          } catch(e) {
+            console.error('Objective-only assessment report pending:',e instanceof Error?e.message:'unknown');
+            // A genuine queued receipt remains durable. A safe retry is possible.
+            return respond(202,{id:data.id,status:'queued'},origin);
+          }
+        }
         return respond(201,{id:data.id,status:data.status},origin);
+      }
+    }
+    if(req.method==='POST'&&parts[0]==='receipts'&&validId(parts[1])&&parts[2]==='objective-review'&&parts.length===3) {
+      const {data:receipt,error:receiptError}=await admin.from('lanx_career_receipts')
+        .select('id,attempt_id,user_id,status,report_id').eq('id',parts[1]).eq('user_id',who.userId).maybeSingle();
+      if(receiptError) throw receiptError;
+      if(!receipt) return fail(404,'Receipt not found',origin);
+      const attempt=await loadAttempt(receipt.attempt_id,who.userId);
+      if(!attempt||attempt.kind!=='skills-assessment'||attempt.status!=='submitted')
+        return fail(409,'Objective assessment is not submitted',origin);
+      if(receipt.status==='complete' && receipt.report_id)
+        return respond(200,{id:receipt.id,status:'complete',reportId:receipt.report_id},origin);
+      if(receipt.status!=='queued') return fail(409,'Receipt is not eligible for objective review',origin);
+      try {
+        const reportId=await finalizeChoiceReview(attempt,receipt.id);
+        return respond(200,{id:receipt.id,status:'complete',reportId},origin);
+      } catch(e) {
+        console.error('Objective review retry failed:',e instanceof Error?e.message:'unknown');
+        return fail(503,'Objective review remains queued; retry later',origin);
       }
     }
     if(req.method==='GET'&&parts[0]==='receipts'&&validId(parts[1])&&parts.length===2) {
