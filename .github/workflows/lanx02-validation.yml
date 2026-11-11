@@ -1,0 +1,28 @@
+name: LANX-02 isolated interview checks
+on:
+  push:
+    branches:
+      - dev/lanx02-interview-assessment-20261111
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  interview-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci --ignore-scripts
+      - name: Lifecycle unit tests
+        run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs scripts/test-interview-http.mjs
+      - name: TypeScript typecheck
+        run: npm run typecheck
+      - name: Production bundle build (no deployment)
+        run: npm run build
