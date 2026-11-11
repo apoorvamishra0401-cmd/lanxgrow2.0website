@@ -20,11 +20,11 @@ const prompts: Partial<Record<LearnerFeature,string>> = {
   'interview-video': 'Write a brief opening answer before your video interview.',
   'interview-assessment': 'Explain how you would approach a difficult question during an assessment.',
 };
-const storeKey = (audience: LearnerAudience) => 'lanx-role-dashboard-review-' + audience;
+const storeKey = (audience: LearnerAudience, owner: string) => 'lanx-role-dashboard-review-' + owner + '-' + audience;
 
-function readProgress(audience: LearnerAudience): LearnerFeature[] {
+function readProgress(audience: LearnerAudience, owner: string): LearnerFeature[] {
   try {
-    const parsed: unknown = JSON.parse(localStorage.getItem(storeKey(audience)) || '[]');
+    const parsed: unknown = JSON.parse(localStorage.getItem(storeKey(audience, owner)) || '[]');
     return Array.isArray(parsed)
       ? parsed.filter((item): item is LearnerFeature => typeof item === 'string' && visibleDashboardFeatures(audience).some(feature => feature === item))
       : [];
@@ -65,7 +65,7 @@ function DeviceCamera() {
   </div>;
 }
 
-function Exercise({ audience, feature, onComplete }: { audience: LearnerAudience; feature: LearnerFeature; onComplete: (feature: LearnerFeature) => void }) {
+function Exercise({ audience, feature, onComplete, preview }: { audience: LearnerAudience; feature: LearnerFeature; onComplete: (feature: LearnerFeature) => void; preview: boolean }) {
   const [answer, setAnswer] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const prompt = prompts[feature];
@@ -94,38 +94,44 @@ function Exercise({ audience, feature, onComplete }: { audience: LearnerAudience
     <button type="button" className="lx-role-action" disabled={!answer.trim()} onClick={()=>{onComplete(feature);setConfirmed(true);}}>Mark practice complete on this device</button>
     {confirmed && <p role="status">Practice marked complete. No AI evaluation or proficiency score was generated.</p>}
     {feature === 'interview-video' || feature === 'interview-assessment'
-      ? <p style={{marginTop:18}}>For your authenticated career assessment, <Link to="/career/interview">open Interview Preparation</Link>. This requires a verified Google session, assigned career access and current consent; otherwise the service will deny access. It is separate from the {feature === 'interview-video' ? '10-minute video interview' : '20-minute assessment'}.</p>
+      ? <p style={{marginTop:18}}>{preview ? <>In a signed-in session, <Link to="/signin">continue with Google</Link> before accessing the career interview service.</> : <>For your authenticated career assessment, <Link to="/career/interview">open Interview Preparation</Link>. This requires a verified Google session, assigned career access and current consent.</>} It is separate from the {feature === 'interview-video' ? '10-minute video interview' : '20-minute assessment'}.</p>
       : null}
   </section>;
 }
 
-export default function AudienceDashboard() {
+export default function AudienceDashboard({ verifiedAudience, verifiedUserId, preview = false }: {
+  verifiedAudience?: LearnerAudience; verifiedUserId?: string; preview?: boolean;
+}) {
   const { audience: rawAudience, feature: rawFeature } = useParams();
-  const route = resolveDashboardRoute(rawAudience, rawFeature);
+  const allowedIdentity = preview || (verifiedAudience !== undefined && !!verifiedUserId && rawAudience === verifiedAudience);
+  const route = allowedIdentity ? resolveDashboardRoute(preview ? rawAudience : verifiedAudience, rawFeature) : { allowed: false } as const;
   const audience = route.allowed ? route.audience : 'student';
   const activeFeature = route.allowed ? route.feature : null;
-  const [completed, setCompleted] = useState<LearnerFeature[]>(() => readProgress(audience));
-  useEffect(() => { setCompleted(readProgress(audience)); }, [audience]);
+  const progressOwner = preview ? 'preview' : verifiedUserId ?? 'unverified';
+  const [completed, setCompleted] = useState<LearnerFeature[]>(() => readProgress(audience, progressOwner));
+  useEffect(() => { setCompleted(readProgress(audience, progressOwner)); }, [audience, progressOwner]);
   usePageMeta(route.allowed ? audienceTitle[audience] : 'Unavailable dashboard',
     'Learner-specific practice and progress in the private LanXgrow review build.');
   if (!route.allowed) return <main className="lx-role-dashboard">
     <div className="lx-role-wrap"><h1>That dashboard feature is unavailable for this audience.</h1>
-      <p>Choose a valid learning audience or return to onboarding. UI restrictions are not server authorization.</p>
+      <p>This feature is not available for the requested learner audience. Only a development server assignment can authorize signed-in access.</p>
       <Link className="lx-role-link" to="/get-started">Choose your journey</Link></div></main>;
   const features = visibleDashboardFeatures(audience);
   const progressCount = completed.filter(item => features.includes(item)).length;
   const updateComplete = (feature: LearnerFeature) => {
     const next = Array.from(new Set([...completed,feature]));
     setCompleted(next);
-    try { localStorage.setItem(storeKey(audience), JSON.stringify(next)); } catch { /* storage unavailable */ }
+    try { localStorage.setItem(storeKey(audience, progressOwner), JSON.stringify(next)); } catch { /* storage unavailable */ }
   };
   const learning = features.filter(feature => FEATURE_DETAILS[feature].group === 'learning');
   const interviews = features.filter(feature => FEATURE_DETAILS[feature].group === 'interview');
+  const dashboardPath = preview ? '/preview' + getAudienceDashboardPath(audience) : getAudienceDashboardPath(audience);
+  const featurePath = (feature: LearnerFeature) => preview ? '/preview' + getAudienceFeaturePath(audience, feature) : getAudienceFeaturePath(audience, feature);
   const featureCard = (feature: LearnerFeature) => <article className="lx-role-card" key={feature}>
     <h2>{FEATURE_DETAILS[feature].title}</h2>
     <p>{FEATURE_DETAILS[feature].description}</p>
     {completed.includes(feature) && <span aria-label="Practice marked complete">✓ Practised on this device</span>}
-    <Link className="lx-role-link" to={getAudienceFeaturePath(audience,feature)}>
+    <Link className="lx-role-link" to={featurePath(feature)}>
       {feature === 'progress-reports' ? 'View activity' : 'Open '+FEATURE_DETAILS[feature].title}
     </Link>
   </article>;
@@ -134,25 +140,27 @@ export default function AudienceDashboard() {
       <div className="lx-role-top">
         <Link className="lx-role-brand" to="/">LanXgrow</Link>
         <nav aria-label="Dashboard navigation">
-          <Link to={getAudienceDashboardPath(audience)}>Dashboard</Link>
-          <Link to={'/guest/'+audience}>Onboarding preview</Link>
-          <Link to="/get-started">Choose another journey</Link>
+          <Link to={dashboardPath}>Dashboard</Link>
+          <Link to={preview ? '/guest/'+audience : '/activate'}>{preview ? 'Guest onboarding' : 'Account onboarding'}</Link>
+          <Link to={preview ? '/get-started' : '/placeholder'}>{preview ? 'Choose another preview' : 'My assigned dashboard'}</Link>
         </nav>
       </div>
       <header className="lx-role-banner">
-        <span className="lx-role-kicker">Audience-specific private review</span>
+        <span className="lx-role-kicker">{preview ? 'Guest demonstration · not signed in' : 'Server-assigned learner dashboard · development'}</span>
         <h1>{audienceTitle[audience]}</h1>
-        <p>Learn, practise and review activity with tools selected for your journey. Some exercises are device-only previews; they are not connected to live AI assessment or verified reports.</p>
+        <p>Learn, practise and review activity with tools selected for your journey. Some exercises are device-only practice; activity markers are not connected to verified reports or evaluation scores.</p>
         <p>Practice activities marked on this device: {progressCount} of {features.filter(f=>f!=='progress-reports' && f!=='ai-soul').length} possible.</p>
       </header>
-      <p className="lx-role-status">UI feature filtering is for navigation only. Authentication and server-side audience authorization require independent verification.</p>
+      <p className="lx-role-status">{preview
+        ? 'Unrestricted guest demonstration. Nothing here verifies identity, consent or feature entitlement. Never enter personal information.'
+        : 'Your learner audience was confirmed by the development Career API after Google login and consent. Device activity markers are not official progress reports or server records.'}</p>
       {activeFeature ? <>
         <div className="lx-role-choices"><Link className="lx-role-back" to={getAudienceDashboardPath(audience)}>← All dashboard features</Link></div>
         <h2 className="lx-role-section-title">{FEATURE_DETAILS[activeFeature].title}</h2>
         {activeFeature === 'progress-reports'
           ? <section className="lx-role-workspace"><h2>Practice activity</h2><p>{progressCount} locally completed activities on this device. This is not a verified learner history or AI score.</p>
               <ul>{completed.map(item=><li key={item}>{FEATURE_DETAILS[item].title}</li>)}</ul></section>
-          : <Exercise audience={audience} feature={activeFeature} onComplete={updateComplete} />}
+          : <Exercise audience={audience} feature={activeFeature} onComplete={updateComplete} preview={preview} />}
       </> : <>
         <h2 className="lx-role-section-title">Learning & practice</h2>
         <div className="lx-role-grid">{learning.map(featureCard)}</div>

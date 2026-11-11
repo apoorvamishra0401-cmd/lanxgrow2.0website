@@ -77,7 +77,9 @@ test('real router and onboarding expose dashboard journeys without modifying sig
   const app = readFileSync(resolve(root, 'src/App.tsx'), 'utf8');
   const onboarding = readFileSync(resolve(root, 'src/pages/GuestEntry.tsx'), 'utf8');
   assert.match(app, /path="\/dashboard\/:audience\/:feature\?"/);
-  assert.match(app, /<AudienceDashboard/);
-  assert.match(onboarding, /\/dashboard\/\$\{audience\}/);
+  assert.match(app, /<VerifiedDashboardRoute/);
+  assert.match(app, /<AudienceDashboard preview/);
+  assert.match(app, /<SignedInDashboardEntry/);
+  assert.match(onboarding, /\/preview\/dashboard\/\$\{audience\}/);
   assert.match(app, /path="\/signin"/);
 });
