@@ -83,6 +83,7 @@ export function createHttpCareerTransport(config: CareerHttpConfig): CareerTrans
         { recordingPath }, key);
     },
     readReceipt: (receiptId: string) => call<Receipt>('GET', `receipts/${path(receiptId)}`),
+    completeObjectiveReview: (receiptId: string) => call<Receipt>('POST', `receipts/${path(receiptId)}/objective-review`),
     readReport: (reportId: string) => call<VerifiedCareerReport>('GET', `reports/${path(reportId)}`),
   };
 }
