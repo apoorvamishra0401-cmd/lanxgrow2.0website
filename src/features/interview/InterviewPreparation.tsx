@@ -237,6 +237,18 @@ export default function InterviewPreparation({ transport }: { transport?: Career
     finally { setBusy(false); }
   }
 
+  async function completeObjectiveReview() {
+    if (!receipt || !transport?.completeObjectiveReview || kind !== 'skills-assessment' || busy) return;
+    setBusy(true); setError('');
+    try {
+      const result=await transport.completeObjectiveReview(receipt.id);
+      if (result.id !== receipt.id) throw new Error('Receipt identity mismatch');
+      setReceipt(result);
+    } catch {
+      setError('Objective question checking is not available yet. Your submitted answers remain saved.');
+    } finally { setBusy(false); }
+  }
+
   async function loadVerifiedReport() {
     if (!receipt?.reportId || receipt.status !== 'complete' || !transport?.readReport || busy) return;
     setBusy(true); setError('');
@@ -282,7 +294,9 @@ export default function InterviewPreparation({ transport }: { transport?: Career
                 <button className="min-h-12 rounded-xl bg-ink-900 px-5 text-white disabled:opacity-40" disabled={busy || (kind === 'video-interview' && !cameraReady)} onClick={() => void finish()}>Finish and submit</button>
               </div></> : <section role="status" className="space-y-3"><h3>Durable receipt: {receipt.id}</h3><p>Processing status: {receipt.status}</p>
               {receipt.status === 'complete' && receipt.reportId ? <p>Server report reference: {receipt.reportId}. <button type="button" className="underline" disabled={busy || !transport.readReport} onClick={() => void loadVerifiedReport()}>Read verified report</button></p> : <p>No AI evaluation score is displayed by this component.</p>}
-              {verifiedReport && <section className="rounded-xl border p-4"><h4 className="font-semibold">Verified evaluator feedback</h4><pre className="mt-2 whitespace-pre-wrap break-words text-sm">{JSON.stringify(verifiedReport.feedback, null, 2)}</pre><p className="text-xs">Source: saved report. No simulated score is shown.</p></section>}
+              {verifiedReport && <section className="rounded-xl border p-4"><h4 className="font-semibold">Saved objective assessment feedback</h4><pre className="mt-2 whitespace-pre-wrap break-words text-sm">{JSON.stringify(verifiedReport.feedback, null, 2)}</pre><p className="text-xs">Only objective answer-key checks may be displayed here. This is not an AI, speech, language proficiency or employability score.</p></section>}
+              {receipt.status === 'queued' && kind === 'skills-assessment' && transport.completeObjectiveReview &&
+                <button type="button" className="min-h-12 rounded-xl border px-5" disabled={busy} onClick={() => void completeObjectiveReview()}>Check objective answers</button>}
               <button type="button" className="min-h-12 rounded-xl border px-5" onClick={() => void refreshReceipt()} disabled={busy}>Read latest receipt</button></section>}
           </section>}
           {attempt && receipt && <button type="button" className="min-h-12 rounded-xl border px-5" disabled={busy} onClick={() => {
