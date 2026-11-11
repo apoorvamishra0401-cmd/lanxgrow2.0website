@@ -194,7 +194,10 @@ export default function InterviewPreparation({ transport }: { transport?: Career
     pendingRef.current = true; setBusy(true); setError('');
     try {
       const question = attempt.questions[index];
-      if (question.format !== 'video') {
+      // At the server deadline answers are read-only. Submit the already saved
+      // answers instead of blocking the receipt with a guaranteed 409 on save.
+      // Warn about the current unsaved text rather than claiming it was persisted.
+      if (question.format !== 'video' && remainingMs(attempt.deadlineAt) > 0) {
         const updated = await transport.saveAnswer(attempt.id, question.id, answer);
         assertAttempt(access, updated, kind);
       }
@@ -202,6 +205,9 @@ export default function InterviewPreparation({ transport }: { transport?: Career
       if (kind === 'video-interview' && !media) throw new Error('No video captured. Re-record before submitting.');
       const result = await transport.submit(attempt.id, submissionKey(attempt.id), media);
       if (!result.id) throw new Error('No durable submission receipt returned.');
+      if (question.format !== 'video' && remainingMs(attempt.deadlineAt) === 0) {
+        setError('Time expired. Any unsaved text on this screen was not included; only saved answers were submitted.');
+      }
       setReceipt(result);
       closeCamera();
     } catch (cause) {
