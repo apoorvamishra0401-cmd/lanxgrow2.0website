@@ -1,4 +1,4 @@
-import { EmailLink } from '@/components/support/SupportLinks';
+import { EmailLink, whatsappUrl } from '@/components/support/SupportLinks';
 import { Link } from 'react-router-dom';
 import { brand, footerNav, hasPublishedContactChannels, contactChannels } from '@/config/site';
 import { Container } from '@/components/ui/Container';
@@ -49,6 +49,7 @@ export function Footer() {
             <div className="mt-5 space-y-3 text-[0.9375rem] text-ivory-100/80">
               {hasPublishedContactChannels ? (
                 <ul className="space-y-3">
+                  <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center hover:text-terracotta-300">WhatsApp enquiries ↗</a></li>
                   {contactChannels.email && (
                     <li>
                       <EmailLink />

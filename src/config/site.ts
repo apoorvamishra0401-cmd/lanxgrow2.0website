@@ -31,6 +31,7 @@ export const primaryNav: NavItem[] = [
 
 /** Secondary (utility) navigation shown in the footer. */
 export const footerNav: NavItem[] = [
+  { label: 'Home', to: '/' },
   { label: 'Meet our Lan-X AI', to: '/smart-ai' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },

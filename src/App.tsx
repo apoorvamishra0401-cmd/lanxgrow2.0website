@@ -37,7 +37,7 @@ export default function App() {
   const { pathname } = useLocation();
   return (
     <>
-    {!pathname.startsWith('/smart-ai') && <FloatingWhatsApp />}
+    <FloatingWhatsApp />
     <PwaStatus />
     {['/smart-ai','/get-started','/signin','/signup','/consent'].includes(pathname) && <div className="lx-shared-header"><Header /></div>}
     <Routes>
