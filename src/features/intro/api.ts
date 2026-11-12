@@ -12,6 +12,7 @@ export type IntroductionReport = {
     recordingBytes: number;
     transcriptSource: string;
     transcriptWords: number | null;
+    structureChecklist?: {item:string;found:boolean}[];
     observations: string[];
     suggestedNextSteps: string[];
     limitations: string;
