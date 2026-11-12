@@ -18,6 +18,8 @@ test('browser transcript review counts words, not fluency or pronunciation',()=>
   assert.equal(value.transcriptWords,13);
   assert.equal(value.transcriptSource,'browser-generated-or-user-corrected-unverified');
   assert.equal(value.suggestedNextSteps.length,2);
+  assert.equal(value.structureChecklist.length,3);
+  assert.equal(value.structureChecklist.filter(x=>x.found).length,2);
 });
 test('short transcript receives a clear limitation rather than a misleading score',()=>{
   const value=objectiveIntroductionReview('Hello world',512);
