@@ -49,6 +49,9 @@ export default function FirstReports() {
         <h3 className="font-semibold">Your first introduction report</h3>
         <p>Saved on {new Date(selected.updatedAt).toLocaleString()}</p>
         <p>Recording: {selected.feedback.recordingReceived?'Uploaded privately':'Not confirmed'}</p>
+        {selected.recordingUrl&&<video controls preload="metadata"
+          src={selected.recordingUrl} className="aspect-video w-full rounded-xl bg-black"
+          aria-label="Private saved introduction interview recording"/>}
         <p>Transcript words: {selected.feedback.transcriptWords??'Unavailable'}</p>
         <h4 className="font-semibold">Evidence-based observations</h4>
         <ul>{selected.feedback.observations?.map((item,i)=><li key={i}>{item}</li>)}</ul>
