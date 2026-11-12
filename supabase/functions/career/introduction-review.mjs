@@ -5,9 +5,9 @@ export function objectiveIntroductionReview(transcript, bytes) {
   const meaningful = words.length >= 10;
   const lower=cleaned.toLowerCase();
   const structureChecklist=cleaned ? [
-    {item:'Personal introduction',found:/\\b(i am|i'm|my name|myself)\\b/i.test(lower)},
-    {item:'Goal or motivation',found:/\\b(goal|want|hope|plan|aim|improve|career|learn)\\b/i.test(lower)},
-    {item:'Example or experience',found:/\\b(example|project|studied|worked|experience|enjoy|practice|because)\\b/i.test(lower)}
+    {item:'Personal introduction',found:/\b(i am|i'm|my name|myself)\b/i.test(lower)},
+    {item:'Goal or motivation',found:/\b(goal|want|hope|plan|aim|improve|career|learn)\b/i.test(lower)},
+    {item:'Example or experience',found:/\b(example|project|studied|worked|experience|enjoy|practice|because)\b/i.test(lower)}
   ] : [];
   return {
     version: 'first-introduction-v1',
