@@ -152,7 +152,7 @@ export default function FirstIntroduction() {
               onChange={event=>setSpeechConsent(event.target.checked)}/>
               Optional: allow browser speech-to-text. Depending on your browser, recognition may use an external speech service; this is not required to record your interview.
             </label>
-            <button type="button" disabled={!consent} onClick={()=>void begin()
+            <button type="button" disabled={!consent} onClick={()=>void begin()}
               className="min-h-12 rounded-xl bg-ink-900 px-6 text-white disabled:opacity-40">Start 60-second interview</button>
             {retryBlob&&<button type="button" className="ml-3 min-h-12 rounded-xl border px-4"
               onClick={()=>void upload(retryBlob,elapsed.current)}>Retry secure upload</button>}
