@@ -6,7 +6,6 @@ import { PageIntro } from '@/components/ui/PageIntro';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
-import { Button } from '@/components/ui/Button';
 import { ConversationThreads } from '@/components/visuals/ConversationThreads';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
@@ -46,11 +45,7 @@ export default function Services() {
               </h2>
               <p className="lx-prose mt-7">{service.summary}</p>
 
-              <div className="mt-9">
-                <Button to="/get-started" withArrow>
-                  Get started
-                </Button>
-              </div>
+
             </Reveal>
 
             <Reveal delay={90} className="lg:col-span-5">

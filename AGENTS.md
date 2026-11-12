@@ -39,3 +39,10 @@
 - On phones use the vertical mobile drawer, with touch and keyboard access, natural scrolling and safe-area spacing. No separate back button is required for main-site navigation.
 - Preserve complete graphics, feature content and activity availability on phones. Reflow layouts rather than shrinking a desktop canvas. Tap/swipe/scroll must provide the actions available through desktop hover.
 - Sign in now links directly to /signin, Sign up to /signup, and Get started to /get-started.
+
+## Founder direction — 12 November 2026
+- The attached 10-Nov latest-changes HTML is the approved homepage placement and wording. Preserve its section order and copy.
+- Remove public direct-login/signup/Get Started marketing CTAs; retain one footer Sign In. The introductory interview completion gate may link to Google sign-in for the report.
+- Production publication to www.lanxgrow.com is explicitly authorized in this session. This does not authorize fabricated reports, client-controlled admin roles, secret disclosure or arbitrary database migrations.
+- Existing Lovable app source is english-made-easy. Do not present the website GuestEntry demonstration as that app.
+- Keep work local until a necessary consolidated deployment; avoid duplicate automatic deployments.

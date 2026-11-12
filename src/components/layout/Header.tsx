@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/cn';
-import { cta, primaryNav } from '@/config/site';
-import { Button } from '@/components/ui/Button';
+import { primaryNav } from '@/config/site';
 import { Container } from '@/components/ui/Container';
 import { Logo } from '@/components/ui/Logo';
 
@@ -106,15 +105,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-3 xl:flex">
-            <Button to="/signin" variant="ghost" size="sm">
-              Sign in
-            </Button>
-            <Button to="/signup" variant="ghost" size="sm">Sign up</Button>
-            <Button to={cta.getStarted.to} size="sm" withArrow>
-              {cta.getStarted.label}
-            </Button>
-          </div>
+
 
           {/* Mobile menu toggle */}
           <button
@@ -171,15 +162,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="mt-6 flex flex-col gap-3">
-            <Button to={cta.getStarted.to} size="md" fullWidth withArrow>
-              {cta.getStarted.label}
-            </Button>
-            <Button to="/signin" variant="secondary" size="md" fullWidth>
-              Sign in
-            </Button>
-            <Button to="/signup" variant="secondary" size="md" fullWidth>Sign up</Button>
-          </div>
+
         </div>
       </div>
     </header>
