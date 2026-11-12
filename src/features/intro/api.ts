@@ -19,6 +19,7 @@ export type IntroductionReport = {
 };
 export type IntroStart = {
   id: string;
+  audience: 'student' | 'fresher' | 'professional';
   startedAt: string;
   durationSeconds: number;
   prompt: string;
