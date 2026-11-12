@@ -181,10 +181,15 @@ Deno.serve(async req => {
           .eq('id',parts[2]).eq('user_id',userId).maybeSingle();
         if (error) throw error;
         if (!data || data.candidate?.kind !== 'one-minute-introduction') return fail(404,'Report not found',origin);
+        // The short-lived playback URL is generated only after owner verification.
+        const privatePath=userId+'/intro/'+data.id+'/recording.webm';
+        const {data:playback,error:playbackError}=await admin.storage.from(bucket)
+          .createSignedUrl(privatePath,300);
+        if (playbackError) console.error('Recording playback unavailable for saved report');
         return respond(200,{
           id:data.id,status:data.status,feedback:data.feedback,
           transcript:data.transcript === '[transcript unavailable]' ? null : data.transcript,
-          updatedAt:data.updated_at
+          updatedAt:data.updated_at,recordingUrl:playback?.signedUrl || null
         },origin);
       }
       if (req.method === 'POST' && parts.length === 2 && parts[1] === 'start') {
