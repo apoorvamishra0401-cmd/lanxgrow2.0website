@@ -4,6 +4,7 @@ import { PwaStatus } from '@/components/support/PwaStatus';
 import { Header } from '@/components/layout/Header';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from '@/pages/Home';
+const InterviewPrep = lazy(() => import('@/pages/InterviewPrep'));
 import { lazy, Suspense } from 'react';
 const SmartAI = lazy(() => import('@/smart/SmartAI'));
 const FounderReviewLab = lazy(() => import('@/pages/FounderReviewLab'));
@@ -53,6 +54,8 @@ export default function App() {
       <Route path="/consent" element={<Consent />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/interview-prep" element={<Suspense fallback={<p role="status">Opening Interview Preparation…</p>}><InterviewPrep /></Suspense>} />
+        <Route path="/interview-preparation" element={<Navigate to="/interview-prep" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<Faq />} />
