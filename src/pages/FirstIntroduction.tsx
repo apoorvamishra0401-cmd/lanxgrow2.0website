@@ -38,6 +38,8 @@ export default function FirstIntroduction() {
   const [error,setError]=useState('');
   const [reportId,setReportId]=useState<string|null>(null);
   const [retryBlob,setRetryBlob]=useState<Blob|null>(null);
+  const uploadedRef=useRef(false);
+  const aliveRef=useRef(true);
 
   const closeMedia=useCallback(()=>{
     if(clock.current!==null) {window.clearInterval(clock.current);clock.current=null;}
@@ -47,14 +49,14 @@ export default function FirstIntroduction() {
     stream.current=null;
     if(video.current) video.current.srcObject=null;
   },[]);
-  useEffect(()=>()=>{if(recorder.current?.state==='recording')recorder.current.stop();closeMedia();},[closeMedia]);
+  useEffect(()=>{aliveRef.current=true;return ()=>{aliveRef.current=false;if(recorder.current?.state==='recording')recorder.current.stop();closeMedia();};},[closeMedia]);
 
   async function upload(blob:Blob, duration:number) {
     const ticket=started.current;
     if(!ticket) {setError('Missing server upload ticket. Start again.');setPhase('ready');return;}
     setPhase('uploading');setError('');
     try {
-      await uploadIntroduction(ticket.upload,blob);
+      if(!uploadedRef.current){await uploadIntroduction(ticket.upload,blob);uploadedRef.current=true;}
       const saved=await completeIntroduction({
         id:ticket.id,durationSeconds:Math.max(1,Math.min(65,duration)),
         transcript:transcriptRef.current.trim().slice(0,4000)
@@ -78,10 +80,10 @@ export default function FirstIntroduction() {
 
   async function begin() {
     if(!consent || phase!=='ready') return;
-    setError('');setPhase('preparing');setReportId(null);setRetryBlob(null);
+    setError('');setPhase('preparing');setReportId(null);setRetryBlob(null);uploadedRef.current=false;
     try {
       if(!window.isSecureContext || !navigator.mediaDevices?.getUserMedia ||
-         !window.MediaRecorder || !MediaRecorder.isTypeSupported('video/webm'))
+         typeof MediaRecorder === 'undefined' || !MediaRecorder.isTypeSupported('video/webm'))
         throw new Error('Camera and microphone with WebM recording require a compatible HTTPS browser.');
       const active=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
       stream.current=active;
@@ -94,6 +96,7 @@ export default function FirstIntroduction() {
       media.ondataavailable=event=>{if(event.data.size)chunks.current.push(event.data);};
       media.onerror=()=>{setError('Recording was interrupted. Please try again.');};
       media.onstop=()=>{
+        if(!aliveRef.current)return;
         const blob=new Blob(chunks.current,{type:'video/webm'});
         if(!blob.size){setError('Empty recording. Please record again.');setPhase('ready');return;}
         void upload(blob,elapsed.current);
@@ -136,7 +139,7 @@ export default function FirstIntroduction() {
       {!configured||!session ? <p role="status">{loading?'Checking Google session…':<>Please <Link to="/signin" className="underline">sign in with Google</Link> and complete learner enrollment.</>}</p>
       : <>
         {phase!=='complete'&&<div className="space-y-4">
-          <p role="timer" className="text-3xl font-semibold tabular-nums">00:{String(seconds).padStart(2,'0')}</p>
+          <p role="timer" className="text-3xl font-semibold tabular-nums">{String(Math.floor(seconds/60)).padStart(2,'0')}:{String(seconds%60).padStart(2,'0')}</p>
           <video ref={video} autoPlay playsInline muted aria-label="Your private camera preview"
             className="aspect-video w-full rounded-2xl bg-ink-900"/>
           {phase==='ready'&&<>
