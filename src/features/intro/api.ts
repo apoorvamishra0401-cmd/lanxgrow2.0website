@@ -5,6 +5,7 @@ export type IntroductionReport = {
   status: 'complete';
   updatedAt: string;
   transcript?: string | null;
+  recordingUrl?: string | null;
   feedback: {
     version: string;
     aiEvaluated: false;
