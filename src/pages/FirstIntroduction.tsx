@@ -34,6 +34,7 @@ export default function FirstIntroduction() {
   const [phase,setPhase]=useState<Phase>('ready');
   const [consent,setConsent]=useState(false);
   const [transcript,setTranscript]=useState('');
+  const transcriptRef=useRef('');
   const [error,setError]=useState('');
   const [reportId,setReportId]=useState<string|null>(null);
   const [retryBlob,setRetryBlob]=useState<Blob|null>(null);
@@ -56,7 +57,7 @@ export default function FirstIntroduction() {
       await uploadIntroduction(ticket.upload,blob);
       const saved=await completeIntroduction({
         id:ticket.id,durationSeconds:Math.max(1,Math.min(65,duration)),
-        transcript:transcript.trim().slice(0,4000)
+        transcript:transcriptRef.current.trim().slice(0,4000)
       });
       if(saved.status!=='complete'||saved.id!==ticket.id)throw new Error('Report receipt did not match your interview.');
       setReportId(saved.id);setRetryBlob(null);setPhase('complete');
@@ -97,7 +98,7 @@ export default function FirstIntroduction() {
         if(!blob.size){setError('Empty recording. Please record again.');setPhase('ready');return;}
         void upload(blob,elapsed.current);
       };
-      setTranscript('');
+      setTranscript('');transcriptRef.current='';
       const browser=window as BrowserSpeech;
       const Speech=browser.SpeechRecognition||browser.webkitSpeechRecognition;
       if(Speech) {
@@ -107,7 +108,7 @@ export default function FirstIntroduction() {
           listener.onresult=event=>{
             let text='';
             for(let i=event.resultIndex;i<event.results.length;i++)text+=' '+(event.results[i][0]?.transcript||'');
-            setTranscript(old=>(old+' '+text).trim().slice(0,4000));
+            setTranscript(old=>{const next=(old+' '+text).trim().slice(0,4000);transcriptRef.current=next;return next;});
           };
           listener.onerror=()=>{};listener.start();speech.current=listener;
         } catch { /* speech-to-text is optional and is not a scoring source */ }
@@ -156,7 +157,7 @@ export default function FirstIntroduction() {
           </>}
           {phase==='uploading'&&<p role="status">Uploading your private recording and saving the report…</p>}
           <label className="block text-sm font-semibold">Optional transcript (browser-generated text can contain errors)
-            <textarea value={transcript} onChange={e=>setTranscript(e.target.value)} maxLength={4000}
+            <textarea value={transcript} onChange={e=>{setTranscript(e.target.value);transcriptRef.current=e.target.value;}} maxLength={4000}
               className="mt-2 min-h-24 w-full rounded-xl border p-3 font-normal"
               placeholder="Optional: correct the transcript, or leave blank. Your video is the original recording."
               disabled={phase==='uploading'}/>
