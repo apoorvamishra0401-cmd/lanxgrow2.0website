@@ -1,57 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getCurrentUser, hasCurrentConsent, isAuthConfigured, signInWithGoogle } from '@/lib/auth';
-import { usePageMeta } from '@/hooks/usePageMeta';
-import { Logo } from '@/components/ui/Logo';
-import './SignIn.css';
+import { useEffect } from 'react';
+import { APP_SIGN_IN_URL } from '@/config/app';
 
-/** Google-only login UI in the isolated founder review branch.
- * This does not change provider settings or grant reviewer/admin rights.
- */
 export default function SignIn() {
-  usePageMeta('Sign in', 'Continue securely with Google on LanXgrow.');
-  const navigate = useNavigate();
-  useEffect(() => {
-    let active = true;
-    void (async () => {
-      try {
-        const user = await getCurrentUser();
-        if (!user || !active) return;
-        const consent = await hasCurrentConsent();
-        if (active) navigate(consent.ok && consent.data ? '/get-started' : '/consent', { replace: true });
-      } catch { /* Keep the normal Google sign-in entry available. */ }
-    })();
-    return () => { active = false; };
-  }, [navigate]);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  async function google() {
-    if (!isAuthConfigured() || busy) return;
-    setBusy(true); setError('');
-    try {
-      const result = await signInWithGoogle();
-      if (!result.ok) { setError(result.message); setBusy(false); }
-    } catch { setError('Google sign-in could not start. Please try again.'); setBusy(false); }
-  }
-  return <main className="lx-login">
-    <Link to="/" className="login-brand" aria-label="LanXgrow home"><Logo /></Link>
-    <div className="login-shell">
-      <aside className="login-story">
-        <span className="login-eyebrow">Your next chapter</span>
-        <h1>Find your voice.<br/>Make it yours.</h1>
-        <p>Practice confidently. Grow every day.</p>
-        <span className="login-story-foot">Speak Smart, Think Smart</span>
-      </aside>
-      <section className="login-card" aria-labelledby="login-heading">
-        <Link to="/" className="login-back">← Back</Link>
-        <h2 id="login-heading">Welcome to LanXgrow.</h2>
-        <p className="login-subtitle">Sign in with your Google account.</p>
-        <button className="login-google" type="button" disabled={busy || !isAuthConfigured()} onClick={google}>
-          Continue with Google
-        </button>
-        {!isAuthConfigured() && <p role="status">Google login is unavailable because the website connection is missing. Please contact support.</p>}
-        {error && <p role="alert">{error}</p>}
-      </section>
-    </div>
-  </main>;
+  const destination = APP_SIGN_IN_URL;
+  useEffect(() => { window.location.replace(destination); }, [destination]);
+  return <main className="lx-container py-20"><h1 className="text-display-sm">Opening your LanXgrow app…</h1><p className="mt-6" role="status">Continue securely in the LanXgrow learning app.</p><a className="mt-6 inline-flex min-h-11 items-center underline" href={destination}>Continue to LanXgrow</a></main>;
 }

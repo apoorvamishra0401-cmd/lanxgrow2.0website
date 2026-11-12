@@ -16,6 +16,31 @@
   ],
   "redirects": [
     {
+      "source": "/app",
+      "destination": "https://lanxgrow-app.lovable.app/",
+      "permanent": false
+    },
+    {
+      "source": "/app/:path*",
+      "destination": "https://lanxgrow-app.lovable.app/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/signin",
+      "destination": "https://lanxgrow-app.lovable.app/auth",
+      "permanent": false
+    },
+    {
+      "source": "/signup",
+      "destination": "https://lanxgrow-app.lovable.app/auth",
+      "permanent": false
+    },
+    {
+      "source": "/get-started",
+      "destination": "https://lanxgrow-app.lovable.app/",
+      "permanent": false
+    },
+    {
       "source": "/founder-homepage.html",
       "destination": "/",
       "permanent": true

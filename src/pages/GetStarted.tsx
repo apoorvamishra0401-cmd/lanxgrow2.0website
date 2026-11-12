@@ -1,39 +1,8 @@
-import { Link } from 'react-router-dom';
-import { useAuthSession } from '@/hooks/useAuthSession';
-import { usePageMeta } from '@/hooks/usePageMeta';
-import { useScrollToTop } from '@/hooks/useScrollToTop';
-import './GetStarted.css';
+import { useEffect } from 'react';
+import { APP_WELCOME_URL } from '@/config/app';
 
 export default function GetStarted() {
-  const { session, loading } = useAuthSession();
-  useScrollToTop();
-  usePageMeta('Get started', 'Build your confidence, express your thoughts, and communicate better every day with LanXgrow.');
-  return (
-    <main className="lx-welcome" aria-labelledby="welcome-heading">
-      <Link to="/" className="lx-welcome-back"><span aria-hidden="true">←</span> Back to website</Link>
-      <Link className="lx-welcome-brand" to="/" aria-label="LanXgrow home">Lan<span className="lx-welcome-x">X<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21C7 11 11 5 22 3c-1 11-7 16-14 14M8 17l9-9" /></svg></span>grow</Link>
-      <div className="lx-welcome-story">
-        <svg className="lx-welcome-art" viewBox="0 0 220 200" fill="none" aria-hidden="true">
-          <g stroke="currentColor" strokeWidth=".85"><ellipse cx="110" cy="100" rx="65" ry="85" transform="rotate(42 110 100)" /><ellipse cx="110" cy="100" rx="62" ry="80" transform="rotate(-27 110 100)" /><ellipse cx="110" cy="100" rx="70" ry="65" /><path fill="var(--welcome-paper)" d="M104 71c-27-17-62-3-65 24-2 16 7 27 16 32l-9 22 27-14c14 4 27 2 38-5" /><path fill="var(--welcome-paper)" d="M111 73c28-16 64-2 67 23 2 15-5 28-16 35l11 22-28-14c-30 7-54-7-56-31-1-15 8-28 22-35Z" /><path d="M76 90c-12 3-17 16-13 24 3 6 11 6 13 0 2-5-2-9-7-8 1-5 4-8 8-10l-1-6Zm55 27c12-3 17-16 13-24-3-6-11-6-13 0-2 5 2 9 7 8-1 5-4 8-8 10l1 6Zm21 0c12-3 17-16 13-24-3-6-11-6-13 0-2 5 2 9 7 8-1 5-4 8-8 10l1 6Z" /></g>
-        </svg>
-        <h1 id="welcome-heading">Let’s become a<br className="lx-welcome-break" /> confident English<br className="lx-welcome-break" /> speaker.</h1>
-        <p>Build your confidence, express your<br className="lx-welcome-break" /> thoughts, and communicate better<br className="lx-welcome-break" /> every day.</p>
-      </div>
-      <div className="lx-welcome-actions">
-        {loading ? <p role="status">Checking your account…</p> : session ? (
-          <>
-            <p>Choose your journey to continue your one-minute introduction.</p>
-            <Link to="/guest/student" className="lx-welcome-cta">Student <span aria-hidden="true">→</span></Link>
-            <Link to="/guest/fresher" className="lx-welcome-cta">Fresher <span aria-hidden="true">→</span></Link>
-            <Link to="/guest/professional" className="lx-welcome-cta">Working Professional <span aria-hidden="true">→</span></Link>
-          </>
-        ) : (
-          <>
-            <Link to="/signin" className="lx-welcome-cta">Continue with Google <span aria-hidden="true">→</span></Link>
-            <p>Sign in securely with Google before continuing.</p>
-          </>
-        )}
-      </div>
-    </main>
-  );
+  const destination = APP_WELCOME_URL;
+  useEffect(() => { window.location.replace(destination); }, [destination]);
+  return <main className="lx-container py-20"><h1 className="text-display-sm">Opening your LanXgrow app…</h1><p className="mt-6" role="status">Continue securely in the LanXgrow learning app.</p><a className="mt-6 inline-flex min-h-11 items-center underline" href={destination}>Continue to LanXgrow</a></main>;
 }

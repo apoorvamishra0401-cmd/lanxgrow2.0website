@@ -1,3 +1,4 @@
+import { APP_SIGN_IN_URL } from '@/config/app';
 import type { Session, SupabaseClient, User } from '@supabase/supabase-js';
 import { POLICY_VERSION } from '@/config/policies';
 export { POLICY_VERSION } from '@/config/policies';
@@ -356,15 +357,10 @@ export async function signInWithPhonePassword(phone: string, password: string): 
 }
 
 export async function signInWithGoogle(): Promise<AuthResult> {
-  try {
-    const client = await getClient();
-    if (!client) return notConfigured();
-    const { data, error } = await client.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/auth-callback`, skipBrowserRedirect: true, queryParams: { prompt: 'select_account' } } });
-    if (error) return toAuthError(error);
-    if (!data.url) return { ok: false, code: 'unknown', message: 'Google sign-in could not start. Please try again.' };
-    window.location.assign(data.url);
-    return { ok: true, data: undefined };
-  } catch (error) { return toAuthError(error); }
+  // The actual Lovable app owns Google authentication and its learner session.
+  // Never authenticate to the old website project or forward its tokens.
+  window.location.assign(APP_SIGN_IN_URL);
+  return { ok: true, data: undefined };
 }
 
 /** Both policy documents are versioned together; accepted_at is database-generated. */
