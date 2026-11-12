@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Button } from './Button';
 import { Container } from './Container';
 import { Eyebrow } from './Eyebrow';
 import { Reveal } from './Reveal';
@@ -27,6 +28,7 @@ export function PageIntro({
             <h1 className="mt-6 max-w-2xl font-display text-display-sm text-ink-900 sm:text-display-md">
               {heading}
             </h1>
+            <div className="mt-7"><Button to="/?interview=1" withArrow>Start my free 1-minute interview</Button></div>
           </Reveal>
 
           {(supporting || aside) && (

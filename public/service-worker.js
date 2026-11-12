@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate') {
     if (AUTH_ROUTES.test(url.pathname) || url.search) {
       // Network-only auth navigation. An offline shell contains no account data.
-      event.respondWith(fetch(request).catch(async () => (await caches.open(CACHE)).match('/index.html')));
+      event.respondWith(fetch(request).catch(async () => (await caches.open(CACHE)).match(url.pathname === '/' ? '/index.html' : '/app.html')));
       return;
     }
     // HTML must be fresh online: a cached old router may not know newly added pages.
@@ -63,7 +63,7 @@ self.addEventListener('fetch', event => {
         if (!response.ok) throw new Error('Navigation unavailable');
         return response;
       } catch (error) {
-        const shell = await (await caches.open(CACHE)).match('/index.html');
+        const shell = await (await caches.open(CACHE)).match(url.pathname === '/' ? '/index.html' : '/app.html');
         if (shell) return shell;
         throw error;
       } finally { clearTimeout(timer); }

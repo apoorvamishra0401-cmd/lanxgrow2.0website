@@ -104,6 +104,10 @@ export function Button(props: ButtonProps) {
     </>
   );
 
+  if ('to' in props && props.to === '/?interview=1') {
+    return <a href={props.to} className={classes}>{content}</a>;
+  }
+
   if ('to' in props && props.to) {
     return (
       <Link to={props.to} className={classes}>

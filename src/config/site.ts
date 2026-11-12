@@ -60,7 +60,7 @@ export const hasPublishedContactChannels = Boolean(
 
 /** Shared CTA targets so every button across the site stays consistent. */
 export const cta = {
-  getStarted: { label: 'Get started', to: '/get-started' },
+  getStarted: { label: 'Start my free 1-minute interview', to: '/?interview=1' },
   exploreExperience: { label: 'Explore the experience', to: '#experience' },
-  talkToUs: { label: 'Get started', to: '/get-started' },
+  talkToUs: { label: 'Start my free 1-minute interview', to: '/?interview=1' },
 } as const;

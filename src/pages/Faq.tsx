@@ -45,7 +45,7 @@ export default function Faq() {
               </p>
               <div className="mt-7">
                 <Button to={cta.talkToUs.to} variant="secondary" withArrow>
-                  Get started
+                  Start my free 1-minute interview
                 </Button>
               </div>
             </div>

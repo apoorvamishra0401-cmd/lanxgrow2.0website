@@ -3,14 +3,19 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/founder-homepage.html"
+      "destination": "/index.html"
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/app.html"
     }
   ],
   "redirects": [
+    {
+      "source": "/founder-homepage.html",
+      "destination": "/",
+      "permanent": true
+    },
     {
       "source": "/contact",
       "destination": "/get-started",
