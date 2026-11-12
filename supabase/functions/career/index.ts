@@ -1,5 +1,6 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.57.0';
 import { objectiveChoiceReview } from './objective.ts';
+import { objectiveIntroductionReview } from './introduction-review.mjs';
 
 const url = Deno.env.get('SUPABASE_URL') || '';
 const anon = Deno.env.get('SUPABASE_ANON_KEY') || '';
@@ -152,6 +153,96 @@ Deno.serve(async req => {
     }
     return fail(405,'Unsupported learner enrollment method',origin);
   }
+
+  // A separate 60-second learner introduction for all three verified audiences.
+  // This intentionally does not change the 10/20-minute career entitlement model.
+  if (parts[0] === 'intro') {
+    const userId = await verifiedGoogleAndConsent(req).catch(() => null);
+    if (!userId) return fail(403,'Verified Google login and current consent required',origin);
+    const {data:learner,error:learnerError} = await admin.from('lanx_learner_access')
+      .select('role,audience').eq('user_id',userId).maybeSingle();
+    if (learnerError) return fail(503,'Learner lookup unavailable',origin);
+    if (learner?.role !== 'learner' || !['student','fresher','professional'].includes(learner.audience))
+      return fail(403,'Learner enrollment required',origin);
+    try {
+      if (req.method === 'GET' && parts.length === 2 && parts[1] === 'reports') {
+        const {data,error} = await admin.from('interview_reports')
+          .select('id,status,feedback,updated_at,candidate').eq('user_id',userId)
+          .contains('candidate',{kind:'one-minute-introduction'})
+          .order('updated_at',{ascending:false}).limit(20);
+        if (error) throw error;
+        return respond(200,{reports:(data||[]).map((item:any)=>({
+          id:item.id,status:item.status,feedback:item.feedback,updatedAt:item.updated_at
+        }))},origin);
+      }
+      if (req.method === 'GET' && parts.length === 3 && parts[1] === 'reports' && validId(parts[2])) {
+        const {data,error} = await admin.from('interview_reports')
+          .select('id,user_id,status,feedback,transcript,updated_at,candidate')
+          .eq('id',parts[2]).eq('user_id',userId).maybeSingle();
+        if (error) throw error;
+        if (!data || data.candidate?.kind !== 'one-minute-introduction') return fail(404,'Report not found',origin);
+        return respond(200,{
+          id:data.id,status:data.status,feedback:data.feedback,
+          transcript:data.transcript === '[transcript unavailable]' ? null : data.transcript,
+          updatedAt:data.updated_at
+        },origin);
+      }
+      if (req.method === 'POST' && parts.length === 2 && parts[1] === 'start') {
+        const id=crypto.randomUUID();
+        const objectPath=userId+'/intro/'+id+'/recording.webm';
+        const {data,error} = await admin.storage.from(bucket).createSignedUploadUrl(objectPath);
+        if (error || !data) throw error || new Error('Signed recording upload is unavailable');
+        return respond(201,{id,startedAt:new Date().toISOString(),
+          durationSeconds:60,prompt:'Introduce yourself, your goal, and one experience or interest.',
+          upload:{bucket,path:objectPath,token:data.token}},origin);
+      }
+      if (req.method === 'POST' && parts.length === 2 && parts[1] === 'complete') {
+        const body=await req.json().catch(()=>null);
+        if (!validId(body?.id) || typeof body?.durationSeconds !== 'number' ||
+          !Number.isFinite(body.durationSeconds) || body.durationSeconds < 1 || body.durationSeconds > 65 ||
+          (body.transcript !== undefined && (typeof body.transcript !== 'string' || body.transcript.length > 4000)))
+          return fail(400,'Invalid introduction submission',origin);
+        const reportId=body.id;
+        const {data:existing,error:lookupError}=await admin.from('interview_reports')
+          .select('id,user_id,candidate').eq('id',reportId).maybeSingle();
+        if (lookupError) throw lookupError;
+        if (existing) {
+          if (existing.user_id !== userId || existing.candidate?.kind !== 'one-minute-introduction')
+            return fail(409,'Introduction submission conflict',origin);
+          return respond(200,{id:reportId,status:'complete'},origin);
+        }
+        const objectPath=userId+'/intro/'+reportId+'/recording.webm';
+        const {data:objects,error:objectError}=await admin.storage.from(bucket)
+          .list(userId+'/intro/'+reportId,{limit:10,search:'recording.webm'});
+        const object=objects?.find((item:any)=>item.name==='recording.webm');
+        const bytes=Number(object?.metadata?.size ?? 0);
+        if (objectError || !object || !Number.isFinite(bytes) || bytes <= 0 || bytes > 50*1024*1024)
+          return fail(400,'A valid private recording upload was not found',origin);
+        const transcript=typeof body.transcript === 'string' ? body.transcript.trim() : '';
+        const feedback=objectiveIntroductionReview(transcript,bytes);
+        const {error:insertError}=await admin.from('interview_reports').insert({
+          id:reportId,user_id:userId,status:'complete',
+          candidate:{kind:'one-minute-introduction',audience:learner.audience,
+            browserReportedSeconds:body.durationSeconds,recordingPath:objectPath,aiEvaluated:false},
+          transcript:transcript || '[transcript unavailable]',
+          feedback,updated_at:new Date().toISOString()
+        });
+        if (insertError?.code === '23505') {
+          const {data:owned}=await admin.from('interview_reports')
+            .select('id,candidate').eq('id',reportId).eq('user_id',userId).maybeSingle();
+          if (owned?.candidate?.kind === 'one-minute-introduction')
+            return respond(200,{id:reportId,status:'complete'},origin);
+        }
+        if (insertError) throw insertError;
+        return respond(201,{id:reportId,status:'complete'},origin);
+      }
+      return fail(404,'Introduction route not found',origin);
+    } catch (e) {
+      console.error('Introduction operation failed:',e instanceof Error ? e.message : 'unknown');
+      return fail(503,'Introduction service unavailable',origin);
+    }
+  }
+
   const who = await identity(req).catch(()=>null);
   if (!who) return fail(403,'Verified Google login, career audience and current consent required',origin);
   try {
