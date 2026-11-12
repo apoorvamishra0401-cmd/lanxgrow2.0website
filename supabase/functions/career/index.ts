@@ -192,7 +192,7 @@ Deno.serve(async req => {
         const objectPath=userId+'/intro/'+id+'/recording.webm';
         const {data,error} = await admin.storage.from(bucket).createSignedUploadUrl(objectPath);
         if (error || !data) throw error || new Error('Signed recording upload is unavailable');
-        return respond(201,{id,startedAt:new Date().toISOString(),
+        return respond(201,{id,audience:learner.audience,startedAt:new Date().toISOString(),
           durationSeconds:60,prompt:'Introduce yourself, your goal, and one experience or interest.',
           upload:{bucket,path:objectPath,token:data.token}},origin);
       }
