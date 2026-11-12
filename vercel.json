@@ -17,27 +17,27 @@
   "redirects": [
     {
       "source": "/app",
-      "destination": "https://lanxgrow-app.lovable.app/",
+      "destination": "https://lanxgrow-app-apoorvamishra0401-cmds-projects.vercel.app/",
       "permanent": false
     },
     {
       "source": "/app/:path*",
-      "destination": "https://lanxgrow-app.lovable.app/:path*",
+      "destination": "https://lanxgrow-app-apoorvamishra0401-cmds-projects.vercel.app/:path*",
       "permanent": false
     },
     {
       "source": "/signin",
-      "destination": "https://lanxgrow-app.lovable.app/auth",
+      "destination": "https://lanxgrow-app-apoorvamishra0401-cmds-projects.vercel.app/auth",
       "permanent": false
     },
     {
       "source": "/signup",
-      "destination": "https://lanxgrow-app.lovable.app/auth",
+      "destination": "https://lanxgrow-app-apoorvamishra0401-cmds-projects.vercel.app/auth",
       "permanent": false
     },
     {
       "source": "/get-started",
-      "destination": "https://lanxgrow-app.lovable.app/",
+      "destination": "https://lanxgrow-app-apoorvamishra0401-cmds-projects.vercel.app/",
       "permanent": false
     },
     {
