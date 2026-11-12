@@ -15,7 +15,7 @@ test('uploaded video with no transcript never invents spoken-language scores',()
 test('browser transcript review counts words, not fluency or pronunciation',()=>{
   const value=objectiveIntroductionReview('Hello, I am learning English and I would like to improve my communication.',999);
   assert.equal(value.aiEvaluated,false);
-  assert.equal(value.transcriptWords,14);
+  assert.equal(value.transcriptWords,13);
   assert.equal(value.transcriptSource,'browser-generated-or-user-corrected-unverified');
   assert.equal(value.suggestedNextSteps.length,2);
 });
