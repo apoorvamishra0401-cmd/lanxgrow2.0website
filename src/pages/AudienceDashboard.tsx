@@ -105,6 +105,16 @@ export default function AudienceDashboard() {
   const audience = route.allowed ? route.audience : 'student';
   const activeFeature = route.allowed ? route.feature : null;
   const [completed, setCompleted] = useState<LearnerFeature[]>(() => readProgress(audience));
+  const [tourOpen, setTourOpen] = useState(false);
+  useEffect(() => {
+    if (!route.allowed || activeFeature) return;
+    try { setTourOpen(localStorage.getItem('lanx-report-tour-seen-' + audience) !== 'yes'); }
+    catch { setTourOpen(true); }
+  }, [audience, route.allowed, activeFeature]);
+  function finishTour() {
+    setTourOpen(false);
+    try { localStorage.setItem('lanx-report-tour-seen-' + audience, 'yes'); } catch { /* private storage may be unavailable */ }
+  }
   useEffect(() => { setCompleted(readProgress(audience)); }, [audience]);
   usePageMeta(route.allowed ? audienceTitle[audience] : 'Unavailable dashboard',
     'Learner-specific practice and progress in the private LanXgrow review build.');
@@ -122,11 +132,11 @@ export default function AudienceDashboard() {
   const learning = features.filter(feature => FEATURE_DETAILS[feature].group === 'learning');
   const interviews = features.filter(feature => FEATURE_DETAILS[feature].group === 'interview');
   const featureCard = (feature: LearnerFeature) => <article className="lx-role-card" key={feature}>
-    <h2>{FEATURE_DETAILS[feature].title}</h2>
+    <h2>{feature === 'progress-reports' ? 'My Reports' : FEATURE_DETAILS[feature].title}</h2>
     <p>{FEATURE_DETAILS[feature].description}</p>
     {completed.includes(feature) && <span aria-label="Practice marked complete">✓ Practised on this device</span>}
     <Link className="lx-role-link" to={getAudienceFeaturePath(audience,feature)}>
-      {feature === 'progress-reports' ? 'View activity' : 'Open '+FEATURE_DETAILS[feature].title}
+      {feature === 'progress-reports' ? 'Open Reports' : 'Open '+FEATURE_DETAILS[feature].title}
     </Link>
   </article>;
   return <main className="lx-role-dashboard">
@@ -146,11 +156,22 @@ export default function AudienceDashboard() {
         <p>Practice activities marked on this device: {progressCount} of {features.filter(f=>f!=='progress-reports' && f!=='ai-soul').length} possible.</p>
       </header>
       <p className="lx-role-status">UI feature filtering is for navigation only. Authentication and server-side audience authorization require independent verification.</p>
+      {tourOpen && !activeFeature && <section role="region" aria-label="First-time dashboard guide" className="lx-role-workspace">
+        <h2>Welcome! Start with Reports</h2>
+        <p>Step 1: Open the Reports section below to check your first interview report. If your interview has not been securely submitted and evaluated yet, the report will show as not available — never as a sample score.</p>
+        <div className="lx-role-choices">
+          <Link className="lx-role-link" to={getAudienceFeaturePath(audience,'progress-reports')} onClick={finishTour}>Open Reports →</Link>
+          <button className="lx-role-action" type="button" onClick={finishTour}>Skip guide</button>
+        </div>
+      </section>}
       {activeFeature ? <>
         <div className="lx-role-choices"><Link className="lx-role-back" to={getAudienceDashboardPath(audience)}>← All dashboard features</Link></div>
         <h2 className="lx-role-section-title">{FEATURE_DETAILS[activeFeature].title}</h2>
         {activeFeature === 'progress-reports'
-          ? <section className="lx-role-workspace"><h2>Practice activity</h2><p>{progressCount} locally completed activities on this device. This is not a verified learner history or AI score.</p>
+          ? <section className="lx-role-workspace"><h2>My Reports</h2>
+            <p role="status">Your first 1-minute interview report is not connected to this dashboard yet. No sample or fabricated score is shown.</p>
+            <p>When the authenticated introduction interview and owner-only report lookup are integrated, your own saved report will appear here after submission and evaluation, including after refresh or sign-in again.</p>
+            <h3>Practice activity on this device</h3><p>{progressCount} locally completed activities. This is not a verified learner history or AI score.</p>
               <ul>{completed.map(item=><li key={item}>{FEATURE_DETAILS[item].title}</li>)}</ul></section>
           : <Exercise audience={audience} feature={activeFeature} onComplete={updateComplete} />}
       </> : <>
