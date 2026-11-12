@@ -4,6 +4,8 @@ import { useAuthSession } from '@/hooks/useAuthSession';
 import { startIntroduction, uploadIntroduction, completeIntroduction,
   type IntroStart } from '@/features/intro/api';
 import { usePageMeta } from '@/hooks/usePageMeta';
+import { FirstInterviewOrb } from '@/components/interview/FirstInterviewOrb';
+import '@/components/interview/FirstInterviewOrb.css';
 
 type Phase = 'ready' | 'preparing' | 'recording' | 'uploading' | 'complete';
 type SpeechResult = { results: ArrayLike<ArrayLike<{transcript:string}>>; resultIndex:number };
@@ -141,8 +143,13 @@ export default function FirstIntroduction() {
       : <>
         {phase!=='complete'&&<div className="space-y-4">
           <p role="timer" className="text-3xl font-semibold tabular-nums">{String(Math.floor(seconds/60)).padStart(2,'0')}:{String(seconds%60).padStart(2,'0')}</p>
-          <video ref={video} autoPlay playsInline muted aria-label="Your private camera preview"
-            className="aspect-video w-full rounded-2xl bg-ink-900"/>
+          <div className="relative">
+            <video ref={video} autoPlay playsInline muted aria-label="Your private camera preview"
+              className="aspect-video w-full rounded-2xl bg-ink-900"/>
+            <div className="lx-intro-orb absolute bottom-2 right-2 sm:bottom-4 sm:right-4">
+              <FirstInterviewOrb mode={phase==='recording'?'recording':phase==='uploading'?'uploading':'ready'}/>
+            </div>
+          </div>
           {phase==='ready'&&<>
             <label className="flex gap-3 text-sm"><input type="checkbox" checked={consent}
               onChange={event=>setConsent(event.target.checked)}/>
