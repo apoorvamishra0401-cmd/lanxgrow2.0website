@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { isAuthConfigured, signInWithGoogle } from '@/lib/auth';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { getCurrentUser, hasCurrentConsent, isAuthConfigured, signInWithGoogle } from '@/lib/auth';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { Logo } from '@/components/ui/Logo';
 import './SignIn.css';
@@ -10,6 +10,19 @@ import './SignIn.css';
  */
 export default function SignIn() {
   usePageMeta('Sign in', 'Continue securely with Google on LanXgrow.');
+  const navigate = useNavigate();
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      try {
+        const user = await getCurrentUser();
+        if (!user || !active) return;
+        const consent = await hasCurrentConsent();
+        if (active) navigate(consent.ok && consent.data ? '/get-started' : '/consent', { replace: true });
+      } catch { /* Keep the normal Google sign-in entry available. */ }
+    })();
+    return () => { active = false; };
+  }, [navigate]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   async function google() {
