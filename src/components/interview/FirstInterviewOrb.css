@@ -1,0 +1,19 @@
+/* Adapted from LanXgrow's Lovable CallOrb and InterviewOrb visual styles. */
+.lx-intro-orb {
+  --orb-light: #f4d8b2; --orb-copper: #b96e3d;
+  --orb-shadow: #3c251e; --orb-glow: rgba(185,110,61,.28);
+  position:relative; width:min(32vw,120px); aspect-ratio:1; isolation:isolate;
+  animation:lx-intro-float 5s ease-in-out infinite;
+}
+.lx-intro-orb .call-orb {position:relative; width:100%;height:100%;}
+.lx-intro-orb .call-orb::before{content:"";position:absolute;inset:17%;border-radius:50%;box-shadow:0 6px 25px 10px var(--orb-glow);z-index:-1}
+.lx-intro-orb .call-orb[data-mode="recording"]::before{animation:lx-intro-breathe 2s ease-in-out infinite}
+.lx-intro-orb .call-orb canvas{display:block;width:100%;height:100%}
+.lx-intro-orb .orb-name{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;color:var(--orb-light);text-shadow:0 1px 5px #47271b}
+.lx-intro-orb .orb-name span{font-family:Fraunces,Georgia,serif;font-size:clamp(16px,2vw,23px)}
+.lx-intro-orb .orb-name small{font-size:8px;letter-spacing:.14em}
+.lx-intro-orb .orb-fallback{display:none;position:absolute;inset:20%;border-radius:50%;background:radial-gradient(circle at 25% 20%,var(--orb-light),var(--orb-copper) 50%,var(--orb-shadow))}
+.lx-intro-orb .call-orb[data-fallback="true"] .orb-fallback{display:block}
+@keyframes lx-intro-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes lx-intro-breathe{0%,100%{opacity:.55}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.lx-intro-orb,.lx-intro-orb .call-orb::before{animation:none}}

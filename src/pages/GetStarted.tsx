@@ -22,10 +22,11 @@ export default function GetStarted() {
       <div className="lx-welcome-actions">
         {loading ? <p role="status">Checking your account…</p> : session ? (
           <>
-            <p>Choose your journey to continue your one-minute introduction.</p>
-            <Link to="/guest/student" className="lx-welcome-cta">Student <span aria-hidden="true">→</span></Link>
-            <Link to="/guest/fresher" className="lx-welcome-cta">Fresher <span aria-hidden="true">→</span></Link>
-            <Link to="/guest/professional" className="lx-welcome-cta">Working Professional <span aria-hidden="true">→</span></Link>
+            <p>First, confirm your learner category securely. You can then open your personal dashboard and reports.</p>
+            <Link to="/activate?audience=student" className="lx-welcome-cta">Student <span aria-hidden="true">→</span></Link>
+            <Link to="/activate?audience=fresher" className="lx-welcome-cta">Fresher <span aria-hidden="true">→</span></Link>
+            <Link to="/activate?audience=professional" className="lx-welcome-cta">Working Professional <span aria-hidden="true">→</span></Link>
+            <p>Confirm your choice securely, then record your first 1-minute interview and open Reports. <Link to="/review-lab" className="underline">Separate demo preview</Link> (not a saved assessment).</p>
           </>
         ) : (
           <>

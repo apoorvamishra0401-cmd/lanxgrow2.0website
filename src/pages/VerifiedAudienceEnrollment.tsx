@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { getAuthConfig, getAccessTokenForCareer } from '@/lib/auth';
 import type { LearnerAudience } from '@/config/audienceCapabilities';
@@ -15,7 +15,14 @@ const choices: { value: LearnerAudience; title: string; description: string }[] 
 export default function VerifiedAudienceEnrollment() {
   const { configured, session, loading } = useAuthSession();
   const navigate = useNavigate();
-  const [choice, setChoice] = useState<LearnerAudience>('student');
+  const [searchParams] = useSearchParams();
+  const requested = searchParams.get('audience');
+  const [choice, setChoice] = useState<LearnerAudience>(
+    requested === 'fresher' || requested === 'professional' ? requested : 'student');
+  useEffect(() => {
+    const next = searchParams.get('audience');
+    if (next === 'student' || next === 'fresher' || next === 'professional') setChoice(next);
+  }, [searchParams]);
   const [existing, setExisting] = useState<Assigned | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -58,7 +65,7 @@ export default function VerifiedAudienceEnrollment() {
       if (!response.ok || data.role !== 'learner' || data.audience !== choice)
         throw new Error(data.error || 'Audience could not be assigned.');
       setExisting(data);
-      navigate('/dashboard/' + data.audience);
+      navigate('/intro-interview');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Enrollment failed.');
     } finally { setBusy(false); }
@@ -71,7 +78,7 @@ export default function VerifiedAudienceEnrollment() {
        : loading || !session ? <p>Google login required. <Link className="underline" to="/signin">Sign in</Link>, then accept the current consent notice.</p>
        : existing?.assigned ? <div className="rounded-2xl border p-5">
            <p>Already assigned: <strong>{existing.audience || existing.role}</strong></p>
-           {existing.audience && <Link className="underline" to={'/dashboard/' + existing.audience}>Open your dashboard</Link>}
+           {existing.audience && <div className="space-y-3"><Link className="block underline" to="/intro-interview">Continue your first 1-minute interview</Link><Link className="block underline" to={'/dashboard/' + existing.audience}>Open your dashboard and Reports</Link></div>}
          </div>
        : <form onSubmit={enroll} className="space-y-5">
            <fieldset className="space-y-3"><legend className="font-semibold">Your learner category</legend>

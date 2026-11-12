@@ -8,6 +8,7 @@ on:
       - dev/lanx02-interview-assessment-20261111
       - dev/lanx03-ai-soul-evaluation-20261111
       - dev/lanx04-admin-access-20261111
+      - dev/lanx-getstarted-first-report-tour-20261112
   pull_request:
     branches:
       - dev/lanx-founder-review-20261110
@@ -27,6 +28,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: node --test scripts/test-introduction.mjs
       - run: node --test scripts/test-audience-routes.mjs
       - run: node --experimental-strip-types --test scripts/test-interview-lifecycle.mjs scripts/test-interview-transport.mjs scripts/test-interview-http.mjs
       - run: node --test scripts/test-evaluation.mjs src/admin/tests/server-access.test.mjs
