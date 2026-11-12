@@ -58,7 +58,7 @@ export default function VerifiedAudienceEnrollment() {
       if (!response.ok || data.role !== 'learner' || data.audience !== choice)
         throw new Error(data.error || 'Audience could not be assigned.');
       setExisting(data);
-      navigate('/dashboard/' + data.audience);
+      navigate('/intro-interview');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Enrollment failed.');
     } finally { setBusy(false); }
@@ -71,7 +71,7 @@ export default function VerifiedAudienceEnrollment() {
        : loading || !session ? <p>Google login required. <Link className="underline" to="/signin">Sign in</Link>, then accept the current consent notice.</p>
        : existing?.assigned ? <div className="rounded-2xl border p-5">
            <p>Already assigned: <strong>{existing.audience || existing.role}</strong></p>
-           {existing.audience && <Link className="underline" to={'/dashboard/' + existing.audience}>Open your dashboard</Link>}
+           {existing.audience && <div className="space-y-3"><Link className="block underline" to="/intro-interview">Continue your first 1-minute interview</Link><Link className="block underline" to={'/dashboard/' + existing.audience}>Open your dashboard and Reports</Link></div>}
          </div>
        : <form onSubmit={enroll} className="space-y-5">
            <fieldset className="space-y-3"><legend className="font-semibold">Your learner category</legend>
