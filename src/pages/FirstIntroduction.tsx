@@ -33,6 +33,7 @@ export default function FirstIntroduction() {
   const [seconds,setSeconds]=useState(60);
   const [phase,setPhase]=useState<Phase>('ready');
   const [consent,setConsent]=useState(false);
+  const [speechConsent,setSpeechConsent]=useState(false);
   const [transcript,setTranscript]=useState('');
   const transcriptRef=useRef('');
   const [error,setError]=useState('');
@@ -104,7 +105,7 @@ export default function FirstIntroduction() {
       setTranscript('');transcriptRef.current='';
       const browser=window as BrowserSpeech;
       const Speech=browser.SpeechRecognition||browser.webkitSpeechRecognition;
-      if(Speech) {
+      if(Speech && speechConsent) {
         try {
           const listener=new Speech();
           listener.continuous=true;listener.interimResults=false;
@@ -147,7 +148,11 @@ export default function FirstIntroduction() {
               onChange={event=>setConsent(event.target.checked)}/>
               I consent to microphone/camera recording and private upload for my introduction report.
             </label>
-            <button type="button" disabled={!consent} onClick={()=>void begin()}
+            <label className="flex gap-3 text-sm"><input type="checkbox" checked={speechConsent}
+              onChange={event=>setSpeechConsent(event.target.checked)}/>
+              Optional: allow browser speech-to-text. Depending on your browser, recognition may use an external speech service; this is not required to record your interview.
+            </label>
+            <button type="button" disabled={!consent} onClick={()=>void begin()
               className="min-h-12 rounded-xl bg-ink-900 px-6 text-white disabled:opacity-40">Start 60-second interview</button>
             {retryBlob&&<button type="button" className="ml-3 min-h-12 rounded-xl border px-4"
               onClick={()=>void upload(retryBlob,elapsed.current)}>Retry secure upload</button>}
