@@ -52,6 +52,7 @@ export default function FirstReports() {
         <p>Transcript words: {selected.feedback.transcriptWords??'Unavailable'}</p>
         <h4 className="font-semibold">Evidence-based observations</h4>
         <ul>{selected.feedback.observations?.map((item,i)=><li key={i}>{item}</li>)}</ul>
+        {selected.feedback.structureChecklist?.length ? <><h4 className="font-semibold">Transcript structure (text only)</h4><ul>{selected.feedback.structureChecklist.map(item=><li key={item.item}>{item.found?'✓':'○'} {item.item}</li>)}</ul></> : null}
         <h4 className="font-semibold">Try next</h4>
         <ul>{selected.feedback.suggestedNextSteps?.map((item,i)=><li key={i}>{item}</li>)}</ul>
         {selected.transcript&&<details><summary>Available transcript (not verified against speech)</summary>
