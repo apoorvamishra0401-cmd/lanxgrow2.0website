@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { getAuthConfig, getAccessTokenForCareer } from '@/lib/auth';
 import type { LearnerAudience } from '@/config/audienceCapabilities';
@@ -15,7 +15,14 @@ const choices: { value: LearnerAudience; title: string; description: string }[] 
 export default function VerifiedAudienceEnrollment() {
   const { configured, session, loading } = useAuthSession();
   const navigate = useNavigate();
-  const [choice, setChoice] = useState<LearnerAudience>('student');
+  const [searchParams] = useSearchParams();
+  const requested = searchParams.get('audience');
+  const [choice, setChoice] = useState<LearnerAudience>(
+    requested === 'fresher' || requested === 'professional' ? requested : 'student');
+  useEffect(() => {
+    const next = searchParams.get('audience');
+    if (next === 'student' || next === 'fresher' || next === 'professional') setChoice(next);
+  }, [searchParams]);
   const [existing, setExisting] = useState<Assigned | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
