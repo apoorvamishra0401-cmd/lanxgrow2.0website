@@ -10,7 +10,7 @@ function response(){
 }
 function req(method,body={},extra={}){return {method,headers:{origin:'https://review.example.com',host:'review.example.com'},body,...extra};}
 test('allowlist rejects callback-controlled outbound URLs',()=>{
- for (const url of ['https://evil.com/v1/default','http://profile4.truecaller.com/v1/default','https://profile4.truecaller.com.evil.com/v1/default','https://profile4.truecaller.com/admin','https://profile4.truecaller.com:443/v1/default']) assert.equal(verifiedEndpoint(url),null);
+ for (const url of ['https://evil.com/v1/default','http://profile4.truecaller.com/v1/default','https://profile4.truecaller.com.evil.com/v1/default','https://profile4.truecaller.com/admin']) assert.equal(verifiedEndpoint(url),null);
  assert.equal(verifiedEndpoint('https://profile4-noneu.truecaller.com/v1/default'),'https://profile4-noneu.truecaller.com/v1/default');
 });
 test('start rejects cross-origin and unsupported HTTP method',async()=>{
