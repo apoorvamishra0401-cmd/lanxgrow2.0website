@@ -4,10 +4,9 @@ import { getLoginMethods, isAuthConfigured, signInWithGoogle } from '@/lib/auth'
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { Logo } from '@/components/ui/Logo';
 import './SignIn.css';
+import TruecallerButton from '@/components/auth/TruecallerButton';
 
-/** Google-only login UI in the isolated founder review branch.
- * This does not change provider settings or grant reviewer/admin rights.
- */
+/** Founder-review login UI; Truecaller proof is separate from account authorization. */
 export default function SignIn() {
   usePageMeta('Sign in', 'Continue securely with Google on LanXgrow.');
   const [googleAvailable, setGoogleAvailable] = useState(false);
@@ -39,10 +38,13 @@ export default function SignIn() {
       <section className="login-card" aria-labelledby="login-heading">
         <Link to="/" className="login-back">← Back</Link>
         <h2 id="login-heading">Welcome to LanXgrow.</h2>
-        <p className="login-subtitle">Sign in with your Google account.</p>
+        <p className="login-subtitle">Sign in with your existing account. Android Truecaller phone verification is being tested separately.</p>
         <button className="login-google" type="button" disabled={checking || busy || !googleAvailable} onClick={google}>
           Continue with Google
         </button>
+        <div className="login-divider"><span/>or verify your number with<span/></div>
+        <TruecallerButton />
+        <p className="login-hint">Truecaller verification is a development preview. Verified phone data will not grant account access until your existing Supabase authentication is securely linked.</p>
         {checking && <p role="status">Checking Google sign-in availability…</p>}
         {!checking && !googleAvailable && <p role="status">Google sign-in is not enabled for this environment yet. No other sign-in method is available.</p>}
         {!isAuthConfigured() && <p role="status">This review deployment is missing its authentication configuration.</p>}
