@@ -8,27 +8,38 @@ type Status = 'idle' | 'waiting' | 'verified' | 'unavailable' | 'failed';
 export default function TruecallerButton({ onVerified }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [notice, setNotice] = useState('');
+  const [ticket, setTicket] = useState<{requestId:string} | null>(null);
+  const [ticketAttempt, setTicketAttempt] = useState(0);
   const active = useRef(false);
   const intervalRef = useRef<number | null>(null);
   const partnerKey = String(import.meta.env.VITE_TRUECALLER_PARTNER_KEY || '').trim();
   const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
 
   useEffect(() => () => { active.current = false; if (intervalRef.current !== null) window.clearInterval(intervalRef.current); }, []);
+  // Prepare the short-lived server ticket BEFORE the user taps the button:
+  // mobile browsers often block external app schemes after an awaited fetch.
+  useEffect(() => {
+    if (!isAndroid || !partnerKey) return;
+    let cancelled = false;
+    setTicket(null);
+    fetch('/api/truecaller-start', {
+      method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+      body: '{}', cache: 'no-store'
+    }).then(async response => {
+      const result = await response.json();
+      if (!response.ok || typeof result.requestId !== 'string') throw Error(result.error || 'Verification unavailable');
+      if (!cancelled) { setTicket({ requestId: result.requestId }); setNotice(''); }
+    }).catch(() => { if (!cancelled) setNotice('Could not prepare Truecaller. Retry or use another sign-in method.'); });
+    return () => { cancelled = true; };
+  }, [isAndroid, partnerKey, ticketAttempt]);
 
-  async function start(event: MouseEvent<HTMLButtonElement>) {
+  function start(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    if (active.current || !isAndroid || !partnerKey) return;
+    if (active.current || !isAndroid || !partnerKey || !ticket) return;
     active.current = true;
     setNotice('Opening Truecaller…');
     setStatus('waiting');
     try {
-      const started = await fetch('/api/truecaller-start', {
-        method: 'POST', credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: '{}', cache: 'no-store'
-      });
-      const ticket = await started.json();
-      if (!started.ok || !ticket.requestId) throw Error(ticket.error || 'Unable to start verification');
       const params = new URLSearchParams({
         type: 'btmsheet',
         requestNonce: ticket.requestId,
@@ -41,6 +52,7 @@ export default function TruecallerButton({ onVerified }: Props) {
         ctaColor: '#1D1A16',
         ctaTextColor: '#FFFFFF'
       });
+      // This runs synchronously in the trusted button click handler.
       window.location.href = 'truecallersdk://truesdk/web_verify?' + params.toString();
       window.setTimeout(() => {
         if (active.current && document.hasFocus())
@@ -100,9 +112,10 @@ export default function TruecallerButton({ onVerified }: Props) {
     return <p className="login-availability">Truecaller is not enabled in this test environment. Use Google sign-in.</p>;
   }
   return <div className="lx-truecaller">
-    <button type="button" className="login-google" onClick={start} disabled={status === 'waiting'}>
-      {status === 'waiting' ? 'Waiting for Truecaller…' : 'Continue with Truecaller'}
+    <button type="button" className="login-google" onClick={start} disabled={status === 'waiting' || !ticket}>
+      {status === 'waiting' ? 'Waiting for Truecaller…' : !ticket ? 'Preparing Truecaller…' : 'Continue with Truecaller'}
     </button>
+    {!ticket && <button type="button" className="login-back" onClick={() => setTicketAttempt(n => n + 1)}>Retry preparation</button>}
     {notice && <p role="status" className="login-availability">{notice}</p>}
   </div>;
 }
