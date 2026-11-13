@@ -9,10 +9,11 @@ export default function TruecallerButton({ onVerified }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [notice, setNotice] = useState('');
   const active = useRef(false);
+  const intervalRef = useRef<number | null>(null);
   const partnerKey = String(import.meta.env.VITE_TRUECALLER_PARTNER_KEY || '').trim();
   const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
 
-  useEffect(() => () => { active.current = false; }, []);
+  useEffect(() => () => { active.current = false; if (intervalRef.current !== null) window.clearInterval(intervalRef.current); }, []);
 
   async function start(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -84,6 +85,7 @@ export default function TruecallerButton({ onVerified }: Props) {
           setNotice(error instanceof Error ? error.message : 'Verification failed.');
         } finally { polling = false; }
       }, 2000);
+      intervalRef.current = interval;
     } catch (error) {
       active.current = false;
       setStatus('failed');
