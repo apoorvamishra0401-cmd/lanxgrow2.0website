@@ -46,7 +46,7 @@ export default function SignIn() {
         <TruecallerButton />
         <p className="login-hint">Truecaller verification is a development preview. Verified phone data will not grant account access until your existing Supabase authentication is securely linked.</p>
         {checking && <p role="status">Checking Google sign-in availability…</p>}
-        {!checking && !googleAvailable && <p role="status">Google sign-in is not enabled for this environment yet. No other sign-in method is available.</p>}
+        {!checking && !googleAvailable && <p role="status">Google sign-in is not enabled in this review environment. Truecaller phone verification is displayed below, but secure account login is not enabled yet.</p>}
         {!isAuthConfigured() && <p role="status">This review deployment is missing its authentication configuration.</p>}
         {error && <p role="alert">{error}</p>}
         <p className="login-subtitle">For the protected one-minute review, use <Link to="/review-lab">Founder review</Link>.</p>
