@@ -10,6 +10,7 @@ export default function TruecallerButton({ onVerified }: Props) {
   const [notice, setNotice] = useState('');
   const [ticket, setTicket] = useState<{requestId:string} | null>(null);
   const [ticketAttempt, setTicketAttempt] = useState(0);
+  const [configError, setConfigError] = useState(false);
   const active = useRef(false);
   const intervalRef = useRef<number | null>(null);
   const partnerKey = String(import.meta.env.VITE_TRUECALLER_PARTNER_KEY || '').trim();
@@ -22,6 +23,7 @@ export default function TruecallerButton({ onVerified }: Props) {
     if (!isAndroid || !partnerKey) return;
     let cancelled = false;
     setTicket(null);
+    setConfigError(false);
     fetch('/api/truecaller-start', {
       method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
       body: '{}', cache: 'no-store'
@@ -29,7 +31,7 @@ export default function TruecallerButton({ onVerified }: Props) {
       const result = await response.json();
       if (!response.ok || typeof result.requestId !== 'string') throw Error(result.error || 'Verification unavailable');
       if (!cancelled) { setTicket({ requestId: result.requestId }); setNotice(''); }
-    }).catch(() => { if (!cancelled) setNotice('Could not prepare Truecaller. Retry or use another sign-in method.'); });
+    }).catch(() => { if (!cancelled) { setConfigError(true); setNotice('Truecaller setup is pending in this review environment. Please use the existing sign-in option.'); } });
     return () => { cancelled = true; };
   }, [isAndroid, partnerKey, ticketAttempt]);
 
@@ -105,17 +107,22 @@ export default function TruecallerButton({ onVerified }: Props) {
     }
   }
 
-  if (!isAndroid) {
-    return <p className="login-availability">Truecaller mobile-web verification is supported in Android browsers. Use Google sign-in on this device.</p>;
-  }
-  if (!partnerKey) {
-    return <p className="login-availability">Truecaller is not enabled in this test environment. Use Google sign-in.</p>;
-  }
-  return <div className="lx-truecaller">
-    <button type="button" className="login-google" onClick={start} disabled={status === 'waiting' || !ticket}>
-      {status === 'waiting' ? 'Waiting for Truecaller…' : !ticket ? 'Preparing Truecaller…' : 'Continue with Truecaller'}
+  const isAvailable = isAndroid && !!partnerKey && !!ticket && status !== 'waiting';
+  return <div className="lx-truecaller" aria-label="Truecaller verification option">
+    <button type="button" className="login-google login-truecaller" onClick={start} disabled={!isAvailable} aria-describedby="lx-truecaller-help">
+      <span aria-hidden="true" className="login-truecaller-mark">T</span>
+      <span>{status === 'waiting' ? 'Waiting for Truecaller…' : 'Continue with Truecaller'}</span>
     </button>
-    {!ticket && <button type="button" className="login-back" onClick={() => setTicketAttempt(n => n + 1)}>Retry preparation</button>}
-    {notice && <p role="status" className="login-availability">{notice}</p>}
+    <p id="lx-truecaller-help" role="status" className="login-availability">
+      {!isAndroid ? 'Available on Android browsers with the Truecaller app. Continue with Google on this device.'
+        : !partnerKey ? 'Truecaller verification is being configured for this review. Google sign-in is available where enabled.'
+        : configError ? 'Verification storage is not connected yet. Use the existing sign-in method.'
+        : !ticket ? 'Preparing secure Truecaller verification…'
+        : status === 'verified' ? 'Phone verified. Secure account login still requires linking to your LanXgrow account.'
+        : 'Confirm in the Truecaller app. Your number will not be used to grant account access without secure account linking.'}
+    </p>
+    {notice && <p role="alert" className="login-availability">{notice}</p>}
+    {isAndroid && partnerKey && (configError || status === 'failed' || status === 'unavailable') &&
+     <button type="button" className="login-back" onClick={() => { active.current=false;setStatus('idle');setTicketAttempt(n => n + 1); }}>Try verification again</button>}
   </div>;
 }
