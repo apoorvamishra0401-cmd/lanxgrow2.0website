@@ -46,3 +46,8 @@
 - Production publication to www.lanxgrow.com is explicitly authorized in this session. This does not authorize fabricated reports, client-controlled admin roles, secret disclosure or arbitrary database migrations.
 - Existing Lovable app source is english-made-easy. Do not present the website GuestEntry demonstration as that app.
 - Keep work local until a necessary consolidated deployment; avoid duplicate automatic deployments.
+
+## Founder direction — 15 November 2026
+- Restore visible Login at the right of website headers, including mobile; link to https://app.lanxgrow.com/login.
+- Interview completion uses provider-neutral account entry; remove Google logo and Google-only login instructions there. Preserve collected answers and session-storage failure handling.
+- English Made Easy is the canonical app source. Website integration source snapshots are retained there before mirroring website changes.

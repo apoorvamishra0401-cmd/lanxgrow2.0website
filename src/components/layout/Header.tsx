@@ -107,6 +107,8 @@ export function Header() {
 
 
 
+          <a href="https://app.lanxgrow.com/login" className="ml-auto inline-flex min-h-11 items-center justify-center rounded-full border border-line px-5 py-2 text-sm font-semibold text-ink-900 hover:border-terracotta-300">Login</a>
+
           {/* Mobile menu toggle */}
           <button
             ref={toggleRef}
