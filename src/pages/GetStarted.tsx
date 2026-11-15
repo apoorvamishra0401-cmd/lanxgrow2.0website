@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 import './GetStarted.css';
+import { APP_INTERVIEW_URL, APP_LOGIN_URL } from '@/config/appLinks';
 
 export default function GetStarted() {
   useScrollToTop();
@@ -18,7 +19,8 @@ export default function GetStarted() {
         <p>Build your confidence, express your<br className="lx-welcome-break" /> thoughts, and communicate better<br className="lx-welcome-break" /> every day.</p>
       </div>
       <div className="lx-welcome-actions">
-        <Link to="/signin" className="lx-welcome-cta">Let’s Get Started <span aria-hidden="true">→</span></Link>
+        <a href={APP_INTERVIEW_URL} className="lx-welcome-cta">Let’s Get Started <span aria-hidden="true">→</span></a>
+        <p><a href={APP_LOGIN_URL}>Already have an account? Log in</a></p>
         <p>Your learning journey will be personalized to your goals.</p>
       </div>
     </main>
