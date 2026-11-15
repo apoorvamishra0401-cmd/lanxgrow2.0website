@@ -21,6 +21,8 @@ import Placeholder from '@/pages/Placeholder';
 import Account from '@/pages/Account';
 import Privacy from '@/pages/Privacy';
 import NotFound from '@/pages/NotFound';
+import ExternalRedirect from '@/components/layout/ExternalRedirect';
+import { APP_LOGIN_URL, APP_SIGNUP_URL } from '@/config/appLinks';
 
 /**
  * Public routes.
@@ -39,8 +41,8 @@ export default function App() {
       {import.meta.env.VITE_SMART_SHOWCASE === 'true' && <Route path="/smart-ai/review" element={<Suspense fallback={<p>Preparing device review…</p>}><SmartDeviceReview /></Suspense>} />}
       <Route path="/smart-ai" element={<Suspense fallback={<main style={{background:'#080c11',color:'#fff',minHeight:'100svh',padding:30}}>Preparing SMART AI…</main>}><SmartAI /></Suspense>} />
       <Route path="/get-started" element={<GetStarted />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/signin" element={<ExternalRedirect to={APP_LOGIN_URL} />} />
+      <Route path="/signup" element={<ExternalRedirect to={APP_SIGNUP_URL} />} />
       <Route path="/consent" element={<Consent />} />
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
