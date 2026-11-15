@@ -11,8 +11,6 @@ import GetStarted from '@/pages/GetStarted';
 import About from '@/pages/About';
 import Services from '@/pages/Services';
 import Faq from '@/pages/Faq';
-import SignIn from '@/pages/SignIn';
-import SignUp from '@/pages/SignUp';
 import Consent from '@/pages/Consent';
 import Terms from '@/pages/Terms';
 import ResetPassword from '@/pages/ResetPassword';
