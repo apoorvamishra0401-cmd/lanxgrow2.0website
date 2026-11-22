@@ -7,7 +7,16 @@ import { usePageMeta } from '@/hooks/usePageMeta';
 export default function Privacy() {
   usePageMeta('Privacy Notice', 'What the LanXgrow website does with your information.');
 
-  const sections = getPrivacySections();
+  const sections = [
+    ...getPrivacySections(),
+    {
+      heading: 'What “instant fix” means',
+      paragraphs: [
+        '“Instant fix” means spotting gaps as soon as feedback is available and getting a practice step you can try right away. One attempt cannot permanently fix a skill or guarantee job readiness in seven days. Improvement takes regular practice.',
+        'Where available, the CEFR-aligned (A1–C2) Readiness Score is an estimate based on the assessment evidence available for that attempt.',
+      ],
+    },
+  ];
 
   return (
     <>
