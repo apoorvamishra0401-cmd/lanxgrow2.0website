@@ -69,21 +69,21 @@ export function Header() {
   return (
     <header
       className={cn(
-        'lx-site-header sticky top-0 z-50 transition-all duration-300 ease-editorial',
+        'lx-site-header lx-consistent-header',
         scrolled || open
           ? 'border-b border-line bg-ivory/90 backdrop-blur-md'
           : 'border-b border-transparent bg-transparent',
       )}
     >
-      <Container>
-        <div className="flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
-          <NavLink to="/" className="flex h-11 items-center rounded-md" aria-label="LanXgrow home">
-            <Logo />
+      <Container className="lx-header-frame">
+        <div className="lx-header-row">
+          <NavLink to="/" className="flex items-center" aria-label="LanXgrow home">
+            <Logo className="lx-header-brand" />
           </NavLink>
 
           {/* Desktop navigation */}
           <nav aria-label="Primary" className="hidden xl:block">
-            <ul className="flex items-center gap-6">
+            <ul className="lx-header-links">
               {primaryNav.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -93,7 +93,7 @@ export function Header() {
                       cn(
                         linkBase,
                         isActive
-                          ? 'text-ink-900 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:bg-terracotta-500'
+                          ? 'text-ink-900'
                           : 'text-ink-500 hover:text-ink-900',
                       )
                     }
@@ -115,7 +115,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="ml-auto grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-ink-900 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700 xl:hidden"
+            className="lx-header-toggle"
           >
             <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
               {open ? <path d="M5 5l10 10M15 5 5 15" /> : <path d="M3 5h14M3 10h14M3 15h14" />}

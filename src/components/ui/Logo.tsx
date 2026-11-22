@@ -23,7 +23,7 @@ export function Logo({
       <span
         aria-hidden="true"
         className={cn(
-          'grid h-8 w-8 place-items-center rounded-[10px]',
+          'lx-header-mark grid h-8 w-8 place-items-center rounded-[10px]',
           tone === 'inverse' ? 'bg-ivory-50 text-ink-900' : 'bg-ink-900 text-ivory-50',
         )}
       >
