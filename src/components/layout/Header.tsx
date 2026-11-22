@@ -124,10 +124,10 @@ export function Header() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-900 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700 xl:hidden"
+            className="ml-auto grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-ink-900 transition-colors duration-200 hover:border-terracotta-300 hover:text-terracotta-700 xl:hidden"
           >
-            <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
-              {open ? <path d="M5 5l10 10M15 5 5 15" /> : <path d="M3 6.5h14M3 13.5h14" />}
+            <svg aria-hidden="true" viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+              {open ? <path d="M5 5l10 10M15 5 5 15" /> : <path d="M3 5h14M3 10h14M3 15h14" />}
             </svg>
           </button>
         </div>
@@ -154,6 +154,11 @@ export function Header() {
                   <NavLink
                     to={item.to}
                     end={item.to === '/'}
+                    onClick={() => {
+                      if (item.to !== pathname) return;
+                      setOpen(false);
+                      toggleRef.current?.focus();
+                    }}
                     className={({ isActive }) =>
                       cn(
                         'flex items-center justify-between py-4 font-display text-[1.25rem] transition-colors',
