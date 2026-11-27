@@ -18,7 +18,7 @@ for(const route of routes){
  assert.equal((html.match(/<title\b[^>]*>/gi)||[]).length,1,'Title count '+route);
  assert.ok(html.includes('<link rel="canonical" href="'+url+'"/>'),'Incorrect canonical '+route);
  const metaTags=html.match(/<meta\b[^>]*>/gi)||[];
- for(const name of ['description','og:title','og:description','og:url','og:type']){
+ for(const name of ['description','og:title','og:description','og:url','og:type','og:image','twitter:card','twitter:title','twitter:description','twitter:image']){
   const matches=metaTags.filter(tag=>{
    const m=tag.match(/\b(?:name|property)\s*=\s*(["'])(.*?)\1/i);
    return m?.[2]?.toLowerCase()===name;
