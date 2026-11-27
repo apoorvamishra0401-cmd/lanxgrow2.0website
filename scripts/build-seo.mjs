@@ -50,7 +50,12 @@ for(const [path,title,description] of pages){
  let html=path==='/'||path==='/interview-prep'?await readFile(file,'utf8'):shell;
  const url=origin+path;
  html=html.replace(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi,'');
- html=html.replace(/<meta\b[^>]*(?:name=["']description["']|property=["']og:(?:title|description|url|type)["'])[^>]*>/gi,'');
+ // Attribute order varies between static HTML, React shells, and generated pages.
+ // Remove matching metadata tags regardless of whether content= precedes name=/property=.
+ html=html.replace(/<meta\b[^>]*>/gi,tag=>{
+  const match=tag.match(/\b(?:name|property)\s*=\s*(["'])(.*?)\1/i);
+  return match&&/^(description|og:(title|description|url|type))$/i.test(match[2])?'':tag;
+ });
  html=html.replace(/<title>[\s\S]*?<\/title>/i,'<title>'+esc(title)+'</title>');
  const schema=path==='/'?{'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'LanXgrow',url:origin+'/'},{'@type':'WebSite','@id':origin+'/#website',name:'LanXgrow',url:origin+'/',publisher:{'@id':origin+'/#organization'}}]}:{'@context':'https://schema.org','@type':'WebPage',name:title,url,description,isPartOf:{'@id':origin+'/#website'}};
  const tags='<link rel="canonical" href="'+url+'"/>\n<meta name="description" content="'+esc(description)+'"/>\n<meta property="og:title" content="'+esc(title)+'"/>\n<meta property="og:description" content="'+esc(description)+'"/>\n<meta property="og:url" content="'+url+'"/>\n<meta property="og:type" content="website"/>\n<script type="application/ld+json">'+JSON.stringify(schema)+'</script>\n';
