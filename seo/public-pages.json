@@ -1,42 +1,84 @@
 [
   {
     "path": "/",
-    "title": "AI Mock Interviews & Job Interview Preparation | LanXgrow",
-    "description": "Practise job interviews and English communication with LanXgrow."
+    "title": "English Speaking Practice & Interview Preparation | LanXgrow",
+    "description": "Start with a free one-minute English conversation at LanXgrow. Explore practical speaking confidence, interview preparation and guidance on what to work on next."
   },
   {
     "path": "/interview-prep",
-    "title": "Job Interview Preparation & HR Round Practice | LanXgrow",
-    "description": "Explore interview preparation for freshers and working professionals."
+    "title": "Interview Preparation in English for Job Seekers | LanXgrow",
+    "description": "Explore job interview preparation for freshers and working professionals. Practise introductions, structured answers and clearer workplace communication in English."
   },
   {
     "path": "/smart-ai",
-    "title": "Meet Lan-X AI, Your Interview Practice Coach | LanXgrow",
-    "description": "Explore Lan-X AI and practise interview communication."
+    "title": "LAN-X AI: English Speaking & Assessment Preview | LanXgrow",
+    "description": "Explore LanXgrow's AI-assisted English speaking and assessment concepts. Learn about voice and video practice in development and check feature availability.",
+    "heading": "Meet LAN-X AI",
+    "summary": "LanXgrow is developing AI-supported English communication practice. The intended voice and video experiences help learners practise expression and review feedback, with feature availability confirmed before enrolment.",
+    "topics": [
+      "AI-assisted speaking practice is intended to support learning, not replace human judgment.",
+      "Features and recordings may be in development; check current availability with LanXgrow."
+    ]
   },
   {
     "path": "/about",
-    "title": "About LanXgrow and Our Interview Practice Approach",
-    "description": "Learn about LanXgrow and its interview practice approach."
+    "title": "About LanXgrow | English Learning With Purpose",
+    "description": "Discover why LanXgrow is developing personalised English learning around real conversations, purposeful practice, human guidance and thoughtful AI-supported tools.",
+    "heading": "AI-Powered English Learning, Personalised Around You.",
+    "summary": "Your ideas deserve to be heard—in the classroom, in an interview and in the conversations that shape your future. LanXgrow is bringing purposeful English practice, human guidance and thoughtfully designed technology into one connected learning experience.",
+    "topics": [
+      "Confidence grows through chances to explain ideas, ask questions and try again.",
+      "LanXgrow is building practice for school, college, interviews and workplace conversations.",
+      "AI-based voice and video practice is in development, alongside human guidance."
+    ]
   },
   {
     "path": "/services",
-    "title": "English Communication and Interview Practice | LanXgrow",
-    "description": "Explore English communication and interview practice at LanXgrow."
+    "title": "English Communication & Guided Learning | LanXgrow",
+    "description": "Explore English Communication at LanXgrow: speaking, listening, pronunciation, workplace conversations and confidence built through purposeful guided practice.",
+    "heading": "Focused services, delivered with guidance.",
+    "summary": "LanXgrow keeps its offering deliberately narrow. English Communication is the core of what we do, supported by guided learning support and Smart AI-assisted assessment.",
+    "topics": [
+      "Speaking in real situations, including introductions, interviews and everyday conversations.",
+      "Speaking fluency, listening, comprehension, pronunciation and clarity of expression.",
+      "Programme details, schedules and any fees are confirmed directly with the LanXgrow team."
+    ]
   },
   {
     "path": "/faq",
-    "title": "Mock Interview and Interview Preparation FAQs | LanXgrow",
-    "description": "Find answers to common questions about LanXgrow and interview preparation."
+    "title": "English Speaking, AI Feedback & Interview FAQs | LanXgrow",
+    "description": "Find answers about English speaking confidence, pronunciation, AI assessment feedback, job interview practice, learning progress, programme fees and privacy.",
+    "heading": "Questions, answered plainly.",
+    "summary": "Find answers to frequently asked questions about English Communication at LanXgrow and the learning experience being developed.",
+    "topics": [
+      "How can I improve my English speaking skills and confidence?",
+      "How reliable is AI feedback on English speaking and pronunciation?",
+      "How can I practise speaking English without a conversation partner?",
+      "How much does the English Communication programme cost, and how long does it take?"
+    ]
   },
   {
     "path": "/privacy",
-    "title": "Privacy Information | LanXgrow",
-    "description": "Read LanXgrow privacy information."
+    "title": "Privacy Notice | Accounts & Data Handling | LanXgrow",
+    "description": "Read how LanXgrow handles Supabase sign-in, account information, policy acceptance, offline browser storage and messages sent through WhatsApp or email.",
+    "heading": "Privacy Notice",
+    "summary": "This notice describes the current LanXgrow website, sign-in and offline features. It will be updated as the learning app develops.",
+    "topics": [
+      "Accounts and sign-in are handled through Supabase; authentication requires an internet connection.",
+      "Offline cache stores public site files, not passwords, private messages or account information.",
+      "Questions about access, correction or deletion can be sent to official@lanxgrow.com."
+    ]
   },
   {
     "path": "/terms",
-    "title": "Terms and Programme Information | LanXgrow",
-    "description": "Read LanXgrow terms and programme information."
+    "title": "Terms & Conditions | Learner Responsibilities | LanXgrow",
+    "description": "Review LanXgrow's terms on account safety, respectful learning, programme details, enrolment choices, payment authorisation, privacy and support.",
+    "heading": "Terms and Conditions",
+    "summary": "LanXgrow aims to provide purposeful English communication practice, clear guidance and a respectful learning experience. Paid enrolment is a separate choice from creating an account.",
+    "topics": [
+      "Programme fees, inclusions, schedules and refund terms are explained before purchase.",
+      "Payments and subscriptions require authorisation; any recurring charges must be explained.",
+      "Learners are asked to protect their accounts and respect others' privacy."
+    ]
   }
 ]
