@@ -1,13 +1,31 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 const origin='https://www.lanxgrow.com';
 // Single metadata source shared with the client navigation hook.
-const pages=JSON.parse(await readFile('seo/public-pages.json','utf8')).map(({path,title,description})=>[path,title,description]);
+const records=JSON.parse(await readFile('seo/public-pages.json','utf8'));
+const pages=records.map(({path,title,description})=>[path,title,description]);
 const esc=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const shell=await readFile('dist/app.html','utf8');
 await mkdir('dist/seo-pages',{recursive:true});
 for(const [path,title,description] of pages){
  const file=path==='/'?'dist/index.html':path==='/interview-prep'?'dist/interview-prep.html':'dist/seo-pages/'+path.slice(1)+'.html';
  let html=path==='/'||path==='/interview-prep'?await readFile(file,'utf8'):shell;
+ // On client-only marketing routes, expose the same factual introductory copy
+ // as real HTML before React mounts. This benefits no-JavaScript visitors and
+ // crawlers without changing the final interactive React page.
+ if(path!=='/' && path!=='/interview-prep'){
+  const record=records.find(p=>p.path===path);
+  if(!record?.heading || !record?.summary)throw new Error('Missing verified page overview: '+path);
+  if(!/<div id="root"><\/div>/.test(html))throw new Error('Missing React root: '+path);
+  const points=(record.topics||[]).map(s=>'<li>'+esc(s)+'</li>').join('');
+  const fallback='<main id="lx-static-overview" style="max-width:900px;margin:10vh auto;padding:24px;color:#2b241e;font:16px/1.7 system-ui,sans-serif">'
+   +'<a href="/" style="color:#7e3b22">LanXgrow home</a>'
+   +'<h1 style="font-size:clamp(32px,5vw,52px);line-height:1.2">'+esc(record.heading)+'</h1>'
+   +'<p>'+esc(record.summary)+'</p>'
+   +(points?'<ul>'+points+'</ul>':'')
+   +'<p><a href="/interview-prep">Interview preparation</a> · <a href="/services">Services</a> · <a href="/faq">FAQs</a></p>'
+   +'</main>';
+  html=html.replace('<div id="root"></div>','<div id="root">'+fallback+'</div>');
+ }
  const url=origin+path;
  html=html.replace(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi,'');
  // Attribute order varies between static HTML, React shells, and generated pages.
