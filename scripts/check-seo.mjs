@@ -30,7 +30,7 @@ for(const route of routes){
   });
   assert.equal(matches.length,1,'Expected exactly one '+name+' for '+route);
  }
- assert.equal((html.match(/<script\\b[^>]*id=["']lx-public-schema["'][^>]*>/gi)||[]).length,1,'Exactly one public schema expected '+route);
+ assert.equal((html.match(/<script\b[^>]*id=["']lx-public-schema["'][^>]*>/gi)||[]).length,1,'Exactly one public schema expected '+route);
  const metaRecord=JSON.parse(await readFile('seo/public-pages.json','utf8')).find(p=>p.path===route);
  assert.ok(metaRecord?.description?.length>=80 && metaRecord.description.length<=175,'Missing useful description '+route);
  if(route!=='/' && route!=='/interview-prep') {
