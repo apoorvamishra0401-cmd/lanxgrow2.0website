@@ -14,11 +14,11 @@ for(const [path,title,description] of pages){
  // Remove matching metadata tags regardless of whether content= precedes name=/property=.
  html=html.replace(/<meta\b[^>]*>/gi,tag=>{
   const match=tag.match(/\b(?:name|property)\s*=\s*(["'])(.*?)\1/i);
-  return match&&/^(description|og:(title|description|url|type))$/i.test(match[2])?'':tag;
+  return match&&/^(description|og:(title|description|url|type|image)|twitter:(card|title|description|image))$/i.test(match[2])?'':tag;
  });
  html=html.replace(/<title>[\s\S]*?<\/title>/i,'<title>'+esc(title)+'</title>');
  const schema=path==='/'?{'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'LanXgrow',url:origin+'/'},{'@type':'WebSite','@id':origin+'/#website',name:'LanXgrow',url:origin+'/',publisher:{'@id':origin+'/#organization'}}]}:{'@context':'https://schema.org','@type':'WebPage',name:title,url,description,isPartOf:{'@id':origin+'/#website'}};
- const tags='<link rel="canonical" href="'+url+'"/>\n<meta name="description" content="'+esc(description)+'"/>\n<meta property="og:title" content="'+esc(title)+'"/>\n<meta property="og:description" content="'+esc(description)+'"/>\n<meta property="og:url" content="'+url+'"/>\n<meta property="og:type" content="website"/>\n<script type="application/ld+json">'+JSON.stringify(schema)+'</script>\n';
+ const tags='<link rel="canonical" href="'+url+'"/>\n<meta name="description" content="'+esc(description)+'"/>\n<meta property="og:title" content="'+esc(title)+'"/>\n<meta property="og:description" content="'+esc(description)+'"/>\n<meta property="og:url" content="'+url+'"/>\n<meta property="og:type" content="website"/>\n<meta property="og:image" content="'+origin+'/icons/icon-512.png"/>\n<meta name="twitter:card" content="summary"/>\n<meta name="twitter:title" content="'+esc(title)+'"/>\n<meta name="twitter:description" content="'+esc(description)+'"/>\n<meta name="twitter:image" content="'+origin+'/icons/icon-512.png"/>\n<script type="application/ld+json">'+JSON.stringify(schema)+'</script>\n';
  if(!/<\/head>/i.test(html))throw new Error('Missing head: '+file);
  html=html.replace(/<\/head>/i,tags+'</head>');
  await writeFile(file,html);
