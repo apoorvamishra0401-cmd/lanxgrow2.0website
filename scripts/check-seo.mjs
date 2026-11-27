@@ -32,4 +32,21 @@ for(const route of routes){
   assert.equal(rule?.destination,'/seo-pages/'+route.slice(1)+'.html','Missing rewrite '+route);
  }
 }
+// A blanket SPA fallback returns 200 for nonexistent paths (soft-404). Keep
+// known client-side deep links explicit so Vercel can return a real 404.
+assert.ok(!redirects.rewrites.some(rule=>rule.source==='/(.*)'), 'Catch-all SPA rewrite would create soft-404 responses');
+for (const source of ['/account','/auth-callback','/consent','/forgot-password','/reset-password','/placeholder','/review-lab','/activate','/career/interview','/guest/:audience','/dashboard/:path*','/smart-ai/review']) {
+ assert.ok(redirects.rewrites.some(rule=>rule.source===source && rule.destination==='/app.html'), 'Missing known SPA route '+source);
+}
+for (const source of ['/account','/dashboard/:path*','/guest/:path*','/review-lab','/smart-ai/review','/career/interview','/activate','/consent','/forgot-password','/reset-password','/auth-callback','/placeholder']) {
+ assert.ok(redirects.headers.some(rule=>rule.source===source && rule.headers.some(h=>h.key.toLowerCase()==='x-robots-tag' && h.value.startsWith('noindex'))), 'Missing noindex header '+source);
+}
+for (const source of ['/home','/index.html','/seo-pages/:path*']) {
+ assert.ok(redirects.redirects.some(rule=>rule.source===source && rule.permanent), 'Missing alias redirect '+source);
+}
+const notFound=await readFile('dist/404.html','utf8');
+assert.match(notFound,/<title>Page not found \| LanXgrow<\/title>/i);
+assert.match(notFound,/name="robots" content="noindex,follow"/i);
+assert.ok(!sitemap.includes('<loc>'+origin+'/get-started</loc>'), 'Redirected onboarding route must not be in sitemap');
+
 console.log('SEO build checks passed for '+routes.length+' public routes');
