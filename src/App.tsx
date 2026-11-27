@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { usePublicSeoMeta } from '@/hooks/usePublicSeoMeta';
 import { FloatingWhatsApp } from '@/components/support/SupportLinks';
 import { PwaStatus } from '@/components/support/PwaStatus';
 import { Header } from '@/components/layout/Header';
@@ -35,6 +36,7 @@ import NotFound from '@/pages/NotFound';
  */
 export default function App() {
   const { pathname } = useLocation();
+  usePublicSeoMeta();
   return (
     <>
     <FloatingWhatsApp />
