@@ -1,0 +1,232 @@
+{
+  "releaseDate": "2026-11-28",
+  "purpose": "Production technical SEO foundation for current Cobalt static Vercel website",
+  "repo": "apoorvamishra0401-cmd/lanxgrow2.0website",
+  "notice": "This manifest is documentation of the live STATIC Vercel API-upload deployment. GitHub main/release branches are not identical to this site's source, and the earlier PR #32/#33 target older Orange-theme Vite implementation. Do not merge those as a production replacement.",
+  "domain": "https://www.lanxgrow.com",
+  "projectId": "prj_P6u3zerqreilg8Ults1ijr7T4cVu",
+  "projectName": "lanxgrow2-0website",
+  "productionAlias": "www.lanxgrow.com",
+  "deploymentId": "dpl_EeGMEsUW7x8wg9qu7pCDybpGx1Nk",
+  "originalProductionDeploymentId": "dpl_GMJ782UcjZeWzpJm2to2oMzdyG6e",
+  "firstSeoDeploymentId": "dpl_92pbRaAsLzewRQ6uAokLS8uaFoH8",
+  "gscProperty": "sc-domain:lanxgrow.com",
+  "sitemap": "https://www.lanxgrow.com/sitemap.xml",
+  "indexableCanonicalPaths": [
+    "/",
+    "/interview-prep/",
+    "/get-started/",
+    "/how-it-works/",
+    "/pricing/",
+    "/smart-ai/",
+    "/services/",
+    "/resources/",
+    "/sample-report/",
+    "/30-day-sample-report/",
+    "/about/",
+    "/faq/",
+    "/contact/",
+    "/privacy/",
+    "/terms/",
+    "/early-access/"
+  ],
+  "noindexPaths": [
+    "/success-stories/",
+    "/signin/"
+  ],
+  "validated": "18 unchanged HTML bodies; 16 indexable public pages; robots sitemap; JSON-LD and social metadata; real HTTP 404; app/sign-in redirects; build SEO checks; GSC successfully downloaded the new 16-URL sitemap with 0 errors and 0 warnings.",
+  "sourceFileCount": 47,
+  "sourceFiles": [
+    {
+      "path": "package.json",
+      "vercelSha1": "130768648752d350ed1f6ad7db1ec634c135093e"
+    },
+    {
+      "path": "seo-check.cjs",
+      "vercelSha1": "531f835c270ef51a2ec2eafa9586458df914ece0"
+    },
+    {
+      "path": "site/30-day-sample-report/index.html",
+      "vercelSha1": "9a1b2546f1a6aa235c59c1f16e8301a1631206ff"
+    },
+    {
+      "path": "site/about/index.html",
+      "vercelSha1": "09dec7a2ea3458f84538bbc3433ef32d4857df0a"
+    },
+    {
+      "path": "site/app.js",
+      "vercelSha1": "3ddd4515157fe93b705d568a76a2c10a0e92f84b"
+    },
+    {
+      "path": "site/background.js",
+      "vercelSha1": "e1d57e4637454f8fc8be6a3ddd6ba0ffe64db55d"
+    },
+    {
+      "path": "site/brand/lanxgrow-app-icon-maskable.svg",
+      "vercelSha1": "8c02e45dda36e492acb33de66e82da0452e20348"
+    },
+    {
+      "path": "site/brand/lanxgrow-app-icon.svg",
+      "vercelSha1": "8c02e45dda36e492acb33de66e82da0452e20348"
+    },
+    {
+      "path": "site/brand/lanxgrow-footer-banner.svg",
+      "vercelSha1": "3caafe1c84ce75b2a2432567ec52281bbaac50bd"
+    },
+    {
+      "path": "site/brand/lanxgrow-wordmark-inverse.svg",
+      "vercelSha1": "e1e5283e8404c1fb213cacc10e466e28b2b8fa15"
+    },
+    {
+      "path": "site/brand/lanxgrow-wordmark.svg",
+      "vercelSha1": "fe5f192e695c85cdaa9cf629f1fa683a1c552079"
+    },
+    {
+      "path": "site/contact/index.html",
+      "vercelSha1": "9447aa5a5ddde366fd4b97db5156bac62b0b90ca"
+    },
+    {
+      "path": "site/early-access/index.html",
+      "vercelSha1": "cc38a712f0ead84e409bdc3dac167cb8cf1c802c"
+    },
+    {
+      "path": "site/faq/index.html",
+      "vercelSha1": "1ee73b5eb4ad0050700a7bb8a7ea857b91227473"
+    },
+    {
+      "path": "site/get-started/index.html",
+      "vercelSha1": "9c29808c428ce86a7a5ff992502bc486e8bebe6a"
+    },
+    {
+      "path": "site/home-assets/exploration.css",
+      "vercelSha1": "27f3b072a1f9c47574bb12168367e52f48326aa6"
+    },
+    {
+      "path": "site/home-assets/home.css",
+      "vercelSha1": "c46b2f07bda3ac32974d8c5d158c388c13c663cd"
+    },
+    {
+      "path": "site/home-assets/interview-in-progress.webp",
+      "vercelSha1": "2cfdcd53f7f059d4257c82ad1ec7b2e7c33a0eba"
+    },
+    {
+      "path": "site/home-assets/interview.webp",
+      "vercelSha1": "b97620743d193a799e4fc27aebd9e723b264344e"
+    },
+    {
+      "path": "site/home-assets/preparation.webp",
+      "vercelSha1": "d9eb4874fdb5fe15d087fccb788b48c3b4a430f9"
+    },
+    {
+      "path": "site/home-assets/visual.css",
+      "vercelSha1": "4e0cb804af2462af8cdf046374d813e33cf039d3"
+    },
+    {
+      "path": "site/how-it-works/index.html",
+      "vercelSha1": "58f6260023c2182b85ec7d5cd0a97687507048f3"
+    },
+    {
+      "path": "site/index.html",
+      "vercelSha1": "f2737a460a7990982b5e947baaa0bfffc36194b2"
+    },
+    {
+      "path": "site/interview-prep/index.html",
+      "vercelSha1": "8f1f9c09523b390ba21ac4c9fc7ff0ebf975cdad"
+    },
+    {
+      "path": "site/llms.txt",
+      "vercelSha1": "7f67eecdf69b766e0c7052768a46afd1c59a06d6"
+    },
+    {
+      "path": "site/manifest.json",
+      "vercelSha1": "8c87e76f562b01d42a070c95dfe76145fe4c3fa7"
+    },
+    {
+      "path": "site/mobile-nav.js",
+      "vercelSha1": "fdb57d281542c5e75cf67575a9732e311429e1bd"
+    },
+    {
+      "path": "site/offline.html",
+      "vercelSha1": "a2134995f5b74738226123bf38ea9f04a86f38e2"
+    },
+    {
+      "path": "site/practice-demo.js",
+      "vercelSha1": "6fc42ca9e9e2ca9941c571ffa00b2aca81b9699b"
+    },
+    {
+      "path": "site/pricing/index.html",
+      "vercelSha1": "044fb287f106e6f31c1d634790bfc3ea0dc078ed"
+    },
+    {
+      "path": "site/privacy/index.html",
+      "vercelSha1": "8efc615c1466bc28c7db3bb9690a1cb2bb107cd0"
+    },
+    {
+      "path": "site/product-visuals.js",
+      "vercelSha1": "0e58988b8443cece8b0ec7cfffe62e596e1f51dc"
+    },
+    {
+      "path": "site/pwa-register.js",
+      "vercelSha1": "63801d3a239c5e5be4e5957b508ba5cc80048304"
+    },
+    {
+      "path": "site/reports/lanxgrow-30-day-sample.pdf",
+      "vercelSha1": "3abffffb282a5891a28cffb72807b1d595c4ebeb"
+    },
+    {
+      "path": "site/reports/lanxgrow-30-minute-sample.pdf",
+      "vercelSha1": "14d8a92e3f00d48a270c3de2bccc4cecc16e842c"
+    },
+    {
+      "path": "site/resources/index.html",
+      "vercelSha1": "6b1c30f99f3e6c68ede70732949604b2d6b89b4c"
+    },
+    {
+      "path": "site/robots.txt",
+      "vercelSha1": "708ec83237ebe6fda274bf87e6bdc8313b9b289d"
+    },
+    {
+      "path": "site/sample-report/index.html",
+      "vercelSha1": "f682ba1b44766509a449adf0248610ebfff25e3e"
+    },
+    {
+      "path": "site/service-worker.js",
+      "vercelSha1": "de810a6c153afe303276ea0f02bd4fa04fbc37c5"
+    },
+    {
+      "path": "site/services/index.html",
+      "vercelSha1": "7224974c89a3f83f63152ecd42e3913cb052d216"
+    },
+    {
+      "path": "site/signin/index.html",
+      "vercelSha1": "9ac3660a12d8503a184b48aaf47e1a7b73305bb6"
+    },
+    {
+      "path": "site/sitemap.xml",
+      "vercelSha1": "a14f95309a0380a49d69fd81907ab5ad44c1c811"
+    },
+    {
+      "path": "site/smart-ai/index.html",
+      "vercelSha1": "0025971be360661b9ae343343f587951b9b767e9"
+    },
+    {
+      "path": "site/style.css",
+      "vercelSha1": "8c424a654d9d15bb7a984d13952241e3d62c0395"
+    },
+    {
+      "path": "site/success-stories/index.html",
+      "vercelSha1": "3c35412662c069c4e5e73d1a114dce8092c19a13"
+    },
+    {
+      "path": "site/terms/index.html",
+      "vercelSha1": "67d01cfcb646244fd1a0e041d426b8e1760683fc"
+    },
+    {
+      "path": "vercel.json",
+      "vercelSha1": "06d9a99a729ed7fa7d0f1255bc2ac5623c926d6b"
+    }
+  ],
+  "rebuildGuidance": "To recreate from this same Vercel project, use the deployment API with files entries {file, sha} from sourceFiles. File paths must omit the src/ prefix, putting package.json in project root. Vercel API uploaded deployments are not automatically reconstructed by a GitHub branch build. Verify build, metadata, all redirects, and body content before reassigning www.lanxgrow.com.",
+  "rollbackGuidance": "For SEO-only rollback use Vercel assign_alias to the firstSeoDeploymentId; for full prior website use originalProductionDeploymentId. Verify the alias before every release.",
+  "remainingContentReview": "Content-length warnings on privacy, services and free practice pages require real product/legal copy review; do not invent data practices, availability or customer outcomes."
+}
