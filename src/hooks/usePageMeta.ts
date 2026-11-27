@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import publicPages from '../../seo/public-pages.json';
 
 /** Keeps the document title and meta description in sync with the page. */
 export function usePageMeta(title: string, description?: string) {
+  const { pathname } = useLocation();
   useEffect(() => {
+    // Marketing metadata is owned by usePublicSeoMeta, which matches the HTML sent to crawlers.
+    if (publicPages.some(page => page.path === pathname)) return;
     const previousTitle = document.title;
     document.title = title ? `${title} — LanXgrow` : 'LanXgrow';
 
@@ -26,5 +31,5 @@ export function usePageMeta(title: string, description?: string) {
         metaEl.content = previousDescription;
       }
     };
-  }, [title, description]);
+  }, [title, description, pathname]);
 }
