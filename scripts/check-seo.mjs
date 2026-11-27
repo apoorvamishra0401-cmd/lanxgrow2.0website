@@ -6,6 +6,10 @@ const routes=['/','/interview-prep','/smart-ai','/about','/services','/faq','/pr
 const redirects=JSON.parse(await readFile('vercel.json','utf8'));
 const sitemap=await readFile('dist/sitemap.xml','utf8');
 const robots=await readFile('dist/robots.txt','utf8');
+const llms=await readFile('dist/llms.txt','utf8');
+assert.match(llms,/# LanXgrow/);
+assert.match(llms,/illustrative or proposed/);
+
 assert.match(sitemap,/<urlset\b/);
 assert.match(robots,/Sitemap:\s*https:\/\/www\.lanxgrow\.com\/sitemap\.xml/);
 assert.equal((sitemap.match(/<loc>/g)||[]).length,routes.length,'Unexpected sitemap size');
@@ -16,6 +20,7 @@ for(const route of routes){
  const file=route==='/'?'dist/index.html':route==='/interview-prep'?'dist/interview-prep.html':'dist/seo-pages/'+route.slice(1)+'.html';
  const html=await readFile(file,'utf8');
  assert.equal((html.match(/<title\b[^>]*>/gi)||[]).length,1,'Title count '+route);
+ assert.ok(html.includes('href="/llms.txt"'),'Missing AI-readable guide discovery '+route);
  assert.ok(html.includes('<link rel="canonical" href="'+url+'"/>'),'Incorrect canonical '+route);
  const metaTags=html.match(/<meta\b[^>]*>/gi)||[];
  for(const name of ['description','og:title','og:description','og:url','og:type','og:image','twitter:card','twitter:title','twitter:description','twitter:image']){
