@@ -10,6 +10,30 @@
       "destination": "/index.html"
     },
     {
+      "source": "/smart-ai",
+      "destination": "/seo-pages/smart-ai.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/seo-pages/about.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/seo-pages/services.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/seo-pages/faq.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/seo-pages/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/seo-pages/terms.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/app.html"
     }
@@ -64,6 +88,11 @@
       "source": "/interview-prep.html",
       "destination": "/interview-prep",
       "permanent": true
+    },
+    {
+      "source": "/interview-preparation",
+      "destination": "/interview-prep",
+      "permanent": true
     }
   ],
   "headers": [
@@ -90,6 +119,114 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/account",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/dashboard/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/guest/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/review-lab",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/smart-ai/review",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/career/interview",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/activate",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/consent",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/forgot-password",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/reset-password",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/auth-callback",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/placeholder",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
         }
       ]
     }
