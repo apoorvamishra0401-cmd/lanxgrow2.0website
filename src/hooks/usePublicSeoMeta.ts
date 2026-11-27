@@ -38,5 +38,10 @@ export function usePublicSeoMeta() {
     setMeta('property', 'og:description', page.description);
     setMeta('property', 'og:url', origin + page.path);
     setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:image', origin + '/icons/icon-512.png');
+    setMeta('name', 'twitter:card', 'summary');
+    setMeta('name', 'twitter:title', page.title);
+    setMeta('name', 'twitter:description', page.description);
+    setMeta('name', 'twitter:image', origin + '/icons/icon-512.png');
   }, [pathname]);
 }
