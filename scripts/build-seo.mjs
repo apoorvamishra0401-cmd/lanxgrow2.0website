@@ -1,47 +1,7 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 const origin='https://www.lanxgrow.com';
-const pages=[
-  [
-    "/",
-    "AI Mock Interviews & Job Interview Preparation | LanXgrow",
-    "Practise job interviews and English communication with LanXgrow."
-  ],
-  [
-    "/interview-prep",
-    "Job Interview Preparation & HR Round Practice | LanXgrow",
-    "Explore interview preparation for freshers and working professionals."
-  ],
-  [
-    "/smart-ai",
-    "Meet Lan-X AI, Your Interview Practice Coach | LanXgrow",
-    "Explore Lan-X AI and practise interview communication."
-  ],
-  [
-    "/about",
-    "About LanXgrow and Our Interview Practice Approach",
-    "Learn about LanXgrow and its interview practice approach."
-  ],
-  [
-    "/services",
-    "English Communication and Interview Practice | LanXgrow",
-    "Explore English communication and interview practice at LanXgrow."
-  ],
-  [
-    "/faq",
-    "Mock Interview and Interview Preparation FAQs | LanXgrow",
-    "Find answers to common questions about LanXgrow and interview preparation."
-  ],
-  [
-    "/privacy",
-    "Privacy Information | LanXgrow",
-    "Read LanXgrow privacy information."
-  ],
-  [
-    "/terms",
-    "Terms and Programme Information | LanXgrow",
-    "Read LanXgrow terms and programme information."
-  ]
-];
+// Single metadata source shared with the client navigation hook.
+const pages=JSON.parse(await readFile('seo/public-pages.json','utf8')).map(({path,title,description})=>[path,title,description]);
 const esc=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const shell=await readFile('dist/app.html','utf8');
 await mkdir('dist/seo-pages',{recursive:true});
