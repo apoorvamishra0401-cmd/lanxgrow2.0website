@@ -34,7 +34,51 @@
       "destination": "/seo-pages/terms.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/account",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/auth-callback",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/consent",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/placeholder",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/review-lab",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/activate",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/career/interview",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/guest/:audience",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/smart-ai/review",
       "destination": "/app.html"
     }
   ],
