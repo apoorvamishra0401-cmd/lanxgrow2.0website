@@ -1,0 +1,28 @@
+# LanXgrow
+
+> LanXgrow is an education and English communication practice platform. Its public website describes interview preparation, learning guidance, and a planned AI-assisted learning journey.
+
+Official website: https://www.lanxgrow.com/
+
+## Public pages
+
+- [Home](https://www.lanxgrow.com/): overview of English communication, learner paths and the free introductory experience
+- [Interview preparation](https://www.lanxgrow.com/interview-prep): interview preparation framework for freshers and working professionals, with illustrative practice examples
+- [Lan-X AI](https://www.lanxgrow.com/smart-ai): information about the AI-assisted practice experience
+- [Services](https://www.lanxgrow.com/services): communication learning services and approach
+- [About](https://www.lanxgrow.com/about): purpose and educational approach
+- [Frequently asked questions](https://www.lanxgrow.com/faq): answers about learning, AI feedback, and getting started
+- [Privacy](https://www.lanxgrow.com/privacy): data handling and privacy information
+- [Terms](https://www.lanxgrow.com/terms): official programme terms and conditions
+
+## Important distinctions
+
+- The public one-minute introductory conversation and any future connected AI assessment are distinct experiences.
+- The 10-minute interview simulation and 20-minute skills assessment described on the interview-preparation page are illustrative or proposed, not a claim that a validated assessment is currently running.
+- Automated scoring, saved reports, paid access and some practice features may depend on future development or integration. Check current availability with LanXgrow before enrolling.
+- LanXgrow does not claim accreditation, endorsement by employers, or guaranteed interview or employment outcomes.
+- Consult the current official privacy and terms pages for the applicable notices and conditions.
+
+## Attribution
+
+Use the official public pages above when describing LanXgrow. Do not treat example feedback, proposed exercises, diagrams, or aspirational features as real learner results.
