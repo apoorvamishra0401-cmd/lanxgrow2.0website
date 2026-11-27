@@ -1,0 +1,62 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+const origin='https://www.lanxgrow.com';
+const pages=[
+  [
+    "/",
+    "AI Mock Interviews & Job Interview Preparation | LanXgrow",
+    "Practise job interviews and English communication with LanXgrow."
+  ],
+  [
+    "/interview-prep",
+    "Job Interview Preparation & HR Round Practice | LanXgrow",
+    "Explore interview preparation for freshers and working professionals."
+  ],
+  [
+    "/smart-ai",
+    "Meet Lan-X AI, Your Interview Practice Coach | LanXgrow",
+    "Explore Lan-X AI and practise interview communication."
+  ],
+  [
+    "/about",
+    "About LanXgrow and Our Interview Practice Approach",
+    "Learn about LanXgrow and its interview practice approach."
+  ],
+  [
+    "/services",
+    "English Communication and Interview Practice | LanXgrow",
+    "Explore English communication and interview practice at LanXgrow."
+  ],
+  [
+    "/faq",
+    "Mock Interview and Interview Preparation FAQs | LanXgrow",
+    "Find answers to common questions about LanXgrow and interview preparation."
+  ],
+  [
+    "/privacy",
+    "Privacy Information | LanXgrow",
+    "Read LanXgrow privacy information."
+  ],
+  [
+    "/terms",
+    "Terms and Programme Information | LanXgrow",
+    "Read LanXgrow terms and programme information."
+  ]
+];
+const esc=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+const shell=await readFile('dist/app.html','utf8');
+await mkdir('dist/seo-pages',{recursive:true});
+for(const [path,title,description] of pages){
+ const file=path==='/'?'dist/index.html':path==='/interview-prep'?'dist/interview-prep.html':'dist/seo-pages/'+path.slice(1)+'.html';
+ let html=path==='/'||path==='/interview-prep'?await readFile(file,'utf8'):shell;
+ const url=origin+path;
+ html=html.replace(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi,'');
+ html=html.replace(/<meta\b[^>]*(?:name=["']description["']|property=["']og:(?:title|description|url|type)["'])[^>]*>/gi,'');
+ html=html.replace(/<title>[\s\S]*?<\/title>/i,'<title>'+esc(title)+'</title>');
+ const schema=path==='/'?{'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'LanXgrow',url:origin+'/'},{'@type':'WebSite','@id':origin+'/#website',name:'LanXgrow',url:origin+'/',publisher:{'@id':origin+'/#organization'}}]}:{'@context':'https://schema.org','@type':'WebPage',name:title,url,description,isPartOf:{'@id':origin+'/#website'}};
+ const tags='<link rel="canonical" href="'+url+'"/>\n<meta name="description" content="'+esc(description)+'"/>\n<meta property="og:title" content="'+esc(title)+'"/>\n<meta property="og:description" content="'+esc(description)+'"/>\n<meta property="og:url" content="'+url+'"/>\n<meta property="og:type" content="website"/>\n<script type="application/ld+json">'+JSON.stringify(schema)+'</script>\n';
+ if(!/<\/head>/i.test(html))throw new Error('Missing head: '+file);
+ html=html.replace(/<\/head>/i,tags+'</head>');
+ await writeFile(file,html);
+}
+const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+pages.map(([p])=>'  <url><loc>'+origin+p+'</loc></url>').join('\n')+'\n</urlset>\n';
+await writeFile('dist/sitemap.xml',sitemap);
