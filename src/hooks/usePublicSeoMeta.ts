@@ -15,6 +15,15 @@ export function usePublicSeoMeta() {
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!page) {
       canonical?.remove();
+      document.getElementById('lx-public-schema')?.remove();
+      // Prevent marketing-specific social metadata from following users into
+      // private or interactive app routes after in-app navigation.
+      for (const key of ['og:title', 'og:description', 'og:url', 'og:type', 'og:image']) {
+        document.querySelector(`meta[property="${key}"]`)?.remove();
+      }
+      for (const key of ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:image']) {
+        document.querySelector(`meta[name="${key}"]`)?.remove();
+      }
       return;
     }
 
@@ -43,5 +52,23 @@ export function usePublicSeoMeta() {
     setMeta('name', 'twitter:title', page.title);
     setMeta('name', 'twitter:description', page.description);
     setMeta('name', 'twitter:image', origin + '/icons/icon-512.png');
+    // Keep structured data aligned with the active route, rather than the
+    // original static HTML page when navigating between marketing screens.
+    const schema = page.path === '/'
+      ? { '@context': 'https://schema.org', '@graph': [
+          { '@type': 'Organization', '@id': origin + '/#organization', name: 'LanXgrow', url: origin + '/' },
+          { '@type': 'WebSite', '@id': origin + '/#website', name: 'LanXgrow', url: origin + '/', publisher: { '@id': origin + '/#organization' } },
+        ] }
+      : { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title,
+          url: origin + page.path, description: page.description,
+          isPartOf: { '@id': origin + '/#website' } };
+    let jsonLd = document.getElementById('lx-public-schema') as HTMLScriptElement | null;
+    if (!jsonLd) {
+      jsonLd = document.createElement('script');
+      jsonLd.id = 'lx-public-schema';
+      jsonLd.type = 'application/ld+json';
+      document.head.appendChild(jsonLd);
+    }
+    jsonLd.textContent = JSON.stringify(schema);
   }, [pathname]);
 }
