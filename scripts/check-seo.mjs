@@ -30,7 +30,14 @@ for(const route of routes){
   });
   assert.equal(matches.length,1,'Expected exactly one '+name+' for '+route);
  }
- assert.ok(html.includes('<script type="application/ld+json">'),'Missing structured data '+route);
+ assert.equal((html.match(/<script\\b[^>]*id=["']lx-public-schema["'][^>]*>/gi)||[]).length,1,'Exactly one public schema expected '+route);
+ const metaRecord=JSON.parse(await readFile('seo/public-pages.json','utf8')).find(p=>p.path===route);
+ assert.ok(metaRecord?.description?.length>=80 && metaRecord.description.length<=175,'Missing useful description '+route);
+ if(route!=='/' && route!=='/interview-prep') {
+  assert.match(html,/<main id="lx-static-overview"/,'Non-JS HTML summary missing '+route);
+  assert.ok(html.includes('<h1')&&html.includes(metaRecord.heading),'Missing visible factual heading '+route);
+  assert.ok(html.includes(metaRecord.summary.slice(0,45)),'Missing accurate initial content '+route);
+ }
  assert.ok(!/<meta\b[^>]*name=["']robots["'][^>]*content=["']noindex/i.test(html),'Public route noindexed '+route);
  if(route!=='/'&&route!=='/interview-prep'){
   const rule=redirects.rewrites.find(r=>r.source===route);
