@@ -19,8 +19,9 @@ for(const [path,title,description] of pages){
  html=html.replace(/<title>[\s\S]*?<\/title>/i,'<title>'+esc(title)+'</title>');
  const schema=path==='/'?{'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'LanXgrow',url:origin+'/'},{'@type':'WebSite','@id':origin+'/#website',name:'LanXgrow',url:origin+'/',publisher:{'@id':origin+'/#organization'}}]}:{'@context':'https://schema.org','@type':'WebPage',name:title,url,description,isPartOf:{'@id':origin+'/#website'}};
  const tags='<link rel="canonical" href="'+url+'"/>\n<meta name="description" content="'+esc(description)+'"/>\n<meta property="og:title" content="'+esc(title)+'"/>\n<meta property="og:description" content="'+esc(description)+'"/>\n<meta property="og:url" content="'+url+'"/>\n<meta property="og:type" content="website"/>\n<meta property="og:image" content="'+origin+'/icons/icon-512.png"/>\n<meta name="twitter:card" content="summary"/>\n<meta name="twitter:title" content="'+esc(title)+'"/>\n<meta name="twitter:description" content="'+esc(description)+'"/>\n<meta name="twitter:image" content="'+origin+'/icons/icon-512.png"/>\n<script type="application/ld+json">'+JSON.stringify(schema)+'</script>\n';
+ const agentGuideLink=html.includes('href="/llms.txt"')?'':'<link rel="alternate" type="text/plain" href="/llms.txt" title="LanXgrow AI-readable public guide"/>\\n';
  if(!/<\/head>/i.test(html))throw new Error('Missing head: '+file);
- html=html.replace(/<\/head>/i,tags+'</head>');
+ html=html.replace(/<\/head>/i,agentGuideLink+tags+'</head>');
  await writeFile(file,html);
 }
 const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+pages.map(([p])=>'  <url><loc>'+origin+p+'</loc></url>').join('\n')+'\n</urlset>\n';
